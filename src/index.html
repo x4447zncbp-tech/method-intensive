@@ -218,16 +218,20 @@ h1, h2, h3 {
 }
 
 h1 {
-  font-size: clamp(2rem, 9vw, 3rem);
+  font-size: clamp(1.75rem, 7.5vw, 2.75rem);
   line-height: 1.05;
   letter-spacing: -0.035em;
   font-weight: 900;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
 }
 
 h2 {
   font-size: clamp(1.5rem, 6vw, 2rem);
   line-height: 1.15;
   margin-bottom: 24px;
+  overflow-wrap: break-word;
 }
 
 h3 {
@@ -235,6 +239,7 @@ h3 {
   line-height: 1.3;
   font-weight: 700;
   margin-bottom: 12px;
+  overflow-wrap: break-word;
 }
 
 @media (min-width: 768px) {
@@ -367,11 +372,14 @@ h3 {
 
 .hero__quote {
   font-weight: 900;
-  font-size: clamp(2rem, 9vw, 3rem);
-  line-height: 1.05;
-  letter-spacing: -0.035em;
-  max-width: 18ch;
+  font-size: clamp(1.375rem, 5.6vw, 2.5rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  max-width: 100%;
   margin-bottom: 24px;
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: manual;
 }
 
 .hero__attribution {
@@ -422,7 +430,7 @@ h3 {
 }
 
 @media (min-width: 768px) {
-  .hero__quote { font-size: clamp(2.5rem, 7vw, 4.5rem); }
+  .hero__quote { font-size: clamp(2.5rem, 7vw, 4.5rem); max-width: 22ch; }
   .hero__sub { font-size: 1.125rem; max-width: 38ch; margin-bottom: 40px; }
   .hero__meta { gap: 48px; margin-bottom: 40px; }
   .hero__meta-value { font-size: 1.0625rem; }
@@ -1339,7 +1347,7 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
     <article class="bridge">
       <!-- source: three_things_post_course.md Response 18 (P5) -->
       <h3 class="bridge__quote">Я в шоке что у меня получилось придумать столько идей.</h3>
-      <p class="bridge__cite">— Выпускник Method, уровень «Начинающий», поток 2024</p>
+      <p class="bridge__cite">— Выпускник Method, уровень «Начинающий», Method 3.0</p>
       <hr class="bridge__rule">
       <p class="bridge__formula">Независимость от шаблонов — через глубинное интервью «5 в глубину».</p>
       <p class="bridge__body">За неделю до интенсива делаешь 3–5 интервью на заданную тему. В Дне 1 разбираем материал — и инсайт приходит оттуда, куда раньше не заглядывал. Это и есть выход из шаблона: не «придумать новое», а увидеть людей по-настоящему.</p>
@@ -1349,7 +1357,7 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
     <article class="bridge">
       <!-- source: three_things_post_course.md Response 17 (P6) -->
       <h3 class="bridge__quote">Создание рекламы теперь никогда не будет прежним ;)</h3>
-      <p class="bridge__cite">— Выпускник Method, поток 2024</p>
+      <p class="bridge__cite">— Выпускник Method, Method 3.0</p>
       <hr class="bridge__rule">
       <p class="bridge__formula">Независимость от «без надрыва — недостаточно» — через процесс, который бережёт людей.</p>
       <p class="bridge__body">Структура двух дней снимает героизм. Ты не «выжимаешь идею из себя» — ты идёшь по шагам: интервью → синтез → бриф → шторминг → отбор → драматизация → борд. Каждый шаг готовит следующий. Выгорание — симптом плохого процесса, а не плата за хороший креатив.</p>
@@ -1362,7 +1370,7 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
       </p>
       <!-- source: three_things_post_course.md Response 14 (outcome / after-картина) -->
       <p class="shift__outcome">За эти месяцы я получил знания, которые помогли вспомнить, почему я люблю свою профессию и остаюсь в ней. Заряжен энергией для новых свершений.</p>
-      <p class="shift__outcome-cite">Выпускник Method, поток 2024 · отзыв после курса</p>
+      <p class="shift__outcome-cite">Выпускник Method, Method 3.0 · отзыв после курса</p>
     </div>
   </div>
 </section>
@@ -1488,7 +1496,7 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
     <!-- AWARDS inline-row — top-shelf фестивали с числом топ-побед (Gold/Bronze/Grand-Prix, без шортлистов) -->
     <div class="awards">
       <div class="awards__item">
-        <!-- source: awards.docx — Cannes Lions Bronze ×3 (Utair 2019 + Google Alive Memory Design 2016 + Cyber 2016) -->
+        <!-- source: awards.docx — Cannes Lions Bronze ×3 (Utair Where You Belong + Google Alive Memory Design + Alive Memory Cyber) -->
         <div class="awards__num">3</div>
         <div class="awards__name">Cannes Lions</div>
       </div>
@@ -1529,7 +1537,7 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
     </div>
 
     <p class="author__bio">
-      Помимо Friends Moscow Денис — основатель и креативный директор школы концептуального мышления MADS (3000+ выпускников, в 2021 — лучшая рекламная школа мира по совокупности побед студентов). Member of Art Directors Club Russia + Europe. В 2021 — в списке 100 самых креативных людей России. Председатель жюри ADCR и TAF (крупнейший фестиваль ЦА). GRAND Jury New York Advertising Festival. Помог Узбекистану получить первый Cannes Lions shortlist за 20 лет.
+      Помимо Friends Moscow Денис — основатель и креативный директор школы концептуального мышления MADS (3000+ выпускников; признана лучшей рекламной школой мира по совокупности побед студентов). Member of Art Directors Club Russia + Europe. В списке ста самых креативных людей России (вместе с Кириллом Серебренниковым и Иваном Ургантом). Председатель жюри ADCR и TAF (крупнейший фестиваль Центральной Азии). GRAND Jury New York Advertising Festival. Помог Узбекистану получить первый Cannes Lions shortlist за двадцать лет.
     </p>
 
     <div class="author__stats">
@@ -1577,7 +1585,7 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
     <div class="foryou__quote">
       <!-- source: three_things_post_course.md Response 9 (закрывающая, НЕ Дундина) -->
       <p class="foryou__quote-text">Просто открыл глаза, что называется.</p>
-      <p class="foryou__quote-cite">Выпускник Method · поток 2024</p>
+      <p class="foryou__quote-cite">Выпускник Method · Method 3.0</p>
     </div>
   </div>
 </section>
