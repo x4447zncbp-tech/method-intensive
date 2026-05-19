@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Method Intensive — 13–14 июня 2026</title>
+<meta name="description" content="Method Intensive — 2-дневный weekend-формат курса креативной методологии Дениса Елисеева. 13–14 июня. $350, из них $300 — в зачёт полного курса.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+
+<!-- TODO: Meta Pixel + GA4 — paste IDs здесь, по CLAUDE.md scope (today) -->
+<!-- <script>fbq init ...</script> -->
+<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script> -->
+
+<style>
+/* ============================================================
+   Method Intensive — stub landing
+   Bg: #ebebeb (sampled from materials/Method 3.0/P1_01.jpg)
+   Monochrome, bold sans-serif (Inter), isometric cube cropped.
+   ============================================================ */
+
+:root {
+  --bg: #ebebeb;
+  --ink: #0a0a0a;
+  --ink-soft: #3a3a3a;
+  --ink-muted: #6a6a6a;
+  --line: #cccccc;
+  --max-w: 1080px;
+  --gutter: clamp(20px, 5vw, 64px);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--ink);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+.wrap {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+section {
+  position: relative;
+  padding: clamp(64px, 12vh, 160px) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+section:last-of-type {
+  border-bottom: none;
+}
+
+/* Headings ----------------------------------------------- */
+
+h1, h2, h3 {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+h1 {
+  font-size: clamp(2.25rem, 5.5vw, 4rem);
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  font-weight: 900;
+}
+
+h2 {
+  font-size: clamp(1.625rem, 3.6vw, 2.5rem);
+  line-height: 1.15;
+  margin-bottom: 24px;
+}
+
+h3 {
+  font-size: 1.25rem;
+  line-height: 1.3;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+p {
+  margin-bottom: 1em;
+  max-width: 60ch;
+}
+
+p:last-child { margin-bottom: 0; }
+
+strong { font-weight: 700; }
+
+/* Eyebrow (small label above heading) -------------------- */
+
+.eyebrow {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 24px;
+}
+
+/* Cube (signature visual) -------------------------------- */
+
+.cube {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  user-select: none;
+}
+
+.cube--hero {
+  right: -10vw;
+  bottom: -8vh;
+  width: clamp(280px, 45vw, 620px);
+  opacity: 0.9;
+}
+
+.cube--shift {
+  left: -8vw;
+  top: 50%;
+  transform: translateY(-50%);
+  width: clamp(220px, 35vw, 480px);
+  opacity: 0.7;
+}
+
+.cube--final {
+  right: -12vw;
+  top: -10vh;
+  width: clamp(240px, 40vw, 540px);
+  opacity: 0.8;
+}
+
+/* Content always above cube */
+.wrap, .hero__content, .section__content {
+  position: relative;
+  z-index: 1;
+}
+
+/* Hero --------------------------------------------------- */
+
+.hero {
+  min-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 80px;
+  padding-bottom: 64px;
+  border-bottom: 1px solid var(--line);
+  overflow: hidden;
+}
+
+.hero__topbar {
+  position: absolute;
+  top: 24px;
+  left: 0;
+  right: 0;
+  padding: 0 var(--gutter);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.hero__logo {
+  color: var(--ink);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.hero__quote {
+  font-weight: 900;
+  font-size: clamp(2rem, 5vw, 3.75rem);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  max-width: 18ch;
+  margin-bottom: 24px;
+}
+
+.hero__attribution {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--ink-muted);
+  margin-bottom: 48px;
+  letter-spacing: 0.02em;
+}
+
+.hero__attribution::before {
+  content: "— ";
+}
+
+.hero__sub {
+  font-size: clamp(1.0625rem, 2vw, 1.25rem);
+  line-height: 1.5;
+  color: var(--ink-soft);
+  max-width: 38ch;
+  margin-bottom: 40px;
+  font-weight: 500;
+}
+
+.hero__sub strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(20px, 4vw, 56px);
+  margin-bottom: 40px;
+}
+
+.hero__meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hero__meta-label {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.hero__meta-value {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+/* CTA button --------------------------------------------- */
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 28px;
+  background: var(--ink);
+  color: var(--bg);
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.cta:hover {
+  background: var(--ink-soft);
+}
+
+.cta:active {
+  transform: translateY(1px);
+}
+
+.cta__arrow {
+  font-size: 1.1em;
+  line-height: 1;
+}
+
+.cta__hint {
+  display: block;
+  margin-top: 16px;
+  font-size: 0.875rem;
+  color: var(--ink-muted);
+}
+
+.cta__hint a {
+  color: var(--ink-soft);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Pain mirror ("Знакомо?") ------------------------------- */
+
+.pain__lines {
+  font-size: clamp(1.25rem, 2.4vw, 1.75rem);
+  line-height: 1.4;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 32px;
+  max-width: 24ch;
+}
+
+.pain__lines em {
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+.pain__resolution {
+  font-size: clamp(1rem, 1.6vw, 1.125rem);
+  line-height: 1.5;
+  color: var(--ink-soft);
+  max-width: 40ch;
+}
+
+/* Method shift (V2) -------------------------------------- */
+
+.shift {
+  overflow: hidden;
+}
+
+.shift__thesis {
+  font-weight: 900;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin-bottom: 40px;
+  max-width: 16ch;
+}
+
+.shift__thesis em {
+  font-style: normal;
+  display: inline-block;
+  border-bottom: 6px solid var(--ink);
+  padding-bottom: 4px;
+  line-height: 1;
+}
+
+.shift__body {
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  max-width: 52ch;
+  margin-bottom: 48px;
+}
+
+.testimonial {
+  position: relative;
+  padding: 32px 0 0;
+  border-top: 1px solid var(--line);
+  max-width: 52ch;
+}
+
+.testimonial__quote {
+  font-size: clamp(1.125rem, 2vw, 1.375rem);
+  line-height: 1.4;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 16px;
+  font-style: normal;
+}
+
+.testimonial__quote::before {
+  content: "« ";
+  color: var(--ink-muted);
+}
+
+.testimonial__quote::after {
+  content: " »";
+  color: var(--ink-muted);
+}
+
+.testimonial__cite {
+  font-size: 0.875rem;
+  color: var(--ink-muted);
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.testimonial__cite::before {
+  content: "— ";
+}
+
+/* Offer (Экран 5) ---------------------------------------- */
+
+.offer__headline {
+  font-weight: 900;
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  margin-bottom: 32px;
+  max-width: 14ch;
+}
+
+.offer__breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 32px 0 40px;
+  max-width: 56ch;
+  border-top: 1px solid var(--ink);
+}
+
+.offer__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 20px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.offer__row--total {
+  border-bottom: 1px solid var(--ink);
+  padding-top: 24px;
+  padding-bottom: 24px;
+}
+
+.offer__label {
+  font-size: 1.0625rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+  flex: 1;
+}
+
+.offer__row--total .offer__label {
+  font-weight: 700;
+  color: var(--ink);
+  font-size: 1.125rem;
+}
+
+.offer__value {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.offer__row--total .offer__value {
+  font-size: 2rem;
+}
+
+.offer__note {
+  font-size: 0.9375rem;
+  color: var(--ink-muted);
+  line-height: 1.5;
+  max-width: 50ch;
+  margin-bottom: 32px;
+}
+
+/* Author (Экран 6) --------------------------------------- */
+
+.author__layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+@media (min-width: 720px) {
+  .author__layout {
+    grid-template-columns: 1.4fr 1fr;
+    gap: 64px;
+  }
+}
+
+.author__name {
+  font-size: clamp(1.875rem, 3.6vw, 2.5rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin-bottom: 16px;
+}
+
+.author__role {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  margin-bottom: 32px;
+  letter-spacing: 0.01em;
+}
+
+.author__bio {
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin-bottom: 32px;
+  max-width: 50ch;
+}
+
+.author__stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 24px;
+  padding: 32px;
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid var(--line);
+}
+
+.author__stat-value {
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 8px;
+}
+
+.author__stat-label {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--ink-muted);
+  line-height: 1.3;
+}
+
+/* For-you (Экран 7) -------------------------------------- */
+
+.foryou__list {
+  list-style: none;
+  margin: 32px 0 48px;
+  padding: 0;
+  max-width: 52ch;
+}
+
+.foryou__list li {
+  position: relative;
+  padding: 20px 0 20px 32px;
+  border-bottom: 1px solid var(--line);
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.foryou__list li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  top: 20px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.foryou__list li:last-child {
+  border-bottom: 1px solid var(--ink);
+}
+
+/* FAQ (Экран 8) ----------------------------------------- */
+
+.faq__list {
+  margin-top: 24px;
+}
+
+.faq__item {
+  border-bottom: 1px solid var(--line);
+  padding: 24px 0;
+}
+
+.faq__item:first-of-type {
+  border-top: 1px solid var(--ink);
+}
+
+.faq__q {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 8px;
+  line-height: 1.35;
+}
+
+.faq__a {
+  font-size: 1rem;
+  color: var(--ink-soft);
+  line-height: 1.55;
+  max-width: 60ch;
+}
+
+/* Final CTA ---------------------------------------------- */
+
+.final {
+  text-align: left;
+  overflow: hidden;
+}
+
+.final__headline {
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin-bottom: 40px;
+  max-width: 16ch;
+}
+
+/* Footer ------------------------------------------------- */
+
+footer {
+  padding: 48px 0;
+  font-size: 0.875rem;
+  color: var(--ink-muted);
+  border-top: 1px solid var(--line);
+}
+
+footer .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+}
+
+footer a {
+  color: var(--ink-soft);
+  text-decoration: none;
+  margin-right: 16px;
+  font-weight: 500;
+}
+
+footer a:hover {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* TODO blocks (placeholders for content awaiting brief revision) */
+
+.todo-block {
+  margin: 24px 0;
+  padding: 24px;
+  border: 2px dashed var(--ink-muted);
+  background: rgba(0, 0, 0, 0.03);
+  font-family: 'Inter', monospace;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.todo-block strong {
+  display: block;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 8px;
+  font-size: 0.75rem;
+}
+
+/* Reduce motion safety net */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  * {
+    transition: none !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     ЭКРАН 1 — Hero
+     Anchor camerton цитата Дениса + дата + цена + единственный CTA
+     ============================================================ -->
+<section class="hero" id="hero">
+  <div class="hero__topbar">
+    <span class="hero__logo">METHOD</span>
+    <span>Intensive · 13–14 июня 2026</span>
+  </div>
+
+  <img class="cube cube--hero" src="assets/cube.png" alt="" aria-hidden="true">
+
+  <div class="wrap hero__content">
+    <h1 class="hero__quote">Сидеть три дня перед пустым документом — это не креативный процесс. Это отсутствие процесса.</h1>
+    <p class="hero__attribution">Денис Елисеев, автор курса Method</p>
+
+    <p class="hero__sub">
+      <strong>Method Intensive</strong> — два дня про систему, которая работает, когда вдохновение не приходит.
+    </p>
+
+    <div class="hero__meta">
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">Когда</span>
+        <span class="hero__meta-value">13–14 июня</span>
+      </div>
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">Время</span>
+        <span class="hero__meta-value">10:00–20:00 Ташкент</span>
+      </div>
+      <div class="hero__meta-item">
+        <span class="hero__meta-label">Цена</span>
+        <span class="hero__meta-value">$350 · из них $300 в зачёт</span>
+      </div>
+    </div>
+
+    <a class="cta" href="https://t.me/gotaddedvalue_bot" target="_blank" rel="noopener">
+      Записаться через Telegram
+      <span class="cta__arrow" aria-hidden="true">→</span>
+    </a>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     ЭКРАН 2 — «Знакомо?» (pain mirror)
+     Voice-эффект: узнать себя
+     ============================================================ -->
+<section class="pain" id="pain">
+  <div class="wrap section__content">
+    <span class="eyebrow">Знакомо?</span>
+    <p class="pain__lines">
+      Вчера придумал три концепции за час.<br>
+      Сегодня — третий час шторма, на доске ноль.<br>
+      <em>Вчера чувствовал себя профи. Сегодня — самозванцем.</em>
+    </p>
+    <p class="pain__resolution">
+      Это нормально — когда единственный инструмент генерации — твоё настроение.
+    </p>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     ЭКРАН 3 — Что меняет Method (V2: системность)
+     Главный позиционирующий тезис + Tier 1 testimonial
+     ============================================================ -->
+<section class="shift" id="shift">
+  <img class="cube cube--shift" src="assets/cube.png" alt="" aria-hidden="true">
+
+  <div class="wrap section__content">
+    <span class="eyebrow">Что меняет Method</span>
+    <h2 class="shift__thesis">
+      Креатив — это не вдохновение.<br>
+      Это <em>процесс</em>.
+    </h2>
+    <p class="shift__body">
+      Method — пошаговая система полного креативного цикла: исследование → инсайт → бриф → идея → отбор → кейс. <strong>Каждый раз, в любой команде, на любом брифе.</strong> Не набор советов и не «авторская методика», а воспроизводимый пайплайн от КД с 450+ международными наградами.
+    </p>
+
+    <div class="testimonial">
+      <p class="testimonial__quote">Можно делать классную работу и не страдать.</p>
+      <p class="testimonial__cite">Креативный директор, 15+ лет в индустрии</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     ЭКРАН 4 — Что в интенсиве (TODO)
+     Зависит от обновлённой структуры воркшопа от Дениса.
+     ============================================================ -->
+<section id="format">
+  <div class="wrap section__content">
+    <span class="eyebrow">Что внутри · 2 дня</span>
+    <div class="todo-block">
+      <strong>TODO · waiting for brief revision</strong>
+      Контент этой секции зависит от обновлённой структуры воркшопа (full mini-cycle Method: интервью → синтез → бриф → шторминг → отбор → драматизация → борд → голосование). Brief Section 1, 4, 5 будут переписаны архитектором после возвращения Дениса. После апдейта — заполнить здесь день 1 / день 2 / артефакт на выходе.
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     ЭКРАН 5 — Это попробовать, не купить ($50 нетто механика)
+     Funnel = primary offer. Закрывает O#1 (цена) + часть O#7 (vs MADS).
+     ============================================================ -->
+<section class="offer" id="offer">
+  <div class="wrap section__content">
+    <span class="eyebrow">Главное про цену</span>
+    <h2 class="offer__headline">Это попробовать, не купить.</h2>
+
+    <div class="offer__breakdown">
+      <div class="offer__row">
+        <span class="offer__label">Интенсив</span>
+        <span class="offer__value">$350</span>
+      </div>
+      <div class="offer__row">
+        <span class="offer__label">В зачёт полного курса Method 3.0 (если решишь продолжать)</span>
+        <span class="offer__value">−$300</span>
+      </div>
+      <div class="offer__row offer__row--total">
+        <span class="offer__label">Фактическая цена попробовать</span>
+        <span class="offer__value">$50</span>
+      </div>
+    </div>
+
+    <p class="offer__note">
+      Понравится — $300 из $350 идут в зачёт полного курса. Не понравится — у тебя в руках конкретный артефакт интенсива, с которым работаешь с понедельника.
+    </p>
+
+    <div class="todo-block">
+      <strong>TODO · brief revision</strong>
+      Заменить «конкретный артефакт» на точное название артефакта после обновления brief Section 4. Сейчас — общая формулировка, чтобы не давать обещание, которое может измениться вместе со структурой воркшопа.
+    </div>
+
+    <a class="cta" href="https://t.me/gotaddedvalue_bot" target="_blank" rel="noopener" style="margin-top: 24px;">
+      Записаться через Telegram
+      <span class="cta__arrow" aria-hidden="true">→</span>
+    </a>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     ЭКРАН 6 — Кто ведёт
+     Денис: 450+ наград, NPS 9.1, founder GAV
+     ============================================================ -->
+<section class="author" id="author">
+  <div class="wrap section__content">
+    <span class="eyebrow">Кто ведёт</span>
+
+    <div class="author__layout">
+      <div>
+        <h2 class="author__name">Денис Елисеев</h2>
+        <p class="author__role">CEO Got Added Value · Author of Method</p>
+        <p class="author__bio">
+          15 лет в индустрии. Креативный директор с международными наградами: Канны, Epica, Golden Drum. Method — система, которую Денис собрал из собственного рабочего процесса и проверил на сотнях проектов.
+        </p>
+      </div>
+
+      <div class="author__stats">
+        <div>
+          <div class="author__stat-value">450+</div>
+          <div class="author__stat-label">международных наград автора</div>
+        </div>
+        <div>
+          <div class="author__stat-value">9.1</div>
+          <div class="author__stat-label">NPS выпускников Method</div>
+        </div>
+        <div>
+          <div class="author__stat-value">15</div>
+          <div class="author__stat-label">лет в индустрии</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     ЭКРАН 7 — Это для тебя если
+     Pain mirror + range опыта + senior validation
+     ============================================================ -->
+<section class="foryou" id="foryou">
+  <div class="wrap section__content">
+    <span class="eyebrow">Это для тебя если</span>
+    <h2>Ты узнаёшь себя хотя бы в одном</h2>
+
+    <ul class="foryou__list">
+      <li>Ты делаешь работу каждый день, но процесс хаотичен — каждый бриф начинаешь с нуля.</li>
+      <li>У тебя есть «удачные дни» и «плохие дни» — и ты не понимаешь, от чего это зависит.</li>
+      <li>Ты руководишь командой и понимаешь: всё держится на тебе. Без тебя процесс встаёт.</li>
+      <li>Ты уже проходил курсы по креативу. Знания есть. Не хватает воспроизводимого процесса.</li>
+      <li>Ты в Алматы, Ташкенте, Москве или в эмиграции — online формат, время по Ташкенту.</li>
+    </ul>
+
+    <div class="testimonial">
+      <p class="testimonial__quote">Как будто всегда это знала, но вчера в очередной раз прозрела.</p>
+      <p class="testimonial__cite">Креативный директор, 15+ лет в индустрии</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     ЭКРАН 8 — FAQ
+     Только вопросы, НЕ зависящие от структуры воркшопа.
+     Вопросы про содержание дней — TODO.
+     ============================================================ -->
+<section class="faq" id="faq">
+  <div class="wrap section__content">
+    <span class="eyebrow">FAQ</span>
+    <h2>Ответы на основное</h2>
+
+    <div class="faq__list">
+      <div class="faq__item">
+        <p class="faq__q">Сколько часов в день?</p>
+        <p class="faq__a">Два дня, 10:00–20:00 по Ташкенту (UTC+5). С перерывами на еду и паузы.</p>
+      </div>
+
+      <div class="faq__item">
+        <p class="faq__q">Подходит ли новичкам?</p>
+        <p class="faq__a">Интенсив рассчитан на mid–senior. Если ты только начинаешь — рекомендуем полный курс Method 3.0, где есть время на проработку.</p>
+      </div>
+
+      <div class="faq__item">
+        <p class="faq__q">А если мне не понравится?</p>
+        <p class="faq__a">$300 из $350 идут в зачёт полного курса. Попробуй — и реши. Это и есть смысл механики.</p>
+      </div>
+
+      <div class="faq__item">
+        <p class="faq__q">Дадите запись?</p>
+        <p class="faq__a">Да. Запись остаётся у тебя навсегда — можно пересматривать.</p>
+      </div>
+
+      <div class="faq__item">
+        <p class="faq__q">Подходит для in-house / не агентства?</p>
+        <p class="faq__a">Да. На курсах работают art-directors, copywriters, marketing-менеджеры, PR-leads, основатели агентств и небрендинговых компаний. Method не привязан к agency-контексту.</p>
+      </div>
+
+      <div class="faq__item">
+        <p class="faq__q">Кто ведёт кроме Дениса?</p>
+        <p class="faq__a">Интенсив ведёт Денис сам. Расширенный состав (mindfulness-практика, AI-блок) — в полном курсе Method 3.0.</p>
+      </div>
+
+      <div class="faq__item">
+        <p class="faq__q">Возможна оплата от компании / B2B?</p>
+        <p class="faq__a">Да. Детали — в Telegram-боте.</p>
+      </div>
+
+      <div class="faq__item">
+        <div class="todo-block" style="margin: 0;">
+          <strong>TODO · brief revision</strong>
+          Вопросы про конкретное содержание дней («Что будет в день 1?», «Что я унесу в руках?», «Сколько времени на практику vs теорию?») — добавить после обновления brief Section 4 со структурой воркшопа от Дениса.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     ЭКРАН 9 — Финальный CTA
+     ============================================================ -->
+<section class="final" id="final">
+  <img class="cube cube--final" src="assets/cube.png" alt="" aria-hidden="true">
+
+  <div class="wrap section__content">
+    <h2 class="final__headline">Включи процесс. 13–14 июня.</h2>
+
+    <a class="cta" href="https://t.me/gotaddedvalue_bot" target="_blank" rel="noopener">
+      Записаться через Telegram
+      <span class="cta__arrow" aria-hidden="true">→</span>
+    </a>
+    <p class="cta__hint">
+      или задать любой вопрос: <a href="https://t.me/gotaddedvalue_bot" target="_blank" rel="noopener">t.me/gotaddedvalue_bot</a>
+    </p>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     Footer
+     ============================================================ -->
+<footer>
+  <div class="wrap">
+    <span>Method 3.0 · © Got Added Value LLC</span>
+    <span>
+      <a href="https://t.me/gotaddedvalue_bot" target="_blank" rel="noopener">Telegram</a>
+      <a href="https://www.instagram.com/denis_eliseev/" target="_blank" rel="noopener">Instagram</a>
+    </span>
+  </div>
+</footer>
+
+</body>
+</html>
