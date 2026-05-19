@@ -1,0 +1,45 @@
+{
+  "permissions": {
+    "allow": [
+      "Read",
+      "Bash(cd *)",
+      "Bash(ls)",
+      "Bash(ls *)",
+      "Bash(mv *)",
+      "Bash(cp *)",
+      "Bash(mkdir *)",
+      "Bash(touch *)",
+      "Bash(cat *)",
+      "Bash(echo *)",
+      "Bash(find *)",
+      "Bash(wc *)",
+      "Bash(head *)",
+      "Bash(tail *)",
+      "Bash(git status*)",
+      "Bash(git add)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git diff*)",
+      "Bash(git log*)",
+      "Bash(git branch)",
+      "Bash(git branch -M *)",
+      "Bash(git init)"
+    ],
+    "ask": [
+      "Bash(git push*)",
+      "Bash(git remote *)",
+      "Bash(git reset --hard*)",
+      "Bash(git clean*)",
+      "Bash(rm *)",
+      "Bash(rmdir *)",
+      "Bash(brew*)",
+      "Bash(sudo*)",
+      "Bash(curl*)",
+      "Bash(wget*)",
+      "Bash(npm install -g*)",
+      "Bash(npm i -g*)",
+      "Bash(pip install*)",
+      "Bash(pipx install*)"
+    ]
+  }
+}

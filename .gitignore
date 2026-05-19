@@ -1,0 +1,28 @@
+# macOS
+.DS_Store
+
+# Claude Code локальные approvals (личные, не для команды)
+.claude/settings.local.json
+
+# Figma — большие бинарники, версионировать бессмысленно
+*.fig
+
+# крупный SVG (61 MB) — хранится локально в /materials/figma/
+Method 3 (4).svg
+
+# зависимости и сборка (на будущее)
+node_modules/
+.vercel/
+
+# секреты
+.env
+.env.local
+
+# медиа (превентивно — сейчас медиа-файлов в проекте нет, защита от случайного раздувания репо)
+*.mp4
+*.mov
+*.mp3
+*.wav
+*.m4a
+*.avi
+*.mkv

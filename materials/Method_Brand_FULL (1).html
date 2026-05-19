@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Method 3.0 — Бренд-платформа</title>
+<style>
+:root {
+  --bg: #fafafa;
+  --surface: #fff;
+  --ink: #1a1a1a;
+  --muted: #666;
+  --faint: #999;
+  --line: #e5e5e5;
+  --accent: #2563eb;
+  --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+  --fs-sm: 13px;
+  --fs-base: 15px;
+  --fs-lg: 18px;
+  --fs-xl: 24px;
+  --fs-2xl: 32px;
+  --lh: 1.7;
+  --max-w: 720px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  line-height: var(--lh);
+  color: var(--ink);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+.wrap {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 64px 24px;
+}
+
+/* Topbar */
+.topbar {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--bg);
+  border-bottom: 1px dashed var(--line);
+  padding: 12px 24px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  color: var(--faint);
+  display: flex; justify-content: space-between;
+}
+
+/* Header */
+.header { margin-bottom: 48px; }
+.header__brand {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  color: var(--faint);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 16px;
+}
+.header__title {
+  font-size: var(--fs-2xl);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+.header__sub {
+  font-size: var(--fs-lg);
+  color: var(--muted);
+  font-weight: 400;
+}
+
+/* TOC */
+.toc {
+  margin: 48px 0;
+  padding: 24px;
+  border: 1px dashed var(--line);
+}
+.toc__title {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  color: var(--faint);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 16px;
+}
+.toc__title::before { content: "/* "; }
+.toc__title::after { content: " */"; }
+.toc ol {
+  list-style: none;
+  columns: 2;
+  column-gap: 32px;
+}
+.toc li {
+  padding: 6px 0;
+  border-bottom: 1px dotted var(--line);
+}
+.toc a {
+  color: var(--ink);
+  text-decoration: none;
+  font-size: var(--fs-sm);
+}
+.toc a:hover { color: var(--accent); }
+.toc .toc__num {
+  font-family: var(--font-mono);
+  color: var(--faint);
+  margin-right: 8px;
+}
+
+/* Sections */
+section { margin: 64px 0; }
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--faint);
+  margin-bottom: 8px;
+}
+.section-title {
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.section-meta {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  color: var(--faint);
+  margin-bottom: 24px;
+}
+.section-meta::before { content: ">> "; }
+
+h3 {
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  margin: 32px 0 12px;
+}
+
+p { margin-bottom: 16px; }
+strong { font-weight: 600; }
+
+/* Key Insight */
+.key-insight {
+  background: var(--surface);
+  border: 1px dashed var(--line);
+  padding: 24px;
+  margin: 24px 0;
+  position: relative;
+}
+.key-insight::before {
+  content: "┌"; position: absolute; top: -8px; left: 12px;
+  font-family: var(--font-mono); font-size: 14px; color: var(--faint);
+  background: var(--bg); padding: 0 4px;
+}
+.key-insight::after {
+  content: "┘"; position: absolute; bottom: -8px; right: 12px;
+  font-family: var(--font-mono); font-size: 14px; color: var(--faint);
+  background: var(--bg); padding: 0 4px;
+}
+.key-insight__label {
+  font-size: 11px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--faint); margin-bottom: 8px;
+  font-family: var(--font-mono);
+}
+.key-insight__label::before { content: "// "; }
+.key-insight p { margin: 0; }
+.key-insight p + p { margin-top: 12px; }
+
+/* Metrics */
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 16px; margin: 24px 0;
+}
+.metric {
+  text-align: center; padding: 16px;
+  background: var(--surface); border: 1px dotted var(--line);
+}
+.metric__value {
+  font-size: 28px; font-weight: 700;
+  font-family: var(--font-mono); line-height: 1; margin-bottom: 4px;
+}
+.metric__label { font-size: var(--fs-sm); color: var(--muted); }
+
+/* Quote */
+.quote {
+  margin: 16px 0; padding-left: 20px; position: relative;
+}
+.quote::before {
+  content: "│"; position: absolute; left: 0; top: 0;
+  font-family: var(--font-mono); color: var(--faint); font-size: 14px;
+}
+.quote p {
+  font-style: italic; color: var(--ink);
+  margin: 0 0 4px; padding-left: 16px; font-size: var(--fs-sm);
+}
+.quote cite {
+  font-style: normal; font-size: 12px; color: var(--muted); padding-left: 16px;
+}
+.quote cite::before { content: "— "; }
+
+/* Card */
+.card {
+  background: var(--surface); border: 1px dashed var(--line);
+  padding: 20px 24px; margin: 16px 0;
+}
+.card__header {
+  display: flex; justify-content: space-between; align-items: baseline;
+  gap: 12px; margin-bottom: 12px;
+}
+.card__title { font-weight: 600; }
+.card__title::before {
+  content: "# "; color: var(--faint); font-family: var(--font-mono);
+}
+.card__meta {
+  font-size: var(--fs-sm); color: var(--faint);
+  font-family: var(--font-mono); white-space: nowrap;
+}
+.card p { font-size: var(--fs-sm); color: var(--muted); }
+.card p:last-child { margin-bottom: 0; }
+.card .label { font-weight: 600; color: var(--ink); }
+
+/* Table */
+table {
+  width: 100%; border-collapse: collapse; margin: 24px 0; font-size: var(--fs-sm);
+}
+th {
+  font-weight: 600; color: var(--muted); font-size: 11px;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  padding: 12px 16px; text-align: left; border-bottom: 1px dashed var(--line);
+}
+td {
+  padding: 12px 16px; text-align: left; border-bottom: 1px dotted var(--line);
+}
+tr:last-child td { border-bottom: none; }
+
+/* Pyramid */
+.pyramid { margin: 32px 0; }
+.pyramid__level {
+  padding: 16px 20px; border-bottom: 1px dashed var(--line);
+  display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap;
+}
+.pyramid__level:last-child { border-bottom: none; }
+.pyramid__level--top {
+  background: var(--surface); border: 1px dashed var(--line);
+  margin-bottom: 8px;
+}
+.pyramid__num {
+  font-family: var(--font-mono); font-size: var(--fs-sm);
+  color: var(--faint); flex-shrink: 0;
+}
+.pyramid__num::before { content: "["; }
+.pyramid__num::after { content: "]"; }
+.pyramid__label { font-weight: 600; flex-shrink: 0; }
+.pyramid__label::after { content: ":"; }
+.pyramid__value { color: var(--muted); }
+.pyramid__level--top .pyramid__value { color: var(--ink); font-weight: 500; }
+
+/* HR */
+hr {
+  border: none; margin: 48px 0; text-align: center;
+}
+hr::before {
+  content: "· · · · · · · · · · · · · · · · · · · · ·";
+  display: block; font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: 3px; color: var(--faint);
+}
+
+/* Footer */
+.footer {
+  margin-top: 64px; padding-top: 24px;
+  border-top: 1px dashed var(--line);
+  font-size: var(--fs-sm); color: var(--faint);
+}
+.footer::before {
+  content: "— EOF —"; display: block; text-align: center;
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: 0.2em; margin-bottom: 16px;
+}
+
+/* Tag */
+.tag {
+  display: inline-block; font-size: 11px; font-weight: 500;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  color: var(--faint); font-family: var(--font-mono);
+  border: 1px dotted var(--line); padding: 2px 8px; margin: 2px 4px 2px 0;
+}
+
+/* Comm examples */
+.comm-example {
+  background: var(--surface); border: 1px dashed var(--line);
+  padding: 24px; margin: 20px 0;
+}
+.comm-example__type {
+  font-family: var(--font-mono); font-size: 11px;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--faint); margin-bottom: 12px;
+}
+.comm-example blockquote {
+  margin: 0; padding: 0; font-size: var(--fs-base);
+  color: var(--ink); line-height: 1.6;
+}
+.comm-example blockquote strong { font-weight: 700; }
+
+@media (max-width: 600px) {
+  .wrap { padding: 32px 16px; }
+  .toc ol { columns: 1; }
+  .metrics { grid-template-columns: repeat(2, 1fr); }
+  section { margin: 48px 0; }
+  .card__header { flex-direction: column; gap: 4px; }
+}
+@media print {
+  body { background: #fff; }
+  .topbar { display: none; }
+  .wrap { padding: 0; max-width: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span>Method 3.0 / Бренд-платформа</span>
+  <span>2025</span>
+</div>
+
+<div class="wrap">
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header__brand">Brand Platform Document</div>
+  <h1 class="header__title">Method 3.0</h1>
+  <div class="header__sub">Бренд-платформа курса креативной методологии Дениса Елисеева</div>
+</header>
+
+<!-- TOC -->
+<nav class="toc">
+  <div class="toc__title">Содержание</div>
+  <ol>
+    <li><span class="toc__num">01</span><a href="#summary">Executive Summary</a></li>
+    <li><span class="toc__num">02</span><a href="#audience">Аудитория</a></li>
+    <li><span class="toc__num">03</span><a href="#drivers">Драйверы</a></li>
+    <li><span class="toc__num">04</span><a href="#cultural">Культурный ресёрч</a></li>
+    <li><span class="toc__num">05</span><a href="#clusters">Кластеры</a></li>
+    <li><span class="toc__num">06</span><a href="#positioning">Позиционирование</a></li>
+    <li><span class="toc__num">07</span><a href="#pyramid">Пирамида бренда</a></li>
+    <li><span class="toc__num">08</span><a href="#comms">Примеры коммуникаций</a></li>
+  </ol>
+</nav>
+
+<hr>
+
+<!-- 01. EXECUTIVE SUMMARY -->
+<section id="summary">
+  <div class="section-label">Раздел 01</div>
+  <h2 class="section-title">Executive Summary</h2>
+  <div class="section-meta">суть бренд-платформы</div>
+
+  <div class="metrics">
+    <div class="metric"><div class="metric__value">46</div><div class="metric__label">респондентов</div></div>
+    <div class="metric"><div class="metric__value">12</div><div class="metric__label">ключевых мотивов</div></div>
+    <div class="metric"><div class="metric__value">3</div><div class="metric__label">кластера</div></div>
+    <div class="metric"><div class="metric__value">5</div><div class="metric__label">тем CR</div></div>
+  </div>
+
+  <div class="key-insight">
+    <div class="key-insight__label">Суть бренда</div>
+    <p><strong>Креативный суверенитет.</strong></p>
+    <p>Креативные профессионалы хотят стабильно создавать сильные идеи — но зависят от вдохновения, настроения и случая. Method даёт им пошаговую систему полного креативного цикла, которая освобождает от этой зависимости. Система не убивает талант — она делает его воспроизводимым.</p>
+  </div>
+
+  <p><strong>Аудитория:</strong> КД, арт-директора, копирайтеры, основатели агентств из России и Центральной Азии. 75% — уровень middle и senior.</p>
+
+  <p><strong>Ключевое напряжение:</strong> Хотят пошаговую систему, но боятся, что система убьёт креативность. Верят, что настоящий креатив = талант и озарение. Принять систему = признать, что таланта недостаточно.</p>
+
+  <p><strong>Обещание:</strong> Method даёт предсказуемость результата — от первого интервью до фестивального кейса. Без зависимости от вдохновения, стратега или удачного дня.</p>
+
+  <p><strong>Миссия:</strong> Освободить креативных профессионалов от зависимости от случая.</p>
+</section>
+
+<hr>
+
+<!-- 02. AUDIENCE -->
+<section id="audience">
+  <div class="section-label">Раздел 02</div>
+  <h2 class="section-title">Аудитория</h2>
+  <div class="section-meta">17 pre-course + 29 post-course анкет</div>
+
+  <div class="metrics">
+    <div class="metric"><div class="metric__value">17</div><div class="metric__label">до курса</div></div>
+    <div class="metric"><div class="metric__value">29</div><div class="metric__label">после курса</div></div>
+    <div class="metric"><div class="metric__value">9.1</div><div class="metric__label">NPS</div></div>
+    <div class="metric"><div class="metric__value">15/29</div><div class="metric__label">продвинутый уровень</div></div>
+  </div>
+
+  <h3>Кто эти люди</h3>
+  <p>Креативные профессионалы: арт-директора, копирайтеры, креативные директора, основатели агентств. География — Россия, Казахстан, Узбекистан. Возраст 25–40. Работают в международных и локальных агентствах или на фрилансе. Все так или иначе занимаются генерацией идей в рекламе.</p>
+
+  <p>Большинство уже имеют опыт и трек — это не новички, ищущие «вход в профессию». Это люди, которые делают работу каждый день, но чувствуют потолок: процесс хаотичен, результат непредсказуем, фестивали кажутся отдельным миром.</p>
+
+  <div class="key-insight">
+    <div class="key-insight__label">Ключевое наблюдение</div>
+    <p><strong>Аудитория не ищет знания — она ищет систему.</strong> Они уже знают «что такое инсайт» и «зачем нужен бриф». Им не хватает воспроизводимого процесса, который даёт результат каждый раз, а не только в удачные дни.</p>
+  </div>
+
+  <div class="quote">
+    <p>"Отсутствие определенной системы как придумывать креативные решения, сейчас немного хаотично"</p>
+    <cite>Респондент 1</cite>
+  </div>
+  <div class="quote">
+    <p>"Хочу контролировать свой мозг и свою креативность"</p>
+    <cite>Респондент 2</cite>
+  </div>
+  <div class="quote">
+    <p>"Структурирование процессов. Мне не хватает знаний в теории и рабочих инструментов"</p>
+    <cite>Респондент 3, руководитель креативного отдела</cite>
+  </div>
+</section>
+
+<hr>
+
+<!-- 03. DRIVERS -->
+<section id="drivers">
+  <div class="section-label">Раздел 03</div>
+  <h2 class="section-title">Драйверы</h2>
+  <div class="section-meta">12 ключевых мотивов, по убыванию значимости</div>
+
+  <p>Драйверы — ключевые желания аудитории, извлечённые из анкет и ранжированные по значимости для целевой аудитории.</p>
+
+  
+  <div class="card">
+    <div class="card__header">
+      <div class="card__title">Хочу воспроизводимую систему</div>
+      
+    </div>
+    <p><span class="label">Суть:</span> Креативщики работают в хаосе — каждый новый бриф начинается с нуля. Нет единого процесса: кто-то начинает с мудборда, кто-то с «давайте поштормим», кто-то ждёт стратегию. Результат зависит от удачи, настроения, состава команды на шторме.</p>
+    <p><span class="label">Почему важно:</span> Без системы каждый проект — лотерея. Невозможно масштабировать команду, невозможно делегировать, невозможно предсказать результат для клиента.</p>
+    <div class="quote">
+      <p>"Отсутствие определенной системы как придумывать креативные решения, сейчас немного хаотично"</p>
+      <cite>Респондент 1</cite>
+    </div>
+    <div class="quote">
+      <p>"Системность процесса разработки креатива, возможность находить идея даже там где их нет"</p>
+      <cite>Респондент 4</cite>
+    </div>
+  </div>
+
+  
+  <div class="card">
+    <div class="card__header">
+      <div class="card__title">Хочу сам добывать инсайты</div>
+      
+    </div>
+    <p><span class="label">Суть:</span> Креативщики зависят от стратегов, которые приносят «инсайты» — часто поверхностные или притянутые. Или придумывают из головы, без данных. Хотят сами проводить исследования и находить настоящие инсайты.</p>
+    <p><span class="label">Почему важно:</span> Без собственного ресёрча креатив стоит на чужом фундаменте. Стратег ушёл — фундамента нет.</p>
+    <div class="quote">
+      <p>"Делать креатив на плохую стратегию, приходиться самой делать небольшой ресеч чтобы найти сообщение или хороший инсайт"</p>
+      <cite>Респондент 2</cite>
+    </div>
+    <div class="quote">
+      <p>"Тянуть идеи не из себя а из инсайтов просто невероятное открытие"</p>
+      <cite>Респондент 5</cite>
+    </div>
+  </div>
+
+  
+  <div class="card">
+    <div class="card__header">
+      <div class="card__title">Хочу быстро генерировать много идей</div>
+      
+    </div>
+    <p><span class="label">Суть:</span> Одностраничный бриф как «креативная машина» — инструмент, который позволяет за один шторм сгенерировать десятки идей. Ступор на шторме — главный страх.</p>
+    <p><span class="label">Почему важно:</span> Мало идей = зависимость от «того одного озарения». Много идей = выбор, качество, уверенность.</p>
+    <div class="quote">
+      <p>"я в шоке что у меня получилось придумать столько идей"</p>
+      <cite>Респондент 6</cite>
+    </div>
+  </div>
+
+  
+  <div class="card">
+    <div class="card__header">
+      <div class="card__title">Хочу побеждать на фестивалях</div>
+      
+    </div>
+    <p><span class="label">Суть:</span> Фестивальные победы — валюта профессии. Но упаковка кейса — отдельный навык, которому нигде не учат. Драматизация, структура истории, подача.</p>
+    <p><span class="label">Почему важно:</span> Без фестивальных побед карьерный рост ограничен. Кейс-портфолио — пропуск на следующий уровень.</p>
+    <div class="quote">
+      <p>"Больше всего меня греет эта фраза — после этого курса даже проходной проект можно сделать классно"</p>
+      <cite>Респондент 7</cite>
+    </div>
+  </div>
+
+  
+  <div class="card">
+    <div class="card__header">
+      <div class="card__title">Хочу стабильно придумывать</div>
+      
+    </div>
+    <p><span class="label">Суть:</span> Сегодня «в потоке», завтра — ступор. Результат зависит от настроения, а не от навыка. Хотят придумывать каждый день, как профессионалы, а не как художники, ждущие музу.</p>
+  </div>
+
+  <div class="card">
+    <div class="card__header">
+      <div class="card__title">Хочу избежать неуверенности</div>
+      
+    </div>
+    <p><span class="label">Суть:</span> Синдром самозванца, тревожность, «а вдруг идея плохая». Без критериев оценки каждая презентация — стресс. Хотят опираться на метод, а не на веру в себя.</p>
+  </div>
+
+  <div class="card">
+    <div class="card__header">
+      <div class="card__title">Хочу продавать креатив</div>
+      
+    </div>
+    <p><span class="label">Суть:</span> Придумать — полдела. Продать идею клиенту — вторая половина, которой не учат. Как защитить идею, как аргументировать, как не дать «убить» концепцию на этапе комментариев.</p>
+  </div>
+
+  <div class="card">
+    <div class="card__header">
+      <div class="card__title">Хочу отбирать идеи по критериям</div>
+      
+    </div>
+    <p><span class="label">Суть:</span> «Нравится / не нравится» — единственный фильтр. Хотят объективные критерии отбора: сильная идея vs слабая — по чек-листу, а не по вкусу.</p>
+  </div>
+
+  <div class="card">
+    <div class="card__header">
+      <div class="card__title">Хочу эффективную команду</div>
+      
+    </div>
+    <p><span class="label">Суть:</span> Штормы неэффективны: все говорят одновременно, критикуют на ходу, лидер тянет на себе. Хотят структуру командной работы с EQ и сонастройкой.</p>
+  </div>
+
+  <div class="card">
+    <div class="card__header">
+      <div class="card__title">Хочу управлять состоянием</div>
+      
+    </div>
+    <p><span class="label">Суть:</span> Тревожность, апатия, панические атаки — рабочая реальность индустрии. Mindfulness как профессиональный инструмент, не эзотерика.</p>
+  </div>
+
+  <div class="card">
+    <div class="card__header">
+      <div class="card__title">Хочу вырасти профессионально</div>
+      
+    </div>
+    <p><span class="label">Суть:</span> Стать КД, выйти на международный рынок, открыть своё агентство. Амбиции подкреплены ростом рынка ЦА (+29%).</p>
+  </div>
+
+  <div class="card">
+    <div class="card__header">
+      <div class="card__title">Хочу быстрый ресёрч</div>
+      
+    </div>
+    <p><span class="label">Суть:</span> Клиенты не дают бюджет и время на исследования. Нужны инструменты качественного ресёрча в условиях ограниченных ресурсов.</p>
+  </div>
+</section>
+
+<hr>
+
+<!-- 04. CULTURAL RESEARCH -->
+<section id="cultural">
+  <div class="section-label">Раздел 04</div>
+  <h2 class="section-title">Культурный ресёрч</h2>
+  <div class="section-meta">5 тем из внешних данных</div>
+
+  <p>Внешние данные, которые дополняют картину из интервью — масштаб явлений, структурные паттерны, культурные сдвиги.</p>
+
+  <div class="card">
+    <div class="card__header">
+      <div class="card__title">Бум рекламного рынка Центральной Азии</div>
+      <div class="card__meta">Рост и амбиции</div>
+    </div>
+    <p><span class="label">Что это значит:</span> Рекламные рынки Казахстана (+29% в Q1 2024) и Узбекистана (2.1 трлн сум) переживают взрывной рост. E-commerce растёт на 40%+ ежегодно. Спрос на креативные кадры опережает предложение.</p>
+    <p><span class="label">Вывод:</span> Амбиции аудитории из ЦА подкреплены реальной динамикой. Method — инфраструктурная инвестиция в растущий рынок.</p>
+  </div>
+
+  <div class="card">
+    <div class="card__header">
+      <div class="card__title">70% креативщиков выгорают</div>
+      <div class="card__meta">Стабильность и состояние</div>
+    </div>
+    <p><span class="label">Что это значит:</span> Mentally Healthy Survey 2024 (2000+ респондентов, 4 страны): 70% креативщиков испытали burnout за 12 месяцев vs 53% работников в среднем. 44% пережили депрессию за карьеру vs 17% населения.</p>
+    <p><span class="label">Вывод:</span> Выгорание респондентов — не личная слабость, а системный кризис. Mindfulness в Method — не бонус, а ответ на документированную эпидемию.</p>
+  </div>
+
+  <div class="card">
+    <div class="card__header">
+      <div class="card__title">AI без системы = автоматизированный хаос</div>
+      <div class="card__meta">Система и технологии</div>
+    </div>
+    <p><span class="label">Что это значит:</span> 77% агентств внедрили AI (McKinsey 2024), но 74% не могут масштабировать. AI ускоряет генерацию контента, но без системы лишь автоматизирует хаос — «ещё больше средних идей быстрее».</p>
+    <p><span class="label">Вывод:</span> Method + AI = формула. AI — инструмент внутри системы, а не замена системы.</p>
+  </div>
+
+  <div class="card">
+    <div class="card__header">
+      <div class="card__title">Кризис модели агентства</div>
+      <div class="card__meta">Новая тема</div>
+    </div>
+    <p><span class="label">Что это значит:</span> Маркетинговые бюджеты упали с 9.1% до 7.7% выручки (Gartner). Только 28% агентств ожидают рост. Волна слияний (Omnicom + IPG, $13 млрд). «Делать больше за меньше» — не выбор, а условие выживания.</p>
+    <p><span class="label">Вывод:</span> Система, которая повышает эффективность креатива — не роскошь для амбициозных, а необходимость для выживания.</p>
+  </div>
+
+  <div class="card">
+    <div class="card__header">
+      <div class="card__title">Passion trap — страсть как ловушка</div>
+      <div class="card__meta">Неуверенность и идентичность</div>
+    </div>
+    <p><span class="label">Что это значит:</span> Исследование проф. Марка Дойзе: креативные индустрии эксплуатируют страсть работников. Идеализм → самоэксплуатация → выгорание. 64% думают об уходе из профессии.</p>
+    <p><span class="label">Вывод:</span> Method предлагает альтернативу: не героизм, а система. Не «гореть на работе», а управлять процессом.</p>
+  </div>
+</section>
+
+<hr>
+
+<!-- 05. CLUSTERS -->
+<section id="clusters">
+  <div class="section-label">Раздел 05</div>
+  <h2 class="section-title">Мотивационные кластеры</h2>
+  <div class="section-meta">3 кластера по мотивациям, не демографии</div>
+
+  
+  <div class="card">
+    <div class="card__header">
+      <div class="card__title">Архитекторы процесса</div>
+      <div class="card__meta">~40% | Tier 1</div>
+    </div>
+    <p><span class="label">Кто это:</span> КД, основатели агентств, групхэды. Уже делают работу, имеют команды и клиентов. Но процесс держится на них лично — они единственный фильтр качества.</p>
+    <p><span class="label">Как живут:</span> Бесконечный поток: брифинги, штормы, фильтрация идей, презентации. Команда приносит сырой материал — лидер «отбирает зёрна», докручивает, упаковывает. Если лидер выпадает — процесс встаёт. Хотят делегировать, но боятся потери качества.</p>
+    <p><span class="label">Ключевое напряжение:</span> Хотят чтобы команда работала автономно, но не могут отпустить контроль — потому что нет единых критериев качества, есть только «вкус» лидера.</p>
+    <p><span class="label">Триггеры:</span> Ключевой сотрудник ушёл и процесс рухнул. Проиграл тендер, в который вложился. Очередной шторм, где все смотрят на тебя.</p>
+    <div class="quote">
+      <p>"Иногда не могу рассчитывать на команду, потому что команда рассчитывает на меня: я направлю на шторме, я докручу, я отберу зерна"</p>
+      <cite>Респондент 8, креативный групхэд</cite>
+    </div>
+    <div class="quote">
+      <p>"Создавать более ценный креатив, уметь доносить его ценность до клиента любого уровня компетенций"</p>
+      <cite>Респондент 9, креативный директор</cite>
+    </div>
+  </div>
+
+  
+  <div class="card">
+    <div class="card__header">
+      <div class="card__title">Голодные мастера</div>
+      <div class="card__meta">~35% | Tier 1</div>
+    </div>
+    <p><span class="label">Кто это:</span> Арт-директора, копирайтеры, сениоры. Умеют делать работу, но чувствуют потолок. Хотят стать КД, выйти на международный рынок, собрать портфолио побед.</p>
+    <p><span class="label">Как живут:</span> Придумывают «по наитию» — иногда удачно, иногда нет. Не понимают, почему одни идеи сильные, а другие нет. Фестивали кажутся отдельным миром. Синдром самозванца — частый спутник.</p>
+    <p><span class="label">Ключевое напряжение:</span> Хотят прорваться на следующий уровень, но для этого нужно признать, что текущий подход не работает — а это удар по профессиональной самооценке.</p>
+    <p><span class="label">Триггеры:</span> Увидел кейс-победитель и подумал «я бы мог так». Ступор на шторме. Коллега получил повышение.</p>
+    <div class="quote">
+      <p>"Синдром самозванца и неуверенность. Не умение отключать критика, как к себе так и к другим. Эго"</p>
+      <cite>Респондент 1</cite>
+    </div>
+    <div class="quote">
+      <p>"Нередко притянутая за уши проблематика проекта — не самые актуальные исследования в основе, отсутствие стратегии, неточные инсайты"</p>
+      <cite>Респондент 7</cite>
+    </div>
+  </div>
+
+  
+  <div class="card">
+    <div class="card__header">
+      <div class="card__title">Искатели опоры</div>
+      <div class="card__meta">~25% | Tier 2</div>
+    </div>
+    <p><span class="label">Кто это:</span> Люди в кризисе — на любом уровне. Главная проблема не карьера, а потеря смысла и стабильности. Method для них — не инвестиция в рост, а терапевтический инструмент.</p>
+    <p><span class="label">Как живут:</span> Тревожность, апатия, потерянность. Работают по инерции. Внешние обстоятельства (кризис, нестабильность) усугубляют состояние. Mindfulness — не бонус, а необходимость.</p>
+    <p><span class="label">Ключевое напряжение:</span> Хотят почувствовать почву под ногами, но в индустрии, где нормой является хаос и героизм, «стабильность» воспринимается как слабость.</p>
+    <div class="quote">
+      <p>"Тревожность, панические атаки, чувство неопределенности, страх за детей"</p>
+      <cite>Респондент 10</cite>
+    </div>
+    <div class="quote">
+      <p>"Большой эмоциональный спад и растерянность. Апатия к работе и не понимания для чего всем этим занимаюсь"</p>
+      <cite>Респондент 1</cite>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- 06. POSITIONING -->
+<section id="positioning">
+  <div class="section-label">Раздел 06</div>
+  <h2 class="section-title">Позиционирование</h2>
+  <div class="section-meta">концепция «Свобода через систему»</div>
+
+  <h3>Ключевое напряжение</h3>
+  <p>Креативщики верят, что хорошие идеи рождаются из таланта, интуиции, вдохновения. Это красивая история — и она же ловушка. Потому что если идея зависит от вдохновения, ты не контролируешь, когда она придёт. Вчера был «в потоке» — сегодня пустой лист.</p>
+  <p>И вот парадокс: чем больше ты веришь в талант, тем меньше ты контролируешь свой результат. Каждый новый бриф — лотерея. А если ты руководишь командой — ты не можешь передать свой «талант» другим. Всё замыкается на тебе.</p>
+  <p>Но те, кто прошёл через это, описывают обратное: система не убила их креативность — она её освободила. Когда не нужно ждать музу, энергия идёт на качество идеи, а не на борьбу с пустым листом.</p>
+
+  <h3>Обещание бренда</h3>
+  <div class="key-insight">
+    <div class="key-insight__label">Brand Promise</div>
+    <p><strong>Method даёт креативщикам то, чего не даёт талант: предсказуемость результата.</strong> Пошаговая система, которая превращает исследование в инсайт, инсайт в идею, а идею в кейс — каждый раз, в любой команде, на любом брифе.</p>
+  </div>
+
+  <h3>RTB</h3>
+  <p><strong>Автор — КД с 450+ международными наградами.</strong> Практик, который создал систему из собственного рабочего процесса и проверил на сотнях проектов.</p>
+  <p><strong>6 шагов полного цикла:</strong> исследование → синтез → бриф → генерация → отбор → упаковка. Не набор советов, а сквозной пайплайн.</p>
+  <p><strong>Одностраничный бриф — креативная машина.</strong> Самый упоминаемый инструмент. Позволяет генерировать десятки идей в любой команде.</p>
+  <p><strong>Глубинные интервью за 30 минут.</strong> Техника «5 вопросов в глубину» — добыча инсайтов без стратега и бюджета.</p>
+  <p><strong>NPS 9.1/10.</strong> Средний уровень участников — продвинутый. Это инструмент, который меняет рабочий процесс опытных профессионалов.</p>
+
+  <h3>Формулировка позиционирования</h3>
+  <div class="key-insight">
+    <div class="key-insight__label">Positioning Statement</div>
+    <p>Для креативных профессионалов, которые хотят стабильно создавать сильные идеи и не зависеть от вдохновения, <strong>Method — это пошаговая система полного креативного цикла</strong>, которая превращает исследование в инсайт, инсайт в идею, а идею в фестивальный кейс.</p>
+  </div>
+
+  <h3>Краткая формулировка</h3>
+  <div class="key-insight">
+    <div class="key-insight__label">Formula</div>
+    <p><strong>Method — система, которая освобождает креативность от случая</strong></p>
+  </div>
+</section>
+
+<hr>
+
+<!-- 07. PYRAMID -->
+<section id="pyramid">
+  <div class="section-label">Раздел 07</div>
+  <h2 class="section-title">Пирамида бренда</h2>
+  <div class="section-meta">8 уровней, от аудитории к сути</div>
+
+  <div class="pyramid">
+    <div class="pyramid__level pyramid__level--top">
+      <span class="pyramid__num">8</span>
+      <span class="pyramid__label">Суть</span>
+      <span class="pyramid__value">Креативный суверенитет</span>
+    </div>
+    <div class="pyramid__level pyramid__level--top">
+      <span class="pyramid__num">7</span>
+      <span class="pyramid__label">Миссия</span>
+      <span class="pyramid__value">Освободить креативных профессионалов от зависимости от случая</span>
+    </div>
+    <div class="pyramid__level">
+      <span class="pyramid__num">6</span>
+      <span class="pyramid__label">Ценности</span>
+      <span class="pyramid__value">Система сильнее таланта · Глубина быстрее поверхности · Процесс бережёт людей</span>
+    </div>
+    <div class="pyramid__level">
+      <span class="pyramid__num">5</span>
+      <span class="pyramid__label">Характер</span>
+      <span class="pyramid__value">Мастер, не гуру · Прямой · Требовательный и бережный · Без пафоса</span>
+    </div>
+    <div class="pyramid__level">
+      <span class="pyramid__num">4</span>
+      <span class="pyramid__label">Эмоциональное</span>
+      <span class="pyramid__value">Твёрдая почва</span>
+    </div>
+    <div class="pyramid__level">
+      <span class="pyramid__num">3</span>
+      <span class="pyramid__label">Функциональные</span>
+      <span class="pyramid__value">Предсказуемый результат на любом брифе · Автономность от стратега и вдохновения · Команда работает без тебя как единственного фильтра</span>
+    </div>
+    <div class="pyramid__level">
+      <span class="pyramid__num">2</span>
+      <span class="pyramid__label">Атрибуты</span>
+      <span class="pyramid__value">6-шаговый цикл · Одностраничный бриф · Интервью «5 в глубину» · Драматизация кейса · Mindfulness-блок · КД 450+ наград · 4 месяца практики · NPS 9.1</span>
+    </div>
+    <div class="pyramid__level">
+      <span class="pyramid__num">1</span>
+      <span class="pyramid__label">Аудитория</span>
+      <span class="pyramid__value">Креативные профессионалы, которые хотят стабильно создавать сильные идеи, но зависят от вдохновения, настроения и случая</span>
+    </div>
+  </div>
+
+  <h3>Ценности — развёрнуто</h3>
+
+  <p><strong>Система сильнее таланта.</strong> Стабильный результат рождается из процесса, а не из озарения. Креативщик с методом обойдёт креативщика, который полагается на вдохновение. Это не обесценивание таланта — это его взросление.</p>
+
+  <p><strong>Глубина быстрее поверхности.</strong> 30 минут настоящего разговора дают больше, чем неделя предположений. Поверхностная идея требует десятков итераций; глубокая — работает с первого раза.</p>
+
+  <p><strong>Процесс бережёт людей.</strong> Выгорание — не цена за хороший креатив, а симптом плохого процесса. Хороший процесс создаёт условия, в которых люди могут быть продуктивными и здоровыми одновременно.</p>
+</section>
+
+<hr>
+
+<!-- 08. COMMS -->
+<section id="comms">
+  <div class="section-label">Раздел 08</div>
+  <h2 class="section-title">Примеры коммуникаций</h2>
+  <div class="section-meta">5 примеров в разных форматах</div>
+
+  <div class="comm-example">
+    <div class="comm-example__type">Лендинг — главный экран</div>
+    <blockquote>
+      <p><strong>Талант привёл тебя в профессию. Система сделает тебя в ней непобедимым.</strong></p>
+      <p>Method — пошаговая система полного креативного цикла от КД с 450+ международными наградами. От первого интервью до фестивального кейса — без зависимости от вдохновения, стратега или удачного дня.</p>
+    </blockquote>
+  </div>
+
+  <div class="comm-example">
+    <div class="comm-example__type">Лендинг — блок «для кого»</div>
+    <blockquote>
+      <p><strong>Знакомо?</strong> Вчера придумал три концепции за час. Сегодня — третий час шторма, на доске ноль. Вчера чувствовал себя профи. Сегодня — самозванцем.</p>
+      <p>Это не провал и не «плохой день». Это нормально — когда единственный инструмент генерации — твоё настроение. Method заменяет настроение процессом. Шесть шагов — и результат зависит от тебя, а не от того, выспался ли ты.</p>
+    </blockquote>
+  </div>
+
+  <div class="comm-example">
+    <div class="comm-example__type">Пост — провокация</div>
+    <blockquote>
+      <p>Креативный директор с 450 наградами не поймал 450 раз вдохновение.</p>
+      <p>У него есть процесс. Исследование → инсайт → бриф → десятки идей → отбор по критериям → кейс. Один и тот же процесс. Каждый раз. На каждом брифе.</p>
+      <p><strong>Вдохновение — бонус. Метод — профессия.</strong></p>
+    </blockquote>
+  </div>
+
+  <div class="comm-example">
+    <div class="comm-example__type">Пост — инсайтовый</div>
+    <blockquote>
+      <p>30 минут разговора с реальным человеком дают больше, чем неделя гугления «тренды 2025».</p>
+      <p>Мы учим технике «5 вопросов в глубину» — за одну беседу ты доходишь до инсайта, из которого рождаются десятки идей. Без бюджета на ресёрч. Без стратега. Без ожидания.</p>
+      <p><strong>Ты сам добываешь фундамент своей работы. Это и есть суверенитет.</strong></p>
+    </blockquote>
+  </div>
+
+  <div class="comm-example">
+    <div class="comm-example__type">Рекламное сообщение — баннер</div>
+    <blockquote>
+      <p><strong>Хватит ждать музу. Включи процесс.</strong></p>
+      <p>Method — 6 шагов от исследования до кейса. Система, которая работает, когда вдохновение не приходит.</p>
+    </blockquote>
+  </div>
+</section>
+
+<hr>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p>Method 3.0 — Бренд-платформа. Источники: анкеты участников курса, экспертные данные (McKinsey, Mentally Healthy Survey, Statista, WARC, Gartner).</p>
+</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>​02 — Драйверы и направления / Безопасность велосипедистов в OC · Method by GAV</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Funnel+Sans:wght@300..800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300..600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0A0A0A;
+    --ink-soft: #1F1F1F;
+    --paper: #FAFAF7;
+    --line: #E8E5DE;
+    --line-soft: #F0EDE6;
+    --muted: #8A857A;
+    --accent: #FF4A1C;
+    --accent-soft: #FCE6DE;
+    --serif: 'Instrument Serif', 'Times New Roman', serif;
+    --sans: 'Funnel Sans', 'Helvetica Neue', sans-serif;
+    --display: 'Funnel Display', 'Funnel Sans', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--paper); color: var(--ink); font-family: var(--sans);
+    font-size: 16px; line-height: 1.6;
+    -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+  }
+
+  ::selection { background: var(--ink); color: var(--paper); }
+
+  .doc { max-width: 760px; margin: 0 auto; padding: 56px 32px 80px; }
+
+  header.gav-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    padding-bottom: 18px; border-bottom: 1px solid var(--ink); margin-bottom: 56px;
+  }
+  .gav-mark { font-family: var(--display); font-weight: 700; font-size: 22px; letter-spacing: -0.02em; }
+  .gav-mark span { color: var(--accent); }
+  .gav-tag { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--muted); }
+
+  .meta-row {
+    display: flex; align-items: center; gap: 24px;
+    font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.2em;
+    color: var(--muted); margin-bottom: 24px;
+  }
+  .status { display: inline-flex; align-items: center; gap: 8px; color: var(--ink); }
+  .status::before { content: ''; width: 8px; height: 8px; background: var(--accent); border-radius: 50%; display: inline-block; }
+  .meta-divider { flex: 1; border-bottom: 1px solid var(--line); height: 1px; }
+
+  h1.title {
+    font-family: var(--display); font-size: 64px; line-height: 1.02;
+    letter-spacing: -0.035em; font-weight: 600; margin-bottom: 28px;
+  }
+  h1.title em { font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--accent); }
+
+  .context {
+    display: grid; grid-template-columns: 140px 1fr; gap: 8px 32px;
+    padding: 28px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+    margin-bottom: 64px;
+  }
+  .context dt {
+    font-family: var(--mono); font-size: 11px; text-transform: uppercase;
+    letter-spacing: 0.16em; color: var(--muted); padding-top: 4px;
+  }
+  .context dd { font-size: 16px; line-height: 1.5; color: var(--ink); }
+
+  .part-marker {
+    margin-bottom: 56px; padding-bottom: 20px;
+    border-bottom: 1px solid var(--line);
+  }
+  .part-marker--break {
+    margin-top: 96px; padding-top: 56px;
+    border-top: 1px solid var(--ink);
+  }
+  .part-marker .part-num {
+    font-family: var(--mono); font-size: 11px; text-transform: uppercase;
+    letter-spacing: 0.22em; color: var(--accent); margin-bottom: 14px;
+  }
+  .part-marker .part-title {
+    font-family: var(--display); font-size: 44px; line-height: 1.05;
+    letter-spacing: -0.03em; font-weight: 600; margin-bottom: 18px;
+  }
+  .part-marker .part-title em { font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--accent); }
+  .part-marker .part-lead {
+    font-size: 17px; line-height: 1.55; color: var(--ink-soft); max-width: 600px;
+  }
+  .part-marker .part-lead em { font-style: italic; }
+
+  .driver { margin-bottom: 80px; }
+  .driver-header { margin-bottom: 28px; }
+  .driver-meta {
+    font-family: var(--mono); font-size: 12px; color: var(--muted);
+    letter-spacing: 0.22em; margin-bottom: 8px;
+    display: inline-block; padding: 4px 10px;
+    background: var(--line-soft); border-radius: 2px;
+  }
+  .driver h3 {
+    font-family: var(--display); font-size: 36px; line-height: 1.1;
+    letter-spacing: -0.025em; font-weight: 600; margin: 14px 0 14px;
+  }
+  .driver h3 em { font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--accent); }
+  .driver .one-line {
+    font-family: var(--serif); font-style: italic; font-size: 22px;
+    line-height: 1.35; color: var(--ink); margin-bottom: 16px; max-width: 600px;
+  }
+  .driver .lede { font-size: 17px; line-height: 1.55; color: var(--ink-soft); max-width: 600px; }
+
+  .direction { margin-bottom: 80px; }
+  .direction-header { margin-bottom: 28px; }
+  .direction-num {
+    font-family: var(--mono); font-size: 12px; color: var(--muted);
+    letter-spacing: 0.2em; margin-bottom: 8px;
+  }
+  .direction h3 {
+    font-family: var(--display); font-size: 36px; line-height: 1.1;
+    letter-spacing: -0.025em; font-weight: 600; margin-bottom: 14px;
+  }
+  .direction h3 em { font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--accent); }
+  .direction .lede { font-size: 17px; line-height: 1.55; color: var(--ink-soft); max-width: 600px; margin-bottom: 8px; }
+  .direction .drivers-tag {
+    font-family: var(--mono); font-size: 11px; text-transform: uppercase;
+    letter-spacing: 0.18em; color: var(--muted); margin-top: 14px;
+  }
+  .direction .drivers-tag strong { color: var(--ink); font-weight: 500; }
+
+  .quotes { margin-top: 28px; border-left: 1px solid var(--line); padding-left: 28px; }
+  blockquote {
+    margin-bottom: 24px; font-family: var(--serif); font-size: 22px;
+    line-height: 1.35; font-style: italic; color: var(--ink);
+  }
+  blockquote::before { content: '\201C'; margin-right: 2px; }
+  blockquote::after { content: '\201D'; margin-left: 2px; }
+  blockquote + cite {
+    display: block; font-style: normal; font-family: var(--mono); font-size: 11px;
+    text-transform: uppercase; letter-spacing: 0.16em; color: var(--muted);
+    margin-bottom: 28px; margin-top: -10px;
+  }
+  blockquote + cite strong { color: var(--ink); font-weight: 500; }
+
+  .product-role {
+    margin-top: 24px; padding: 22px 26px; background: var(--accent-soft);
+    border-left: 3px solid var(--accent);
+  }
+  .product-role .label {
+    font-family: var(--mono); font-size: 10px; text-transform: uppercase;
+    letter-spacing: 0.2em; color: var(--accent); margin-bottom: 8px;
+  }
+  .product-role p {
+    font-family: var(--display); font-size: 19px; line-height: 1.4;
+    font-weight: 500; color: var(--ink);
+  }
+
+  footer.gav-foot {
+    margin-top: 96px; padding-top: 24px; border-top: 1px solid var(--ink);
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.16em;
+  }
+  footer .signoff { color: var(--muted); }
+  footer a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--ink); padding-bottom: 1px; }
+  footer a:hover { color: var(--accent); border-color: var(--accent); }
+
+  .pullquote {
+    margin: 8px 0 64px; padding: 32px 0;
+    border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink);
+  }
+  .pullquote p {
+    font-family: var(--display); font-weight: 500; font-size: 28px;
+    line-height: 1.15; letter-spacing: -0.02em;
+  }
+  .pullquote p em { font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="doc">
+
+  <header class="gav-head">
+    <div class="gav-mark">GAV<span>.</span></div>
+    <div class="gav-tag">Method / Brand Platform</div>
+  </header>
+
+  <div class="meta-row">
+    <span>02 / 02</span>
+    <span class="status">Live</span>
+    <span class="meta-divider"></span>
+    <span>Безопасность велосипедистов · Orange County</span>
+  </div>
+
+  <h1 class="title">​Драйверы и <em>направления</em>.</h1>
+
+  <dl class="context">
+    <dt>Вход</dt>
+    <dd>Этап 01 — Аудитория. 7 интервью + 32 анкеты OC Cycling</dd>
+    <dt>Что собираем</dt>
+    <dd>Часть 1 — пять глубинных стремлений в порядке силы. Часть 2 — шесть продуктовых плоскостей с ролью продукта на каждой</dd>
+    <dt>Ранжирование</dt>
+    <dd>Драйверы упорядочены по совокупности трёх: частота × эмоциональная плотность × продуктовый рычаг</dd>
+  </dl>
+
+  <div class="pullquote">
+    <p>Драйверы говорят, <em>что</em> человеку нужно. Направления — <em>где</em> продукт может стоять, чтобы это закрыть.</p>
+  </div>
+  <!-- ===== ЧАСТЬ 1 / ДРАЙВЕРЫ ===== -->
+
+  <div class="part-marker">
+    <div class="part-num">​Часть 1 из 2</div>
+    <h2 class="part-title">Драйверы — что <em>движет</em> за словами.</h2>
+    <p class="part-lead">Пять глубинных стремлений за разговорами о машинах, светофорах и грязи. Драйверы идут <em>в порядке силы</em> — от самого мощного к менее. Сила = совокупность частоты, эмоциональной плотности и продуктового рычага.</p>
+  </div>
+
+  <article class="driver">
+    <div class="driver-header">
+      <div class="driver-meta">​D1 · RANK 01 / 05</div>
+      <h3>Я <em>равный</em> на этой дороге.</h3>
+      <p class="one-line">Чтобы перестать быть помехой, странным объектом, недопешеходом.</p>
+      <p class="lede">Самый политически заряженный драйвер. Велосипедист не хочет, чтобы его терпели — он хочет, чтобы его считали участником движения с правом на полосу. Из этого растёт «наглость» как стратегия выживания, обида на водителей и отдельная злость на e-bike-подростков, которые подрывают саму идею велосипедиста на дороге. Самый частый и самый прямой материал в анкете.</p>
+    </div>
+
+    <div class="quotes">
+      <blockquote>​Я понял, что когда ты наглее на дороге, ты безопаснее находишься. Если ты выезжаешь на полосу, ты её занимаешь полностью, посередине встаёшь. Иначе водители думают, что они могут мимо тебя протиснуться.</blockquote>
+      <cite><strong>Денис Елисеев</strong> · Интервью · Orange County</cite>
+
+      <blockquote>​Велосипедисты должны быть где-то вообще вне поля зрения. Сам факт, что велосипедист может быть посреди дороги с машинами, их бесит.</blockquote>
+      <cite><strong>Наталья Иаковлева</strong> · Интервью · Orange County</cite>
+
+      <blockquote>​Drivers don't care about cyclists. At least 80% don't.</blockquote>
+      <cite><strong>Richard Flores</strong> · OC Cycling Survey</cite>
+
+      <blockquote>​Even though I don't ride much lately and I ride where there's mostly bike lanes, I still find that drivers don't pay enough attention and discount cyclist's right to use the road.</blockquote>
+      <cite><strong>Nate Torres</strong> · OC Cycling Survey</cite>
+
+      <blockquote>​The worst will be areas that allow bikes to take a full lane and drivers don't understand and honk at us.</blockquote>
+      <cite><strong>Edward Lee</strong> · OC Cycling Survey</cite>
+
+      <blockquote>​Часто бывают такие улицы, где пешеходных дорог вообще нету. По правилам велосипед имеет право ехать по первой полосе. И в таких ситуациях я вроде бы виновник, но как мне ещё быть?</blockquote>
+      <cite><strong>Улугбек</strong> · Интервью · Ташкент</cite>
+    </div>
+  </article>
+
+  <article class="driver">
+    <div class="driver-header">
+      <div class="driver-meta">​D2 · RANK 02 / 05</div>
+      <h3>Принадлежность к <em>племени</em>.</h3>
+      <p class="one-line">Чтобы быть в группе, в которой меня узнают без слов.</p>
+      <p class="lede">Велосипед — это короткий вход в готовое сообщество. Клуб, форма, общий ритуал, общая шутка. Это сильнее, чем спорт: люди катаются с группой даже когда им тяжело, не носят жилеты, потому что свои не носят, и приходят на social ride скорее за людьми, чем за километрами.</p>
+    </div>
+
+    <div class="quotes">
+      <blockquote>​Велосипедная комьюнити — это просто прикольная комьюнити. Уровень доверия, который я нигде в жизни не встречал. Когда вы едете на сорока, шестеро человек плотно друг к другу, дорогу видит только первый.</blockquote>
+      <cite><strong>Денис Елисеев</strong> · Интервью · Orange County</cite>
+
+      <blockquote>​Когда вы все надеваете велоформу, неважно, привозит вас водитель с охранником или вы приехали на метро — вы становитесь командой.</blockquote>
+      <cite><strong>Пётр Моргорский</strong> · Интервью · Москва</cite>
+
+      <blockquote>​Я обожаю велосообщество. Медсёстры, врачи, кто-то ремонтом домов занимается — разные профессии. Когда мы на велорайде, все товарищи.</blockquote>
+      <cite><strong>Наталья Иаковлева</strong> · Интервью · Orange County</cite>
+
+      <blockquote>​Прикольно, когда ты в группе едешь, и там три-четыре человека в одной форме. Ты понимаешь, что это какой-то клуб. Нас уже даже знают.</blockquote>
+      <cite><strong>Денис Елисеев</strong> · Интервью · Orange County</cite>
+
+      <blockquote>​There are so many group rides in OC. Mostly very friendly and inclusive.</blockquote>
+      <cite><strong>Edward Lee</strong> · OC Cycling Survey</cite>
+    </div>
+  </article>
+
+  <article class="driver">
+    <div class="driver-header">
+      <div class="driver-meta">​D3 · RANK 03 / 05</div>
+      <h3>Я хочу <em>понимать</em>, что делаю.</h3>
+      <p class="one-line">Чтобы быть не пассажиром этого спорта, а хозяином — техники, тренировки, дороги.</p>
+      <p class="lede">Желание компетентности — отдельная сильная мотивация, не сводимая ни к перформансу, ни к племени. Люди ищут тренеров, читают исследования, лазают в Strava смотреть чужие пульсы. И параллельно — фрустрация, потому что системы обучения нет: знание приходит через ссадины, случайных людей и обрывки ютуба.</p>
+    </div>
+
+    <div class="quotes">
+      <blockquote>​Большинство останавливается на уровне навыков. А когда уходишь в глубину, понимаешь, что физиология влияет на это. И появляются опции — а можно так, а можно зал, а можно горы.</blockquote>
+      <cite><strong>Денис Елисеев</strong> · Интервью · Orange County</cite>
+
+      <blockquote>​Я считаю, что у меня в принципе нету каких-то знаний. Когда мы идём сдавать на права, у нас есть теоретическая часть. Хотелось бы какую-то такую — для велосипеда.</blockquote>
+      <cite><strong>Кристина</strong> · Интервью · Irvine</cite>
+
+      <blockquote>​Какая-то была памятка, начальные описательные правила. Даже элементарно — как руль держать. Кто-то это знает, кто-то не знает.</blockquote>
+      <cite><strong>Наталья Иаковлева</strong> · Интервью · Orange County</cite>
+
+      <blockquote>​Если бы в то время был условный чат GPT, с высокой долей вероятности я бы много информации там брал.</blockquote>
+      <cite><strong>Дмитрий Барков</strong> · Интервью · Orange County</cite>
+
+      <blockquote>​There's a lot to be said about riding etiquette, and it's worth going over group cycling basics — these rules exist for a reason.</blockquote>
+      <cite><strong>Chikki Mok</strong> · OC Cycling Survey</cite>
+    </div>
+  </article>
+
+  <article class="driver">
+    <div class="driver-header">
+      <div class="driver-meta">​D4 · RANK 04 / 05</div>
+      <h3>Прогресс — это <em>я расту</em>, не я разваливаюсь.</h3>
+      <p class="one-line">Чтобы видеть движение вперёд — и не платить за него телом.</p>
+      <p class="lede">Желание расти движет всем тренировочным аппаратом — пульсометрами, тестами FTP, Strava-сегментами. И обратная сторона: имитация профессиональных тренировок, которая для любителя превращается в самоповреждение. Опытные велосипедисты называют этот драйвер самым недооценённым по риску — большая статистика травм у любителей не на дороге, а в собственном сердце.</p>
+    </div>
+
+    <div class="quotes">
+      <blockquote>​В аварию попадает один из ста велосипедистов. А убивают себя пятьдесят из ста. Это вещь, которая недооценена в плане вреда, который люди себе наносят.</blockquote>
+      <cite><strong>Денис Елисеев</strong> · Интервью · Orange County</cite>
+
+      <blockquote>​Я себя перетренировал. Очень хотел показать хороший результат на тесте. И в итоге я провалился, не мог тренироваться, в январе вообще заболел.</blockquote>
+      <cite><strong>Денис Елисеев</strong> · Интервью · Orange County</cite>
+
+      <blockquote>​Велосипедисты, у них уровень смертности от тромбов, от сердечных приступов просто зашкаливающий. Один из лидеров наших, спортивный взрослый мужчина за пятьдесят, на днях написал — оказалось, у него был сердечный приступ.</blockquote>
+      <cite><strong>Денис Елисеев</strong> · Интервью · Orange County</cite>
+
+      <blockquote>​Тренер советской закалки считает, что нужно херачить. Все время херачить. Мне пришлось бросить курить ради этого.</blockquote>
+      <cite><strong>Пётр Моргорский</strong> · Интервью · Москва</cite>
+
+      <blockquote>​У моей жены сейчас цель стоит на первой и второй зоне — на лёгкой интенсивности набирать объём. Многие новички этого не понимают, начинают делать тяжёлые тренировки, и мотивация пропадает.</blockquote>
+      <cite><strong>Дмитрий Барков</strong> · Интервью · Orange County</cite>
+    </div>
+  </article>
+
+  <article class="driver">
+    <div class="driver-header">
+      <div class="driver-meta">​D5 · RANK 05 / 05</div>
+      <h3>Свобода как <em>очищение</em>.</h3>
+      <p class="one-line">Чтобы за два часа в седле прожить неделю и вернуться с чистой головой.</p>
+      <p class="lede">Главная личная награда от велосипеда — не форма и не цифры, а другое состояние сознания. Сел с проблемами — слез без них. Концентрация на дороге выгружает голову, как медитация. Драйвер замыкает список не потому что слабый, а потому что менее «активный» с точки зрения продукта — это то, что человек получает сам, и продукт здесь скорее охраняет, чем создаёт.</p>
+    </div>
+
+    <div class="quotes">
+      <blockquote>​Ты садишься с кучей мыслей и проблем, а слезаешь с максимально чистой картиной. Это полтора часа какого-то перерождения. Точно такое же ощущение, как от медитации.</blockquote>
+      <cite><strong>Денис Елисеев</strong> · Интервью · Orange County</cite>
+
+      <blockquote>​Это какая-то медитация. У меня никогда на велосипеде нет наушников. Для меня велоспорт — это два часа моей поездки, когда я одна, переосмысливаю всё.</blockquote>
+      <cite><strong>Наталья Иаковлева</strong> · Интервью · Orange County</cite>
+
+      <blockquote>​Это ощущение и физической активности, и свободы. А для меня это две основные ценности в жизни.</blockquote>
+      <cite><strong>Кристина</strong> · Интервью · Irvine</cite>
+
+      <blockquote>​Бывает у меня период, когда не хватает inspiration. Я могу взять и поехать в гору, где лежит туман. Просто едешь — и это вдохновляет на то, что видишь.</blockquote>
+      <cite><strong>Денис Елисеев</strong> · Интервью · Orange County</cite>
+    </div>
+  </article>
+  <!-- ===== ЧАСТЬ 2 / НАПРАВЛЕНИЯ ===== -->
+
+  <div class="part-marker part-marker--break">
+    <div class="part-num">​Часть 2 из 2</div>
+    <h2 class="part-title">Направления — на чём <em>стоит</em> разговор.</h2>
+    <p class="part-lead">Шесть продуктовых плоскостей. Каждая — место, где у человека уже идёт внутренний разговор. Продукт встраивается в этот разговор, а не открывает его с нуля. На каждой плоскости — роль продукта одной фразой через механизм.</p>
+  </div>
+
+  <article class="direction">
+    <div class="direction-header">
+      <div class="direction-num">​Направление 01</div>
+      <h3>Полноправие против <em>вежливости</em>.</h3>
+      <p class="lede">Чтобы выжить на дороге, надо занимать полосу, ехать посередине, не уступать. Чтобы чувствовать себя нормальным человеком, надо быть вежливым, не мешать, дать проехать машине сзади. Велосипедист всё время выбирает между двумя версиями себя — наглой выжившей и вежливой задавленной. И обе — его собственные.</p>
+      <p class="drivers-tag">Связано с драйверами: <strong>D1</strong></p>
+    </div>
+
+    <div class="quotes">
+      <blockquote>​Я понял, что когда ты наглее на дороге, ты безопаснее находишься. Если ты выезжаешь на полосу, ты её занимаешь полностью, посередине встаёшь.</blockquote>
+      <cite><strong>Денис Елисеев</strong> · Интервью · Orange County</cite>
+
+      <blockquote>​Я в той ситуации показала флаг и просто замедлилась ещё больше. Меня дико разозлило, потому что человек не понимает, насколько он опасную ситуацию создаёт.</blockquote>
+      <cite><strong>Денис Елисеев</strong> · Интервью · Orange County</cite>
+
+      <blockquote>​Cars pass dangerously close on the left, especially when there's no bike lane or the cyclist is given the full lane. Drivers may give space but rev the engine and speed past out of frustration.</blockquote>
+      <cite><strong>Luke Stratton</strong> · OC Cycling Survey</cite>
+
+      <blockquote>​Велосипедисты должны быть где-то вообще вне поля зрения. Сам факт, что велосипедист может быть посреди дороги с машинами, их бесит.</blockquote>
+      <cite><strong>Наталья Иаковлева</strong> · Интервью · Orange County</cite>
+
+      <blockquote>​Most drivers are decent. It's more their ignorance in road rules — like bike-may-take-full-lane areas and roundabouts. Bigger vehicles like trucks and pickups tend to pass closer.</blockquote>
+      <cite><strong>Edward Lee</strong> · OC Cycling Survey</cite>
+
+      <blockquote>​Часто бывают такие улицы, где пешеходных дорог вообще нету. По правилам велосипед имеет право ехать по первой полосе. И в таких ситуациях я вроде бы виновник, но как мне ещё быть?</blockquote>
+      <cite><strong>Улугбек</strong> · Интервью · Ташкент</cite>
+    </div>
+
+    <div class="product-role">
+      <div class="label">Роль продукта</div>
+      <p>Переводит «наглость» из личной черты в общий стандарт — делает занятую полосу очевидной нормой и для водителя, и для самого велосипедиста, чтобы выживание не нужно было оправдывать.</p>
+    </div>
+  </article>
+
+  <article class="direction">
+    <div class="direction-header">
+      <div class="direction-num">​Направление 02</div>
+      <h3>Племя без <em>цены</em> жизни.</h3>
+      <p class="lede">Группа спасает и группа же толкает. Велосипедист тянется в пилотон за чувством «своих», за защитой в потоке, за общим темпом — и одновременно платит за это нежеланием отстать, не показать слабость, не задержать никого. И едет на красный, потому что группа уже проехала. Оба полюса — то, чего человек хочет: быть с этими людьми и при этом возвращаться домой целым.</p>
+      <p class="drivers-tag">Связано с драйверами: <strong>D2, D4</strong></p>
+    </div>
+
+    <div class="quotes">
+      <blockquote>​Я в Бангкоке на расстоянии 15 сантиметров от колеса другого мужика, которого вижу первый раз в жизни. Это уровень доверия, который я нигде в жизни не встречал.</blockquote>
+      <cite><strong>Денис Елисеев</strong> · Интервью · Orange County</cite>
+
+      <blockquote>​Я тот человек, который ребят за стенды догоняю. Они проехали — а у меня красный. Я понимаю, что мне нельзя от них отставать. И я такая — пы-ы-ы, на красный.</blockquote>
+      <cite><strong>Кристина</strong> · Интервью · Irvine</cite>
+
+      <blockquote>​Все самые страшные завалы на гонках происходят оттого, что кто-то решил немножечко поиграть нервами или переоценил свои силы.</blockquote>
+      <cite><strong>Пётр Моргорский</strong> · Интервью · Москва</cite>
+
+      <blockquote>​My experience with the front group is usually great, but as you stay more towards the back or B groups, there tend to be more close calls — overlapping wheels, sudden stops, no callout on objects.</blockquote>
+      <cite><strong>Edward Lee</strong> · OC Cycling Survey</cite>
+
+      <blockquote>​Я не имею права профессионально людей использовать. Это уже услуга. Я могу задать какой-то вопрос, но это не полноценная работа.</blockquote>
+      <cite><strong>Кристина</strong> · Интервью · Irvine</cite>
+
+      <blockquote>​Cyclists here, especially in groups, are generally not friendly. A lot of inexperienced riders that don't know what they are doing.</blockquote>
+      <cite><strong>Ramon Melendez</strong> · OC Cycling Survey</cite>
+    </div>
+
+    <div class="product-role">
+      <div class="label">Роль продукта</div>
+      <p>Встраивает культуру отказа от рискованных действий внутрь самой группы — делает «не успел, ничего страшного» нормой социального ride, а не личным поражением.</p>
+    </div>
+  </article>
+
+  <article class="direction">
+    <div class="direction-header">
+      <div class="direction-num">​Направление 03</div>
+      <h3>Свой человек <em>без</em> зеркал.</h3>
+      <p class="lede">Каждая защитная штука — жилет, зеркало, катафот, флаг — выводит тебя из круга «своих». Каждое непринятие защиты приближает к травме. Велосипедист балансирует между принадлежностью и сохранностью, и большинство выбирает принадлежность. Не потому что не понимает риск — а потому что цена выпадения из племени ощущается выше.</p>
+      <p class="drivers-tag">Связано с драйверами: <strong>D1, D2</strong></p>
+    </div>
+
+    <div class="quotes">
+      <blockquote>​Безопасность — это не классно. Когда ты начинаешь всякие звоночки ставить, катафотики вешать, ты всё, долбоёб. Это вот так воспринимается.</blockquote>
+      <cite><strong>Денис Елисеев</strong> · Интервью · Orange County</cite>
+
+      <blockquote>​Когда ты видишь человека, у которого какой-нибудь смешной шлем с козырьком, с зеркалами — либо ему 8 лет, либо он дурачок.</blockquote>
+      <cite><strong>Пётр Моргорский</strong> · Интервью · Москва</cite>
+
+      <blockquote>​Жилеты в основном одевают взрослые люди за 60. Безопасность — это не модно, не стильно, не классно.</blockquote>
+      <cite><strong>Денис Елисеев</strong> · Интервью · Orange County</cite>
+
+      <blockquote>​Когда ты покупаешь супергоночный велосипед, и он приходит у тебя с детскими катафотами на колесе — этот набор у меня лежит нераспакованный.</blockquote>
+      <cite><strong>Денис Елисеев</strong> · Интервью · Orange County</cite>
+
+      <blockquote>​Bike lanes are in many cases more dangerous than taking a lane. With all of the road construction the bike lanes are blocked off and that puts us in the lane.</blockquote>
+      <cite><strong>Greg Hall</strong> · OC Cycling Survey · 42 года в седле</cite>
+
+      <blockquote>​Чем больше всяких прибамбаков, тем я прикольнее с точки зрения, что я разобралась в индустрии. Для нас, для женщин, нет этого нюанса.</blockquote>
+      <cite><strong>Кристина</strong> · Интервью · Irvine</cite>
+    </div>
+
+    <div class="product-role">
+      <div class="label">Роль продукта</div>
+      <p>Переписывает признак «своего» — делает осознанную экипировку маркером опытности, а не новичковости, чтобы защита перестала быть платой за выпадение из племени.</p>
+    </div>
+  </article>
+
+  <article class="direction">
+    <div class="direction-header">
+      <div class="direction-num">​Направление 04</div>
+      <h3>Между <em>ссадинами</em> и системой.</h3>
+      <p class="lede">Велосипедист хочет компетентности, но получает её только через падения, случайные подсказки на дороге и разрозненные ютуб-ролики. Школы нет, кодекса нет, инструкции к велосипеду нет. Это пробел такого размера, что в одно интервью его озвучивают и опытные, и новички, и женщины, и мужчины — почти теми же словами. Здесь нет двух стремлений в конфликте. Здесь — пустое место, на котором продукт может стоять целиком.</p>
+      <p class="drivers-tag">Связано с драйверами: <strong>D3, D4</strong></p>
+    </div>
+
+    <div class="quotes">
+      <blockquote>​Нет такой книжки, которая говорит, что вот так следует. Эти ситуации можно было бы избежать, если бы у меня эти знания сразу были. Я их приобрёл через ссадины.</blockquote>
+      <cite><strong>Денис Елисеев</strong> · Интервью · Orange County</cite>
+
+      <blockquote>​Когда мы идём сдавать на права, у нас есть теоретическая часть, которую мы можем прочитать. Хотелось бы какую-то такую — для велосипеда.</blockquote>
+      <cite><strong>Кристина</strong> · Интервью · Irvine</cite>
+
+      <blockquote>​Чтобы кто-то была какая-то памятка, начальные описательные правила, прежде чем садиться за руль. Даже элементарно — как руль держать.</blockquote>
+      <cite><strong>Наталья Иаковлева</strong> · Интервью · Orange County</cite>
+
+      <blockquote>​Если бы в то время был условный чат GPT, с высокой долей вероятности я бы много информации там брал.</blockquote>
+      <cite><strong>Дмитрий Барков</strong> · Интервью · Orange County</cite>
+
+      <blockquote>​There's a lot to be said about riding etiquette, and it's worth going over group cycling basics — these rules exist for a reason.</blockquote>
+      <cite><strong>Chikki Mok</strong> · OC Cycling Survey</cite>
+
+      <blockquote>​E-bikes have greatly expanded the amount of people getting on bikes, but since there's no licensure or learning requirement, you have a ton of people riding dangerously for themselves and other bikeway users.</blockquote>
+      <cite><strong>Nate Torres</strong> · OC Cycling Survey</cite>
+
+      <blockquote>​Я думаю, что курсы для вождения, спуски — это прям большие темы. Никто не заканчивает, как в автомобиле, ты хотя бы хоть какой-то курс проходишь. С велосипедом этого нет.</blockquote>
+      <cite><strong>Денис Елисеев</strong> · Интервью · Orange County</cite>
+    </div>
+
+    <div class="product-role">
+      <div class="label">Роль продукта</div>
+      <p>Закрывает место, где сейчас пусто — собирает учебник, ритуал и культуру в одну видимую структуру, чтобы первый год в седле перестал быть сборником ссадин.</p>
+    </div>
+  </article>
+
+  <article class="direction">
+    <div class="direction-header">
+      <div class="direction-num">​Направление 05</div>
+      <h3>Дорога, которая <em>нас не помнит</em>.</h3>
+      <p class="lede">Велополоса есть — и в ней лежит песок, разбитое стекло, песчаные кучи после стройки. Маршрут есть — и обрывается у Sand Canyon как у стены. В одном городе инфраструктура «феноменальна», в соседнем — выезд на freeway без прохода. Среда то поддерживает велосипедиста, то его как будто не существует. Это не личное противоречие в голове, это структурный пробел — но он входит в каждое решение «куда сегодня поехать», «по какой стороне», «остаться целым или нет».</p>
+      <p class="drivers-tag">Связано с драйверами: <strong>D1, D5</strong></p>
+    </div>
+
+    <div class="quotes">
+      <blockquote>​Bike lanes covered in rocks, debris, sand, and dirt piles. Road surface fine in some areas but bumpy, ripped up and cracked by cars and trucks in others.</blockquote>
+      <cite><strong>Luke Stratton</strong> · OC Cycling Survey · 250–400 миль/неделю</cite>
+
+      <blockquote>​I hope Irvine continues bike trails east of Sand Canyon. Currently it seems like Sand Canyon is like a wall in how a cyclist can continue deeper into orange county safely.</blockquote>
+      <cite><strong>Erin</strong> · OC Cycling Survey</cite>
+
+      <blockquote>​Freeway entrances are a big issue. I avoid a few otherwise nice roads because of that. Bike lanes need more regular sweeping, some are horrendously dangerous.</blockquote>
+      <cite><strong>Ramon Melendez</strong> · OC Cycling Survey · С середины 70-х</cite>
+
+      <blockquote>​The infrastructure is phenomenal, however I'd suggest that the city cleans the bike lanes with a street sweeper more often, just like they do with the regular roads.</blockquote>
+      <cite><strong>Louis Marquis</strong> · OC Cycling Survey</cite>
+
+      <blockquote>​Most bike lanes in Irvine is wide and clearly marked. Some other areas in O.C. there are bike lanes that narrows without much prior notice, sewage covers and the ditch sometimes become the bike lane with plenty of debris.</blockquote>
+      <cite><strong>Edward Lee</strong> · OC Cycling Survey</cite>
+
+      <blockquote>​Depends on the city. Irvine is great, Costa Mesa is actively improving, some other places not so much.</blockquote>
+      <cite><strong>Adam Roberts</strong> · OC Cycling Survey</cite>
+
+      <blockquote>​Need to fill the gaps in several bike paths in OC.</blockquote>
+      <cite><strong>Ron Newcomb</strong> · OC Cycling Survey</cite>
+
+      <blockquote>​Dirty roads, bad state, some good bike lines but some bad roads without much space for riding away from the cars.</blockquote>
+      <cite><strong>David</strong> · OC Cycling Survey</cite>
+    </div>
+
+    <div class="product-role">
+      <div class="label">Роль продукта</div>
+      <p>Превращает разрозненные жалобы в одну видимую сеть — делает пробелы в маршрутах, грязь в велополосах и опасные стыки общей проблемой города, а не личной невезухой каждого велосипедиста по отдельности.</p>
+    </div>
+  </article>
+
+  <article class="direction">
+    <div class="direction-header">
+      <div class="direction-num">​Направление 06</div>
+      <h3>Прогресс против <em>долголетия</em>.</h3>
+      <p class="lede">Каждый раз, когда ты копируешь профессиональный график тренировок, ты получаешь рост — и платишь сердцем. Это не выбор между «тренироваться или не тренироваться». Это выбор между «стать чуть сильнее в этом сезоне» и «остаться в седле через двадцать лет». Оба полюса — то, чего хочет любитель. И никто не говорит, где граница, потому что профессиональные программы не предназначены для любительского тела.</p>
+      <p class="drivers-tag">Связано с драйверами: <strong>D4</strong></p>
+    </div>
+
+    <div class="quotes">
+      <blockquote>​В аварию попадает один из ста велосипедистов. А убивают себя пятьдесят из ста. Это вещь, которая недооценена в плане вреда, который люди себе наносят.</blockquote>
+      <cite><strong>Денис Елисеев</strong> · Интервью · Orange County</cite>
+
+      <blockquote>​Один из лидеров наших, спортивный взрослый мужчина за пятьдесят, написал: «Я в больнице, три дня не будет заезда». Через день — оказывается, у него был сердечный приступ.</blockquote>
+      <cite><strong>Денис Елисеев</strong> · Интервью · Orange County</cite>
+
+      <blockquote>​Я себя перетренировал. Очень хотел показать хороший результат на тесте. И в итоге я провалился, не мог тренироваться, в январе вообще заболел.</blockquote>
+      <cite><strong>Денис Елисеев</strong> · Интервью · Orange County</cite>
+
+      <blockquote>​Тренер советской закалки считает, что нужно херачить. Все время херачить. Мне пришлось бросить курить ради этого.</blockquote>
+      <cite><strong>Пётр Моргорский</strong> · Интервью · Москва</cite>
+
+      <blockquote>​У моей жены сейчас цель стоит на первой и второй зоне — на лёгкой интенсивности набирать объём. Многие новички этого не понимают, начинают делать тяжёлые тренировки, и мотивация пропадает.</blockquote>
+      <cite><strong>Дмитрий Барков</strong> · Интервью · Orange County</cite>
+
+      <blockquote>​После тренировки у меня очень высокий уровень стресса поднимается. Я по кольцу это вижу. И я пока не нашёл ничего эффективнее, чем холодная ванна.</blockquote>
+      <cite><strong>Денис Елисеев</strong> · Интервью · Orange County</cite>
+    </div>
+
+    <div class="product-role">
+      <div class="label">Роль продукта</div>
+      <p>Делает разницу между ростом и износом видимой — переводит метрики тренировки в карту, где каждое решение «пожать ещё» имеет цену, измеренную не в ваттах, а в годах в седле.</p>
+    </div>
+  </article>
+
+  <footer class="gav-foot">
+    <span class="signoff">Method by GAV</span>
+    <a href="https://gav.gotaddedvalue.com/" target="_blank" rel="noopener">gotaddedvalue.com →</a>
+  </footer>
+
+</div>
+</body>
+</html>
+​​​

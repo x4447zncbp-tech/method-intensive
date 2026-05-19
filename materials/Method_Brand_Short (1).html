@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Method 3.0 — Бренд-платформа</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0a0f;--text:#e8e6e1;--dim:#8a8880;--muted:#555;--accent:#3b82f6;--accent-l:#60a5fa;--accent-s:rgba(59,130,246,0.10);--gold:#d4a843;--blue:#2563eb;--border:rgba(255,255,255,0.06);--serif:'Cormorant Garamond',Georgia,serif;--sans:'Manrope',system-ui,sans-serif;--mono:'JetBrains Mono',monospace;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{width:100%;height:100%;background:var(--bg);color:var(--text);font-family:var(--sans);overflow:hidden;-webkit-font-smoothing:antialiased;}
+.deck{width:100%;height:100%;position:relative;}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:6vh 8vw;opacity:0;visibility:hidden;transition:opacity 0.5s,visibility 0.5s;overflow-y:auto;}
+.slide.active{opacity:1;visibility:visible;}
+.slide.active .r{animation:ru 0.65s cubic-bezier(0.22,1,0.36,1) forwards;}
+.slide.active .r1{animation-delay:0.08s;}.slide.active .r2{animation-delay:0.2s;}
+.slide.active .r3{animation-delay:0.35s;}.slide.active .r4{animation-delay:0.5s;}
+.slide.active .r5{animation-delay:0.65s;}
+@keyframes ru{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+.r{opacity:0;transform:translateY(22px);}
+.progress{position:fixed;top:0;left:0;height:2px;z-index:200;background:linear-gradient(90deg,var(--accent),var(--accent-l));transition:width 0.4s;}
+.blk{position:fixed;top:3vh;left:8vw;font-family:var(--mono);font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);z-index:100;}
+.nav{position:fixed;bottom:3.5vh;right:8vw;display:flex;align-items:center;gap:12px;z-index:200;}
+.nb{width:44px;height:44px;border-radius:50%;border:1px solid var(--border);background:rgba(255,255,255,0.02);color:var(--dim);cursor:pointer;font-size:17px;display:flex;align-items:center;justify-content:center;transition:all 0.3s;}
+.nb:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-s);}
+.nc{font-family:var(--mono);font-size:0.7rem;color:var(--muted);letter-spacing:0.1em;}
+.credit{position:fixed;bottom:3.5vh;left:8vw;font-family:var(--mono);font-size:0.55rem;letter-spacing:0.08em;color:var(--muted);opacity:0.45;z-index:100;}
+.kh{position:fixed;bottom:3.5vh;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:0.55rem;color:var(--muted);opacity:0.4;z-index:100;transition:opacity 0.5s;}
+.label{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);margin-bottom:2.5vh;}
+h2{font-family:var(--serif);font-weight:400;font-size:clamp(2rem,3.8vw,3.4rem);line-height:1.15;letter-spacing:-0.02em;margin-bottom:2vh;max-width:80%;}
+h2 em{font-style:italic;color:var(--accent);}
+.sub{font-size:1.05rem;line-height:1.7;color:var(--dim);max-width:620px;font-weight:300;}
+.body{font-size:1rem;line-height:1.65;color:var(--dim);max-width:620px;font-weight:300;}
+.body strong{color:var(--text);font-weight:500;}
+.box{border:1px solid rgba(59,130,246,0.18);background:var(--accent-s);padding:2vh 2.5vw;border-radius:8px;margin-top:2.5vh;max-width:680px;}
+.box p{color:var(--text);font-size:0.95rem;font-weight:400;line-height:1.6;}
+.hl{color:var(--accent-l);font-weight:600;}
+.sn{font-family:var(--serif);font-size:clamp(2.4rem,3.8vw,3.4rem);font-weight:700;line-height:1;}
+.sd{font-size:0.78rem;color:var(--dim);margin-top:0.5vh;line-height:1.4;font-weight:300;}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:2vw;margin-top:2.5vh;max-width:720px;}
+.card{border:1px solid var(--border);border-radius:8px;padding:2vh 1.8vw;background:rgba(255,255,255,0.015);}
+.card.hot{border-color:rgba(59,130,246,0.25);background:var(--accent-s);}
+.card-tag{font-family:var(--mono);font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:1vh;}
+.card-tag.hi{color:var(--accent-l);}.card-tag.lo{color:var(--muted);}
+.card-name{font-weight:600;font-size:1rem;margin-bottom:0.5vh;}
+.card-desc{font-size:0.82rem;color:var(--dim);line-height:1.45;font-weight:300;}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:5vw;margin-top:3vh;max-width:860px;}
+.vs-head{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:1.5vh;}
+.bq{font-family:var(--serif);font-size:clamp(1.5rem,2.8vw,2.4rem);font-weight:400;font-style:italic;line-height:1.35;max-width:72%;color:var(--text);margin-bottom:2vh;}
+.bq em{color:var(--accent);font-style:italic;}
+.line{width:50px;height:1px;background:var(--muted);margin:2.5vh 0;}
+.slide.tp{justify-content:flex-end;padding-bottom:12vh;}
+.tp .logo{font-family:var(--serif);font-weight:700;font-size:clamp(3.5rem,7vw,6.5rem);line-height:1.05;margin-bottom:1.5vh;}
+.tp .logo span{color:var(--accent);}
+.tp .ml{font-family:var(--mono);font-size:0.7rem;letter-spacing:0.12em;color:var(--muted);margin-top:2vh;}
+.slide.ch{justify-content:center;align-items:flex-start;}
+.ch-num{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);margin-bottom:2vh;opacity:0.7;}
+.ch-q{font-family:var(--serif);font-size:clamp(2.2rem,4.5vw,4rem);font-weight:400;font-style:italic;line-height:1.2;max-width:70%;letter-spacing:-0.02em;}
+.ch-q em{color:var(--accent);font-style:italic;}
+.ch-sub{font-size:0.9rem;color:var(--muted);margin-top:2vh;font-weight:300;max-width:50%;}
+.qt{border-left:2px solid var(--accent);padding-left:1.5vw;margin-top:1.5vh;font-style:italic;font-size:0.92rem;color:var(--dim);line-height:1.5;max-width:600px;}
+.qt strong{color:var(--text);font-weight:500;font-style:normal;}
+.concept{border:1px solid var(--border);border-radius:10px;padding:3vh 3vw;background:rgba(255,255,255,0.015);max-width:720px;margin-top:2vh;}
+.concept.featured{border-color:rgba(59,130,246,0.3);background:var(--accent-s);}
+.concept h3{font-family:var(--serif);font-size:clamp(1.3rem,2vw,1.7rem);font-weight:600;margin-bottom:1vh;}
+.concept h3 em{color:var(--accent);font-style:italic;}
+.concept .body{max-width:100%;font-size:0.92rem;}
+@media(max-width:768px){.slide{padding:4vh 6vw;}h2,.sub,.body,.box,.bq,.ch-q,.concept{max-width:95%;}.cards,.vs{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<div class="blk" id="bl"></div>
+<div class="deck">
+
+<div class="slide tp active" data-block="">
+  <div class="logo r r1"><span>Method</span> 3.0</div>
+  <div class="line r r2"></div>
+  <div class="sub r r3" style="max-width:50%;">Бренд-платформа курса креативной методологии</div>
+  <div class="ml r r4">2025 · Got Added Value LLC · Аналитика: StrategAI</div>
+</div>
+
+<div class="slide ch" data-block=""><div class="ch-num r r1">Блок 01</div><div class="ch-q r r2">Кто эти <em>люди</em>?</div><div class="ch-sub r r3">Аудитория и ключевой инсайт</div></div>
+
+<div class="slide" data-block="Блок 1 · Аудитория">
+  <div class="label r r1">Аудитория</div>
+  <h2 class="r r2">Они уже умеют <em>придумывать</em></h2>
+  <div class="body r r3">Арт-директора, копирайтеры, креативные директора, основатели агентств. Россия, Казахстан, Узбекистан. 25–40 лет. Международные и локальные агентства, фриланс.</div>
+  <div class="box r r4"><p>Это не новички. Это люди, которые делают работу каждый день, но чувствуют потолок: <span class="hl">процесс хаотичен, результат непредсказуем</span>, фестивали кажутся другим миром.</p></div>
+</div>
+
+<div class="slide" data-block="Блок 1 · Аудитория">
+  <div class="label r r1">Ключевой инсайт</div>
+  <div class="bq r r2">Они не ищут <em>знания</em>.<br>Они ищут <em>систему</em>.</div>
+  <div class="body r r3">Они уже знают «что такое инсайт» и «зачем нужен бриф». Им не хватает воспроизводимого процесса, который даёт результат каждый раз — а не только в удачные дни.</div>
+  <div class="qt r r4">"Отсутствие определенной системы как придумывать креативные решения, сейчас немного хаотично"<br><strong>— Респондент 1</strong></div>
+</div>
+
+<div class="slide" data-block="Блок 1 · Аудитория">
+  <div class="label r r1">Продукт</div>
+  <h2 class="r r2"><em>Единственная</em> пошаговая система полного креативного цикла</h2>
+  <div style="display:flex;gap:5vw;margin-top:4vh;flex-wrap:wrap;" class="r r3">
+    <div><div class="sn">450<span style="font-size:0.4em;font-weight:400;">+</span></div><div class="sd">Международных наград автора</div></div>
+    <div><div class="sn">6</div><div class="sd">Шагов полного цикла</div></div>
+    <div><div class="sn">9.1</div><div class="sd">NPS выпускников</div></div>
+    <div><div class="sn">4</div><div class="sd">Месяца практики</div></div>
+  </div>
+  <div class="box r r4"><p>От первого интервью до фестивального кейса. <span class="hl">Не набор советов — сквозной пайплайн</span> с инструментом на каждом шаге.</p></div>
+</div>
+
+<div class="slide ch" data-block=""><div class="ch-num r r1">Блок 02</div><div class="ch-q r r2">Что ими <em>движет</em>?</div><div class="ch-sub r r3">Ключевые мотивы аудитории</div></div>
+
+<div class="slide" data-block="Блок 2 · Мотивы">
+  <div class="label r r1">Главные мотивы</div>
+  <h2 class="r r2">Система. Инсайты. <em>Предсказуемость.</em></h2>
+  <div class="cards r r3">
+    <div class="card hot"><div class="card-tag hi">Главный</div><div class="card-name">Воспроизводимая система</div><div class="card-desc">Каждый бриф с нуля. Нет процесса. Результат = лотерея.</div></div>
+    <div class="card hot"><div class="card-tag hi">Мотив 2</div><div class="card-name">Сам добывать инсайты</div><div class="card-desc">Зависят от стратегов. Хотят сами дойти до настоящего инсайта.</div></div>
+    <div class="card hot"><div class="card-tag hi">Мотив 3</div><div class="card-name">Генерировать много идей</div><div class="card-desc">Ступор на шторме — главный страх.</div></div>
+    <div class="card"><div class="card-tag lo">Мотив 4</div><div class="card-name">Побеждать на фестивалях</div><div class="card-desc">Упаковка кейса — навык, которому нигде не учат.</div></div>
+  </div>
+  <div class="qt r r4">"Хочу контролировать свой мозг и свою креативность"<br><strong>— Респондент 2</strong></div>
+</div>
+
+<div class="slide" data-block="Блок 2 · Мотивы">
+  <div class="label r r1">Вторичные мотивы</div>
+  <h2 class="r r2">Уверенность. Команда. <em>Состояние.</em></h2>
+  <div class="cards r r3">
+    <div class="card"><div class="card-tag lo">Мотив 5</div><div class="card-name">Стабильно придумывать</div><div class="card-desc">Сегодня «в потоке», завтра ступор.</div></div>
+    <div class="card"><div class="card-tag lo">Мотив 6</div><div class="card-name">Избежать неуверенности</div><div class="card-desc">Синдром самозванца. Без критериев каждая презентация — стресс.</div></div>
+    <div class="card"><div class="card-tag lo">Мотив 7</div><div class="card-name">Продавать креатив</div><div class="card-desc">Защитить идею перед клиентом — отдельный навык.</div></div>
+    <div class="card"><div class="card-tag lo">Мотив 8</div><div class="card-name">Управлять состоянием</div><div class="card-desc">Тревожность, апатия — рабочая реальность индустрии.</div></div>
+  </div>
+</div>
+
+<div class="slide ch" data-block=""><div class="ch-num r r1">Блок 03</div><div class="ch-q r r2">Что происходит <em>вокруг</em>?</div><div class="ch-sub r r3">Культурный контекст индустрии</div></div>
+
+<div class="slide" data-block="Блок 3 · Контекст">
+  <div class="label r r1">Burnout</div>
+  <h2 class="r r2">70% креативщиков <em>выгорели</em> за последний год</h2>
+  <div style="display:flex;gap:5vw;margin-top:4vh;flex-wrap:wrap;" class="r r3">
+    <div><div class="sn" style="color:var(--accent)">70%</div><div class="sd">Burnout за 12 мес.</div></div>
+    <div><div class="sn" style="color:var(--accent)">44%</div><div class="sd">Депрессия за карьеру</div></div>
+    <div><div class="sn" style="color:var(--accent)">64%</div><div class="sd">Думают об уходе</div></div>
+  </div>
+  <div class="box r r4"><p>Выгорание — <span class="hl">не личная слабость, а системный кризис</span>. Индустрия романтизирует «горение» и эксплуатирует страсть.</p></div>
+</div>
+
+<div class="slide" data-block="Блок 3 · Контекст">
+  <div class="label r r1">AI и кризис агентств</div>
+  <h2 class="r r2">AI без системы = <em>автоматизированный хаос</em></h2>
+  <div class="vs r r3">
+    <div><div class="vs-head" style="color:var(--dim);">AI</div><div class="body" style="font-size:0.92rem;"><strong>77%</strong> агентств внедрили AI, но <strong>74%</strong> не могут масштабировать. «Ещё больше средних идей быстрее».</div></div>
+    <div><div class="vs-head" style="color:var(--accent);">Кризис модели</div><div class="body" style="font-size:0.92rem;">Бюджеты: с <strong>9.1%</strong> до <strong>7.7%</strong> выручки. «Делать больше за меньше» — условие выживания.</div></div>
+  </div>
+  <div class="box r r4"><p>Система, повышающая эффективность — <span class="hl">не роскошь, а необходимость</span>.</p></div>
+</div>
+
+<div class="slide" data-block="Блок 3 · Контекст">
+  <div class="label r r1">Рынок Центральной Азии</div>
+  <h2 class="r r2">Бум, который требует <em>инфраструктуры</em></h2>
+  <div style="display:flex;gap:5vw;margin-top:4vh;flex-wrap:wrap;" class="r r3">
+    <div><div class="sn">+29%</div><div class="sd">Рекламный рынок Казахстана</div></div>
+    <div><div class="sn">+40%</div><div class="sd">E-commerce ежегодно</div></div>
+  </div>
+  <div class="box r r4"><p>Спрос на креативные кадры опережает предложение. <span class="hl">Method — инфраструктурная инвестиция</span>.</p></div>
+</div>
+
+<div class="slide ch" data-block=""><div class="ch-num r r1">Блок 04</div><div class="ch-q r r2">Три типа людей — <em>одна потребность</em></div><div class="ch-sub r r3">Мотивационные кластеры</div></div>
+
+<div class="slide" data-block="Блок 4 · Кластеры">
+  <div class="label r r1">~40% аудитории · Приоритетный</div>
+  <h2 class="r r2">Архитекторы <em>процесса</em></h2>
+  <div class="body r r3">КД, основатели агентств, групхэды. Процесс держится на них лично. Хотят <strong>установить систему, которая работает без них</strong>.</div>
+  <div class="qt r r4">"Иногда не могу рассчитывать на команду, потому что команда рассчитывает на меня: я направлю, я докручу, я отберу зерна"<br><strong>— Респондент 8, креативный групхэд</strong></div>
+</div>
+
+<div class="slide" data-block="Блок 4 · Кластеры">
+  <div class="label r r1">~35% аудитории · Приоритетный</div>
+  <h2 class="r r2">Голодные <em>мастера</em></h2>
+  <div class="body r r3">Арт-директора, копирайтеры, сениоры. Чувствуют потолок. Хотят стать КД, выйти на международный рынок, <strong>собрать портфолио побед</strong>.</div>
+  <div class="qt r r4">"Нередко притянутая за уши проблематика проекта — не самые актуальные исследования в основе, отсутствие стратегии, неточные инсайты"<br><strong>— Респондент 7</strong></div>
+</div>
+
+<div class="slide" data-block="Блок 4 · Кластеры">
+  <div class="label r r1">~25% аудитории · Вторичный</div>
+  <h2 class="r r2">Искатели <em>опоры</em></h2>
+  <div class="body r r3">Люди в кризисе. Тревожность, апатия, потерянность. Method для них — <strong>не инвестиция в рост, а почва под ногами</strong>.</div>
+  <div class="qt r r4">"Большой эмоциональный спад и растерянность. Апатия к работе и не понимания для чего всем этим занимаюсь"<br><strong>— Респондент 1</strong></div>
+</div>
+
+<div class="slide ch" data-block=""><div class="ch-num r r1">Блок 05</div><div class="ch-q r r2">Между чем и чем они <em>разрываются</em>?</div><div class="ch-sub r r3">Ключевое напряжение</div></div>
+
+<div class="slide" data-block="Блок 5 · Напряжение">
+  <div class="label r r1">Ключевое напряжение</div>
+  <h2 class="r r2">Хочу систему — но боюсь потерять <em>свободу</em></h2>
+  <div class="body r r3" style="max-width:650px;">Креативщики верят, что хорошие идеи рождаются из таланта, интуиции, вдохновения. Если идея зависит от вдохновения — ты не контролируешь результат.</div>
+  <div class="body r r4" style="margin-top:1.5vh;max-width:650px;">Принять систему = признать, что таланта недостаточно. <strong>Но те, кто прошёл через это, описывают обратное:</strong> система не убила креативность — она её освободила.</div>
+</div>
+
+<div class="slide" data-block="Блок 5 · Напряжение">
+  <div class="label r r1">Парадокс</div>
+  <div class="bq r r2">Чем больше ты веришь в талант — тем меньше ты <em>контролируешь результат</em></div>
+  <div class="body r r3">Каждый бриф — лотерея. А если руководишь командой — не можешь передать «талант» другим.</div>
+  <div class="box r r4"><p>Когда не нужно ждать музу — энергия идёт на качество идеи. <span class="hl">Система не убивает свободу — она создаёт для неё условия.</span></p></div>
+</div>
+
+<div class="slide ch" data-block=""><div class="ch-num r r1">Блок 06</div><div class="ch-q r r2">Что <em>обещает</em> бренд?</div><div class="ch-sub r r3">Позиционирование и обещание</div></div>
+
+<div class="slide" data-block="Блок 6 · Позиционирование">
+  <div class="label r r1">Обещание бренда</div>
+  <div class="concept featured r r2">
+    <h3>Method даёт креативщикам то, чего не даёт талант: <em>предсказуемость результата</em></h3>
+    <div class="body">Пошаговая система: исследование → инсайт → идея → кейс. Каждый раз, в любой команде, на любом брифе.</div>
+  </div>
+  <div class="qt r r3">"Креатив — это не вдохновение и не гениальное прозрение. Креатив — это системная работа"<br><strong>— Респондент 11</strong></div>
+</div>
+
+<div class="slide" data-block="Блок 6 · Позиционирование">
+  <div class="label r r1">Reasons to Believe</div>
+  <h2 class="r r2">Почему это <em>работает</em></h2>
+  <div class="cards r r3">
+    <div class="card hot"><div class="card-tag hi">Автор</div><div class="card-name">КД с 450+ наградами</div><div class="card-desc">Канны, Epica, Golden Drum. Практик, не теоретик.</div></div>
+    <div class="card hot"><div class="card-tag hi">Процесс</div><div class="card-name">6 шагов полного цикла</div><div class="card-desc">Исследование → синтез → бриф → генерация → отбор → упаковка.</div></div>
+    <div class="card"><div class="card-tag lo">Инструмент</div><div class="card-name">Одностраничный бриф</div><div class="card-desc">Самый упоминаемый инструмент. Десятки идей в любой команде.</div></div>
+    <div class="card"><div class="card-tag lo">Ресёрч</div><div class="card-name">Интервью за 30 минут</div><div class="card-desc">«5 вопросов в глубину» — инсайт без стратега и бюджета.</div></div>
+  </div>
+</div>
+
+<div class="slide" data-block="Блок 6 · Позиционирование">
+  <div class="label r r1">Формулировка</div>
+  <div class="concept featured r r2">
+    <h3>Для креативных профессионалов, которые хотят стабильно создавать сильные идеи, Method — <em>пошаговая система полного креативного цикла</em>, превращающая исследование в инсайт, инсайт в идею, идею в фестивальный кейс.</h3>
+  </div>
+  <div class="line r r3"></div>
+  <div class="bq r r4" style="font-size:clamp(1.3rem,2.5vw,2rem);">Method — система, которая освобождает креативность <em>от случая</em></div>
+</div>
+
+<div class="slide ch" data-block=""><div class="ch-num r r1">Блок 07</div><div class="ch-q r r2">Пирамида <em>бренда</em></div><div class="ch-sub r r3">Вся система смыслов</div></div>
+
+<div class="slide" data-block="Блок 7 · Пирамида">
+  <div class="label r r1">Суть и миссия</div>
+  <h2 class="r r2"><em>Креативный суверенитет</em></h2>
+  <div class="body r r3" style="max-width:650px;margin-bottom:3vh;">Способность стабильно создавать сильный креатив, не завися от случая, вдохновения, настроения, стратега или обстоятельств.</div>
+  <div class="box r r4"><p><strong>Миссия:</strong> Освободить креативных профессионалов от зависимости от случая.</p></div>
+</div>
+
+<div class="slide" data-block="Блок 7 · Пирамида">
+  <div class="label r r1">Ценности</div>
+  <h2 class="r r2">Во что <em>верит</em> бренд</h2>
+  <div style="display:flex;flex-direction:column;gap:2.5vh;margin-top:2vh;max-width:650px;" class="r r3">
+    <div class="body" style="border-left:2px solid var(--accent);padding-left:1.5vw;"><strong>Система сильнее таланта.</strong> Креативщик с методом обойдёт того, кто полагается на вдохновение. Это не обесценивание — это взросление.</div>
+    <div class="body" style="border-left:2px solid var(--accent);padding-left:1.5vw;"><strong>Глубина быстрее поверхности.</strong> 30 минут настоящего разговора дают больше, чем неделя предположений.</div>
+    <div class="body" style="border-left:2px solid var(--accent);padding-left:1.5vw;"><strong>Процесс бережёт людей.</strong> Выгорание — симптом плохого процесса, а не цена за хороший креатив.</div>
+  </div>
+</div>
+
+<div class="slide" data-block="Блок 7 · Пирамида">
+  <div class="label r r1">Характер и эмоция</div>
+  <div class="vs r r2">
+    <div><div class="vs-head" style="color:var(--dim);">Характер бренда</div>
+      <div class="body" style="font-size:0.92rem;margin-bottom:1vh;"><strong>Мастер, не гуру</strong> — показывает, не проповедует</div>
+      <div class="body" style="font-size:0.92rem;margin-bottom:1vh;"><strong>Прямой</strong> — называет вещи своими именами</div>
+      <div class="body" style="font-size:0.92rem;margin-bottom:1vh;"><strong>Требовательный и бережный</strong></div>
+      <div class="body" style="font-size:0.92rem;"><strong>Без пафоса</strong> — 450 наград как proof, не корона</div>
+    </div>
+    <div><div class="vs-head" style="color:var(--accent);">Эмоция</div>
+      <div style="font-family:var(--serif);font-size:clamp(1.8rem,3vw,2.6rem);font-weight:600;font-style:italic;color:var(--text);margin-top:2vh;">Твёрдая<br>почва</div>
+      <div class="body" style="font-size:0.85rem;margin-top:1.5vh;">Устойчивость. Не нужно каждый раз доказывать себе, что можешь.</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide ch" data-block=""><div class="ch-num r r1">Блок 08</div><div class="ch-q r r2">Одно обещание — <em>разные точки входа</em></div><div class="ch-sub r r3">Примеры коммуникаций</div></div>
+
+<div class="slide" data-block="Блок 8 · Коммуникации">
+  <div class="label r r1">Лендинг · Главный экран</div>
+  <div class="concept featured r r2">
+    <h3>Талант привёл тебя в профессию. Система сделает тебя в ней <em>непобедимым.</em></h3>
+    <div class="body">Method — пошаговая система полного креативного цикла от КД с 450+ наградами. От интервью до кейса — без зависимости от вдохновения, стратега или удачного дня.</div>
+  </div>
+</div>
+
+<div class="slide" data-block="Блок 8 · Коммуникации">
+  <div class="label r r1">Лендинг · Для кого</div>
+  <h2 class="r r2"><em>Знакомо?</em></h2>
+  <div class="body r r3">Вчера придумал три концепции за час. Сегодня — третий час шторма, на доске ноль. Вчера — профи. Сегодня — самозванец.</div>
+  <div class="box r r4"><p>Это нормально — когда единственный инструмент — настроение. <span class="hl">Method заменяет настроение процессом.</span> Шесть шагов — и результат зависит от тебя.</p></div>
+</div>
+
+<div class="slide" data-block="Блок 8 · Коммуникации">
+  <div class="label r r1">Социальные сети</div>
+  <div style="display:flex;gap:2vw;flex-wrap:wrap;margin-top:1vh;" class="r r2">
+    <div class="card hot" style="flex:1;min-width:190px;"><div class="card-tag hi">Провокация</div><div class="card-name">«450 ≠ вдохновение»</div><div class="card-desc">КД с 450 наградами не поймал 450 раз вдохновение. У него есть процесс. Вдохновение — бонус. Метод — профессия.</div></div>
+    <div class="card hot" style="flex:1;min-width:190px;"><div class="card-tag hi">Инсайт</div><div class="card-name">«30 минут > недели»</div><div class="card-desc">30 минут разговора с реальным человеком дают больше, чем неделя гугления. Ты сам добываешь фундамент.</div></div>
+    <div class="card hot" style="flex:1;min-width:190px;"><div class="card-tag hi">Баннер</div><div class="card-name">«Хватит ждать музу»</div><div class="card-desc">Хватит ждать музу. Включи процесс. Method — 6 шагов от исследования до кейса.</div></div>
+  </div>
+</div>
+
+<div class="slide ch" data-block="" style="align-items:center;text-align:center;">
+  <div class="bq r r1" style="max-width:85%;text-align:center;font-size:clamp(1.5rem,3.2vw,2.8rem);margin:0 auto;">Система, которая освобождает креативность <em>от случая</em></div>
+  <div class="line r r2" style="margin:3vh auto;"></div>
+  <div class="r r3" style="font-family:var(--serif);font-size:clamp(1.1rem,2.2vw,1.7rem);font-weight:600;">Method 3.0 — <em style="color:var(--accent);font-style:italic;">креативный суверенитет</em></div>
+  <div class="r r4" style="font-family:var(--mono);font-size:0.82rem;color:var(--dim);margin-top:1.5vh;">Пошаговая система от КД с 450+ наградами</div>
+  <div style="width:50px;height:1px;background:var(--muted);margin:4vh auto;" class="r r4"></div>
+  <div class="r r5">
+    <div style="font-size:0.9rem;color:var(--muted);margin-bottom:3vh;">Аналитика подготовлена продуктом</div>
+    <a href="https://gotaddedvalue.com/strategAI/" target="_blank" style="text-decoration:none;display:inline-block;"><span style="font-family:'Space Grotesk',var(--sans);font-size:clamp(2rem,4vw,3.2rem);font-weight:700;color:var(--text);letter-spacing:-0.03em;">Strateg</span><span style="font-family:'Space Grotesk',var(--sans);font-size:clamp(2rem,4vw,3.2rem);font-weight:700;color:var(--blue);letter-spacing:-0.03em;">AI</span></a>
+  </div>
+  <div class="r r5" style="margin-top:4vh;">
+    <div style="font-family:var(--mono);font-size:0.7rem;letter-spacing:0.12em;color:var(--muted);">Методология и стратегия © Got Added Value LLC</div>
+    <div style="font-family:var(--mono);font-size:0.65rem;color:var(--muted);margin-top:1vh;opacity:0.6;">2025</div>
+  </div>
+</div>
+
+</div>
+<div class="nav"><button class="nb" onclick="go(-1)">←</button><div class="nc" id="c"></div><button class="nb" onclick="go(1)">→</button></div>
+<div class="kh" id="kh">← → для навигации</div>
+<div class="credit">Got Added Value LLC</div>
+<script>
+let cur=0;const ss=document.querySelectorAll('.slide'),tot=ss.length;
+function show(i){ss.forEach(s=>s.classList.remove('active'));ss[i].querySelectorAll('.r').forEach(el=>{el.style.animation='none';el.offsetHeight;el.style.animation='';});ss[i].classList.add('active');document.getElementById('c').textContent=(i+1)+' / '+tot;document.getElementById('progress').style.width=((i+1)/tot*100)+'%';document.getElementById('bl').textContent=ss[i].dataset.block||'';}
+function go(d){const n=cur+d;if(n<0||n>=tot)return;cur=n;show(cur);document.getElementById('kh').style.opacity='0';}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();go(1);}if(e.key==='ArrowLeft'){e.preventDefault();go(-1);}});
+let tx=0;document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;});document.addEventListener('touchend',e=>{const d=tx-e.changedTouches[0].clientX;if(Math.abs(d)>50)go(d>0?1:-1);});
+show(0);
+</script>
+</body>
+</html>
