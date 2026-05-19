@@ -8,7 +8,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 
 <!-- TODO: Meta Pixel + GA4 — paste IDs здесь, по CLAUDE.md scope (today) -->
 <!-- <script>fbq init ...</script> -->
@@ -16,19 +16,22 @@
 
 <style>
 /* ============================================================
-   Method Intensive — stub landing
-   Bg: #ebebeb (sampled from materials/Method 3.0/P1_01.jpg)
-   Monochrome, bold sans-serif (Inter), isometric cube cropped.
+   Method Intensive — landing v3 (mobile-first redesign)
+   Breakpoints: 768px (tablet), 1280px (desktop)
    ============================================================ */
 
 :root {
   --bg: #ebebeb;
+  --bg-inverted: #0a0a0a;
   --ink: #0a0a0a;
+  --ink-inverted: #f5f5f5;
   --ink-soft: #3a3a3a;
   --ink-muted: #6a6a6a;
+  --ink-muted-inverted: #9a9a9a;
   --line: #cccccc;
-  --max-w: 1080px;
-  --gutter: clamp(20px, 5vw, 64px);
+  --line-inverted: #2a2a2a;
+  --max-w: 1280px;
+  --nav-h: 64px;
 }
 
 *, *::before, *::after {
@@ -43,7 +46,7 @@ html {
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-  font-size: 17px;
+  font-size: 15px;
   line-height: 1.55;
   color: var(--ink);
   background: var(--bg);
@@ -52,72 +55,213 @@ body {
   overflow-x: hidden;
 }
 
+img { max-width: 100%; height: auto; display: block; }
+
+p { max-width: 60ch; }
+p + p { margin-top: 1em; }
+strong { font-weight: 700; }
+
+/* ============================================================
+   NAV (sticky top bar, mobile-first)
+   ============================================================ */
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+  height: var(--nav-h);
+}
+
+.nav__inner {
+  max-width: var(--max-w);
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.nav__logo {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  font-size: 16px;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.nav__links {
+  display: none;
+}
+
+.nav__link {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  text-decoration: none;
+  letter-spacing: 0.01em;
+}
+.nav__link:hover { color: var(--ink); }
+
+.nav__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px;
+  background: var(--ink);
+  color: var(--bg);
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+.nav__cta:hover { background: var(--ink-soft); }
+
+.nav__burger {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  padding: 8px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  margin-left: 4px;
+}
+.nav__burger span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--ink);
+}
+
+#nav-toggle { display: none; }
+
+.nav__menu {
+  position: fixed;
+  top: var(--nav-h);
+  left: 0;
+  right: 0;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+  padding: 20px;
+  display: none;
+  flex-direction: column;
+  gap: 16px;
+  z-index: 99;
+}
+#nav-toggle:checked ~ .nav__menu { display: flex; }
+.nav__menu .nav__link { font-size: 18px; }
+
+@media (min-width: 768px) {
+  .nav__inner { padding: 0 32px; }
+  .nav__links {
+    display: flex;
+    gap: 28px;
+    flex: 1;
+    justify-content: center;
+  }
+  .nav__burger, #nav-toggle, .nav__menu { display: none !important; }
+  .nav__cta { font-size: 14px; padding: 10px 18px; }
+}
+
+@media (min-width: 1280px) {
+  .nav__inner { padding: 0 48px; }
+  .nav__links { gap: 36px; }
+  .nav__cta { padding: 11px 20px; }
+}
+
+/* ============================================================
+   Section base (mobile-first)
+   ============================================================ */
+
 .wrap {
   max-width: var(--max-w);
   margin: 0 auto;
-  padding: 0 var(--gutter);
+  padding: 0 24px;
 }
 
 section {
   position: relative;
-  padding: clamp(64px, 12vh, 160px) 0;
+  padding: 64px 0;
   border-bottom: 1px solid var(--line);
 }
+section:last-of-type { border-bottom: none; }
 
-section:last-of-type {
-  border-bottom: none;
+.section__content { position: relative; z-index: 1; }
+
+@media (min-width: 768px) {
+  section { padding: 96px 0; }
+  .wrap { padding: 0 32px; }
 }
 
-/* Headings ----------------------------------------------- */
+@media (min-width: 1280px) {
+  section { padding: 160px 0; }
+  .wrap { padding: 0 48px; }
+}
+
+/* ============================================================
+   Typography
+   ============================================================ */
 
 h1, h2, h3 {
   font-weight: 800;
   letter-spacing: -0.02em;
-  color: var(--ink);
+  color: inherit;
 }
 
 h1 {
-  font-size: clamp(2.25rem, 5.5vw, 4rem);
+  font-size: clamp(2rem, 9vw, 3rem);
   line-height: 1.05;
   letter-spacing: -0.035em;
   font-weight: 900;
 }
 
 h2 {
-  font-size: clamp(1.625rem, 3.6vw, 2.5rem);
+  font-size: clamp(1.5rem, 6vw, 2rem);
   line-height: 1.15;
   margin-bottom: 24px;
 }
 
 h3 {
-  font-size: 1.25rem;
+  font-size: 1.125rem;
   line-height: 1.3;
   font-weight: 700;
   margin-bottom: 12px;
 }
 
-p {
-  margin-bottom: 1em;
-  max-width: 60ch;
+@media (min-width: 768px) {
+  h1 { font-size: clamp(2.5rem, 7vw, 4.5rem); }
+  h2 { font-size: clamp(1.75rem, 4vw, 2.75rem); }
+  h3 { font-size: 1.25rem; }
 }
 
-p:last-child { margin-bottom: 0; }
-
-strong { font-weight: 700; }
-
-/* Eyebrow (small label above heading) -------------------- */
+@media (min-width: 1280px) {
+  h1 { font-size: clamp(4rem, 8vw, 7.5rem); letter-spacing: -0.04em; }
+  h2 { font-size: clamp(2.25rem, 3.5vw, 3.25rem); }
+}
 
 .eyebrow {
   display: inline-block;
+  font-family: 'Space Grotesk', sans-serif;
   font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
+  font-weight: 600;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--ink-muted);
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
-/* Cube (signature visual) -------------------------------- */
+/* ============================================================
+   Cube (signature visual)
+   ============================================================ */
 
 .cube {
   position: absolute;
@@ -127,108 +271,133 @@ strong { font-weight: 700; }
 }
 
 .cube--hero {
-  right: -10vw;
-  bottom: -8vh;
-  width: clamp(280px, 45vw, 620px);
-  opacity: 0.9;
+  right: -15vw;
+  bottom: -6vh;
+  width: 60vw;
+  max-width: 280px;
+  opacity: 0.85;
 }
 
 .cube--shift {
-  left: -8vw;
-  top: 50%;
-  transform: translateY(-50%);
-  width: clamp(220px, 35vw, 480px);
-  opacity: 0.7;
+  left: -20vw;
+  top: 8vh;
+  width: 55vw;
+  max-width: 240px;
+  opacity: 0.55;
 }
 
 .cube--final {
-  right: -12vw;
-  top: -10vh;
-  width: clamp(240px, 40vw, 540px);
-  opacity: 0.8;
+  right: -15vw;
+  top: -8vh;
+  width: 55vw;
+  max-width: 280px;
+  opacity: 0.55;
+  filter: invert(1);
 }
 
-/* Content always above cube */
-.wrap, .hero__content, .section__content {
-  position: relative;
-  z-index: 1;
+@media (min-width: 768px) {
+  .cube--hero { width: 45vw; max-width: 480px; right: -8vw; }
+  .cube--shift { width: 35vw; max-width: 400px; left: -10vw; }
+  .cube--final { width: 40vw; max-width: 440px; right: -10vw; }
 }
 
-/* Hero --------------------------------------------------- */
+@media (min-width: 1280px) {
+  .cube--hero { max-width: 640px; }
+  .cube--shift { max-width: 520px; }
+  .cube--final { max-width: 560px; }
+}
+
+/* ============================================================
+   CTA buttons
+   ============================================================ */
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 24px;
+  background: var(--ink);
+  color: var(--bg);
+  font-family: inherit;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+.cta:hover { background: var(--ink-soft); }
+.cta:active { transform: translateY(1px); }
+
+.cta--inverted { background: var(--ink-inverted); color: var(--bg-inverted); }
+.cta--inverted:hover { background: #ffffff; }
+
+@media (min-width: 768px) {
+  .cta { font-size: 1rem; padding: 18px 28px; }
+}
+
+.cta__arrow { font-size: 1.1em; line-height: 1; }
+
+.cta__hint {
+  display: block;
+  margin-top: 16px;
+  font-size: 0.8125rem;
+  color: var(--ink-muted);
+  max-width: 42ch;
+}
+.cta__hint a {
+  color: var(--ink-soft);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ============================================================
+   HERO (HUGE — 100vh)
+   ============================================================ */
 
 .hero {
-  min-height: 92vh;
+  min-height: calc(100vh - var(--nav-h));
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-top: 80px;
-  padding-bottom: 64px;
-  border-bottom: 1px solid var(--line);
   overflow: hidden;
-}
-
-.hero__topbar {
-  position: absolute;
-  top: 24px;
-  left: 0;
-  right: 0;
-  padding: 0 var(--gutter);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink-muted);
-}
-
-.hero__logo {
-  color: var(--ink);
-  font-weight: 800;
-  letter-spacing: 0.04em;
+  padding: 80px 0 64px;
 }
 
 .hero__quote {
   font-weight: 900;
-  font-size: clamp(2rem, 5vw, 3.75rem);
-  line-height: 1.08;
+  font-size: clamp(2rem, 9vw, 3rem);
+  line-height: 1.05;
   letter-spacing: -0.035em;
   max-width: 18ch;
   margin-bottom: 24px;
 }
 
 .hero__attribution {
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   font-weight: 500;
   color: var(--ink-muted);
-  margin-bottom: 48px;
+  margin-bottom: 32px;
   letter-spacing: 0.02em;
 }
-
-.hero__attribution::before {
-  content: "— ";
-}
+.hero__attribution::before { content: "— "; }
 
 .hero__sub {
-  font-size: clamp(1.0625rem, 2vw, 1.25rem);
+  font-size: 1rem;
   line-height: 1.5;
   color: var(--ink-soft);
-  max-width: 38ch;
-  margin-bottom: 40px;
+  max-width: 42ch;
+  margin-bottom: 32px;
   font-weight: 500;
 }
-
-.hero__sub strong {
-  color: var(--ink);
-  font-weight: 700;
-}
+.hero__sub strong { color: var(--ink); font-weight: 700; }
 
 .hero__meta {
   display: flex;
   flex-wrap: wrap;
-  gap: clamp(20px, 4vw, 56px);
-  margin-bottom: 40px;
+  gap: 24px;
+  margin-bottom: 32px;
 }
 
 .hero__meta-item {
@@ -238,446 +407,811 @@ strong { font-weight: 700; }
 }
 
 .hero__meta-label {
+  font-family: 'Space Grotesk', sans-serif;
   font-size: 0.6875rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
+  font-weight: 600;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ink-muted);
 }
 
 .hero__meta-value {
-  font-size: 1.0625rem;
-  font-weight: 700;
-  color: var(--ink);
-}
-
-/* CTA button --------------------------------------------- */
-
-.cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  padding: 18px 28px;
-  background: var(--ink);
-  color: var(--bg);
-  font-family: inherit;
   font-size: 1rem;
   font-weight: 700;
-  letter-spacing: 0.01em;
-  text-decoration: none;
-  border: none;
-  cursor: pointer;
-  transition: background 0.15s ease, transform 0.15s ease;
+  color: var(--ink);
 }
 
-.cta:hover {
-  background: var(--ink-soft);
+@media (min-width: 768px) {
+  .hero__quote { font-size: clamp(2.5rem, 7vw, 4.5rem); }
+  .hero__sub { font-size: 1.125rem; max-width: 38ch; margin-bottom: 40px; }
+  .hero__meta { gap: 48px; margin-bottom: 40px; }
+  .hero__meta-value { font-size: 1.0625rem; }
 }
 
-.cta:active {
-  transform: translateY(1px);
+@media (min-width: 1280px) {
+  .hero { padding: 100px 0 80px; }
+  .hero__quote { font-size: clamp(4rem, 7.5vw, 6.5rem); max-width: 16ch; }
+  .hero__sub { font-size: 1.25rem; }
+  .hero__meta { gap: 64px; }
 }
 
-.cta__arrow {
-  font-size: 1.1em;
-  line-height: 1;
-}
+/* ============================================================
+   PAIN MIRROR (MEDIUM — 70–90vh)
+   ============================================================ */
 
-.cta__hint {
-  display: block;
-  margin-top: 16px;
-  font-size: 0.875rem;
-  color: var(--ink-muted);
+.pain {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
 }
-
-.cta__hint a {
-  color: var(--ink-soft);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-/* Pain mirror ("Знакомо?") ------------------------------- */
 
 .pain__lines {
-  font-size: clamp(1.25rem, 2.4vw, 1.75rem);
-  line-height: 1.4;
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(1.125rem, 4.5vw, 1.5rem);
+  line-height: 1.35;
   font-weight: 500;
   color: var(--ink);
-  margin-bottom: 32px;
-  max-width: 24ch;
-}
-
-.pain__lines em {
-  font-style: italic;
-  color: var(--ink-soft);
+  margin-bottom: 24px;
+  max-width: 28ch;
 }
 
 .pain__resolution {
-  font-size: clamp(1rem, 1.6vw, 1.125rem);
-  line-height: 1.5;
-  color: var(--ink-soft);
+  font-size: 0.875rem;
+  font-style: italic;
+  color: var(--ink-muted);
+  margin-top: 32px;
   max-width: 40ch;
 }
 
-/* Method shift (V2) -------------------------------------- */
-
-.shift {
-  overflow: hidden;
+@media (min-width: 768px) {
+  .pain { min-height: 85vh; }
+  .pain__lines { font-size: clamp(1.25rem, 2.4vw, 1.75rem); }
 }
+
+@media (min-width: 1280px) {
+  .pain { min-height: 90vh; }
+}
+
+/* ============================================================
+   SHIFT — Что меняет Method (scroll-heavy MEDIUM)
+   bridges: quote-as-heading, attribution, hr, formula, body
+   ============================================================ */
+
+.shift { overflow: hidden; }
 
 .shift__thesis {
   font-weight: 900;
-  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-size: clamp(1.75rem, 6vw, 2.5rem);
   line-height: 1.1;
   letter-spacing: -0.03em;
-  margin-bottom: 40px;
-  max-width: 16ch;
+  margin-bottom: 32px;
+  max-width: 18ch;
 }
 
 .shift__thesis em {
   font-style: normal;
   display: inline-block;
-  border-bottom: 6px solid var(--ink);
-  padding-bottom: 4px;
+  border-bottom: 4px solid var(--ink);
+  padding-bottom: 2px;
   line-height: 1;
 }
 
-.shift__body {
-  font-size: 1.0625rem;
+.shift__lead {
+  font-size: 1rem;
   line-height: 1.6;
   color: var(--ink-soft);
-  max-width: 52ch;
-  margin-bottom: 48px;
+  max-width: 56ch;
+  margin-bottom: 56px;
 }
 
-.testimonial {
-  position: relative;
-  padding: 32px 0 0;
-  border-top: 1px solid var(--line);
-  max-width: 52ch;
+.bridge {
+  margin: 56px 0;
+  max-width: 56ch;
 }
 
-.testimonial__quote {
-  font-size: clamp(1.125rem, 2vw, 1.375rem);
-  line-height: 1.4;
+.bridge__quote {
+  font-family: 'Inter', sans-serif;
   font-weight: 700;
+  font-size: clamp(1.25rem, 5vw, 1.75rem);
+  line-height: 1.25;
+  letter-spacing: -0.015em;
   color: var(--ink);
-  margin-bottom: 16px;
-  font-style: normal;
+  margin-bottom: 8px;
 }
+.bridge__quote::before { content: "« "; color: var(--ink-muted); }
+.bridge__quote::after { content: " »"; color: var(--ink-muted); }
 
-.testimonial__quote::before {
-  content: "« ";
-  color: var(--ink-muted);
-}
-
-.testimonial__quote::after {
-  content: " »";
-  color: var(--ink-muted);
-}
-
-.testimonial__cite {
-  font-size: 0.875rem;
-  color: var(--ink-muted);
-  font-style: normal;
+.bridge__cite {
+  font-size: 0.8125rem;
   font-weight: 500;
+  color: var(--ink-muted);
+  letter-spacing: 0.01em;
+  margin-bottom: 16px;
+}
+
+.bridge__rule {
+  border: none;
+  border-top: 1px solid var(--line);
+  margin: 16px 0 20px;
+  width: 64px;
+}
+
+.bridge__formula {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.35;
+  color: var(--ink);
+  margin-bottom: 12px;
+}
+
+.bridge__body {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.shift__close {
+  margin-top: 72px;
+  padding-top: 32px;
+  border-top: 1px solid var(--line);
+  max-width: 56ch;
+}
+
+.shift__diff {
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--ink);
+  margin-bottom: 32px;
+}
+
+.shift__outcome {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.125rem, 3.5vw, 1.5rem);
+  line-height: 1.3;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.shift__outcome::before { content: "« "; color: var(--ink-muted); }
+.shift__outcome::after { content: " »"; color: var(--ink-muted); }
+
+.shift__outcome-cite {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--ink-muted);
+  letter-spacing: 0.01em;
+}
+.shift__outcome-cite::before { content: "— "; }
+
+@media (min-width: 768px) {
+  .bridge { margin: 72px 0; }
+  .bridge__quote { font-size: clamp(1.5rem, 4vw, 2.25rem); }
+  .bridge__formula { font-size: 1.0625rem; }
+  .bridge__body { font-size: 1rem; }
+}
+
+@media (min-width: 1280px) {
+  .bridge { margin: 96px 0; }
+  .bridge__quote { font-size: clamp(1.75rem, 3vw, 2.5rem); }
+  .bridge__rule { width: 96px; }
+}
+
+/* ============================================================
+   PROGRAM (Экран 4) — COMPACT
+   Mobile: accordion (<details>). Desktop: 2-col day1/day2.
+   ============================================================ */
+
+.program__intro,
+.program__outro {
+  margin: 16px 0;
+  max-width: 60ch;
+}
+
+.program__intro h3,
+.program__outro h3 {
+  font-family: 'Space Grotesk', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--ink-muted);
+  margin-bottom: 8px;
+}
+
+.program__intro p,
+.program__outro p {
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+.program__outro ul {
+  list-style: none;
+  margin-top: 12px;
+}
+.program__outro ul li {
+  position: relative;
+  padding-left: 24px;
+  font-size: 0.9375rem;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+.program__outro ul li + li { margin-top: 8px; }
+.program__outro ul li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.program__grid {
+  margin: 32px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.program__day {
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.program__day > summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 16px 20px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 0.9375rem;
   letter-spacing: 0.02em;
+  color: var(--ink);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.program__day > summary::-webkit-details-marker { display: none; }
+.program__day > summary::after {
+  content: "+";
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--ink-muted);
+  transition: transform 0.15s ease;
+}
+.program__day[open] > summary::after { content: "−"; }
+
+.program__day ul {
+  list-style: none;
+  padding: 4px 20px 20px;
+}
+.program__day ul li {
+  position: relative;
+  padding: 10px 0 10px 28px;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  border-top: 1px solid var(--line);
+}
+.program__day ul li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  top: 10px;
+  color: var(--ink-muted);
 }
 
-.testimonial__cite::before {
-  content: "— ";
+@media (min-width: 768px) {
+  .program__grid {
+    flex-direction: row;
+    gap: 24px;
+  }
+  .program__day {
+    flex: 1;
+    background: transparent;
+  }
+  .program__day > summary {
+    cursor: default;
+    padding: 20px 0 12px;
+    border-bottom: 1px solid var(--ink);
+  }
+  .program__day > summary::after { display: none; }
+  .program__day[open] > summary,
+  .program__day > summary {
+    background: transparent;
+  }
+  .program__day ul {
+    padding: 12px 0 0;
+  }
+  .program__day ul li {
+    padding: 12px 0 12px 28px;
+  }
 }
 
-/* Offer (Экран 5) ---------------------------------------- */
+@media (min-width: 1280px) {
+  .program__grid { gap: 64px; }
+}
+
+/* ============================================================
+   OFFER ($50) — DRAMA inverted (60vh)
+   ============================================================ */
+
+.offer {
+  background: var(--bg-inverted);
+  color: var(--ink-inverted);
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--line-inverted);
+}
+
+.offer .eyebrow { color: var(--ink-muted-inverted); }
+
+.offer__layout {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.offer__hero {
+  display: flex;
+  flex-direction: column;
+}
+
+.offer__number {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: clamp(5rem, 28vw, 8rem);
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+  color: var(--ink-inverted);
+  margin-bottom: 8px;
+}
+
+.offer__caption {
+  font-family: 'Space Grotesk', sans-serif;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  color: var(--ink-muted-inverted);
+}
 
 .offer__headline {
   font-weight: 900;
-  font-size: clamp(2rem, 5vw, 3.25rem);
-  line-height: 1.08;
+  font-size: clamp(1.5rem, 5vw, 2.25rem);
+  line-height: 1.1;
   letter-spacing: -0.03em;
-  margin-bottom: 32px;
-  max-width: 14ch;
+  margin-bottom: 24px;
+  max-width: 18ch;
+  color: var(--ink-inverted);
 }
 
 .offer__breakdown {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  margin: 32px 0 40px;
-  max-width: 56ch;
-  border-top: 1px solid var(--ink);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  border-top: 1px solid var(--line-inverted);
+  border-bottom: 1px solid var(--line-inverted);
+  padding: 12px 0;
+  margin-bottom: 24px;
 }
 
 .offer__row {
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
-  gap: 20px;
-  padding: 20px 0;
-  border-bottom: 1px solid var(--line);
+  gap: 16px;
+  padding: 6px 0;
+  color: var(--ink-muted-inverted);
 }
 
 .offer__row--total {
-  border-bottom: 1px solid var(--ink);
-  padding-top: 24px;
-  padding-bottom: 24px;
-}
-
-.offer__label {
-  font-size: 1.0625rem;
-  font-weight: 500;
-  color: var(--ink-soft);
-  flex: 1;
-}
-
-.offer__row--total .offer__label {
+  border-top: 1px solid var(--line-inverted);
+  margin-top: 8px;
+  padding-top: 12px;
+  color: var(--ink-inverted);
   font-weight: 700;
-  color: var(--ink);
-  font-size: 1.125rem;
-}
-
-.offer__value {
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: var(--ink);
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-}
-
-.offer__row--total .offer__value {
-  font-size: 2rem;
 }
 
 .offer__note {
   font-size: 0.9375rem;
-  color: var(--ink-muted);
   line-height: 1.5;
-  max-width: 50ch;
+  color: var(--ink-muted-inverted);
+  max-width: 52ch;
   margin-bottom: 32px;
 }
 
-/* Author (Экран 6) --------------------------------------- */
-
-.author__layout {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 48px;
-  align-items: start;
-}
-
-@media (min-width: 720px) {
-  .author__layout {
-    grid-template-columns: 1.4fr 1fr;
+@media (min-width: 768px) {
+  .offer { min-height: 70vh; }
+  .offer__layout {
+    flex-direction: row;
     gap: 64px;
+    align-items: flex-start;
   }
+  .offer__hero { flex: 0 0 auto; }
+  .offer__body { flex: 1; }
+  .offer__number { font-size: clamp(8rem, 18vw, 12rem); }
+  .offer__breakdown { font-size: 1rem; }
 }
+
+@media (min-width: 1280px) {
+  .offer__layout { gap: 96px; }
+  .offer__number { font-size: clamp(10rem, 14vw, 14rem); }
+}
+
+/* ============================================================
+   AUTHOR (Кто ведёт) — MEDIUM
+   Awards inline-row (CANNES 3 · EPICA 2 · GD 2 · EUROBEST 1)
+   ============================================================ */
 
 .author__name {
-  font-size: clamp(1.875rem, 3.6vw, 2.5rem);
+  font-size: clamp(1.75rem, 6vw, 2.25rem);
   font-weight: 900;
   letter-spacing: -0.03em;
   line-height: 1.05;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .author__role {
-  font-size: 1rem;
+  font-size: 0.9375rem;
   font-weight: 600;
   color: var(--ink-soft);
-  margin-bottom: 32px;
+  margin-bottom: 24px;
   letter-spacing: 0.01em;
+  line-height: 1.4;
 }
 
 .author__bio {
-  font-size: 1.0625rem;
+  font-size: 0.9375rem;
   line-height: 1.6;
   color: var(--ink-soft);
-  margin-bottom: 32px;
-  max-width: 50ch;
+  max-width: 56ch;
+  margin-bottom: 16px;
+}
+
+.awards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin: 32px 0;
+  padding: 28px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.awards__item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.awards__num {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: clamp(2.25rem, 9vw, 2.75rem);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+}
+
+.awards__name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+}
+
+.awards__note {
+  grid-column: 1 / -1;
+  font-size: 0.75rem;
+  font-style: italic;
+  color: var(--ink-muted);
+  margin-top: 8px;
+}
+
+.cases {
+  margin: 32px 0;
+}
+
+.case {
+  padding: 20px 0;
+  border-top: 1px solid var(--line);
+}
+.case:last-child { border-bottom: 1px solid var(--line); }
+
+.case__title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+
+.case__body {
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
 }
 
 .author__stats {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 24px;
-  padding: 32px;
-  background: rgba(255, 255, 255, 0.4);
-  border: 1px solid var(--line);
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  padding: 24px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  margin-top: 32px;
 }
 
 .author__stat-value {
-  font-size: clamp(1.75rem, 3vw, 2.25rem);
-  font-weight: 900;
-  letter-spacing: -0.03em;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: clamp(1.5rem, 6vw, 2rem);
   line-height: 1;
+  letter-spacing: -0.03em;
   color: var(--ink);
-  font-variant-numeric: tabular-nums;
   margin-bottom: 8px;
 }
 
 .author__stat-label {
-  font-size: 0.8125rem;
+  font-size: 0.6875rem;
   font-weight: 500;
   color: var(--ink-muted);
-  line-height: 1.3;
+  line-height: 1.35;
+  letter-spacing: 0.02em;
 }
 
-/* For-you (Экран 7) -------------------------------------- */
+@media (min-width: 768px) {
+  .awards {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    padding: 36px 0;
+  }
+  .awards__num { font-size: clamp(2.75rem, 7vw, 4rem); }
+  .awards__note { grid-column: 1 / -1; text-align: left; }
+  .author__stats {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    padding: 32px 0;
+  }
+  .author__stat-value { font-size: clamp(1.75rem, 3vw, 2.25rem); }
+  .author__stat-label { font-size: 0.75rem; }
+}
+
+@media (min-width: 1280px) {
+  .author__name { font-size: clamp(2.25rem, 3.6vw, 3rem); }
+  .awards { gap: 48px; }
+  .awards__num { font-size: 4rem; }
+}
+
+/* ============================================================
+   FOR YOU — COMPACT
+   ============================================================ */
 
 .foryou__list {
   list-style: none;
-  margin: 32px 0 48px;
+  margin: 24px 0 32px;
   padding: 0;
-  max-width: 52ch;
+  max-width: 56ch;
 }
 
 .foryou__list li {
   position: relative;
-  padding: 20px 0 20px 32px;
+  padding: 16px 0 16px 28px;
   border-bottom: 1px solid var(--line);
-  font-size: 1.0625rem;
+  font-size: 0.9375rem;
   line-height: 1.5;
   color: var(--ink);
 }
+
+.foryou__list li:first-child { border-top: 1px solid var(--ink); }
+.foryou__list li:last-child { border-bottom: 1px solid var(--ink); }
 
 .foryou__list li::before {
   content: "→";
   position: absolute;
   left: 0;
-  top: 20px;
+  top: 16px;
   font-weight: 700;
   color: var(--ink);
 }
 
-.foryou__list li:last-child {
-  border-bottom: 1px solid var(--ink);
+.foryou__quote {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  max-width: 56ch;
 }
 
-/* FAQ (Экран 8) ----------------------------------------- */
-
-.faq__list {
-  margin-top: 24px;
+.foryou__quote-text {
+  font-weight: 700;
+  font-size: 1.0625rem;
+  line-height: 1.4;
+  color: var(--ink);
+  margin-bottom: 8px;
 }
+.foryou__quote-text::before { content: "« "; color: var(--ink-muted); }
+.foryou__quote-text::after { content: " »"; color: var(--ink-muted); }
+
+.foryou__quote-cite {
+  font-size: 0.8125rem;
+  color: var(--ink-muted);
+  letter-spacing: 0.01em;
+}
+.foryou__quote-cite::before { content: "— "; }
+
+@media (min-width: 768px) {
+  .foryou__list li { font-size: 1rem; padding: 18px 0 18px 32px; }
+  .foryou__quote-text { font-size: 1.25rem; }
+}
+
+/* ============================================================
+   FAQ — COMPACT accordion
+   ============================================================ */
+
+.faq__list { margin-top: 16px; }
 
 .faq__item {
   border-bottom: 1px solid var(--line);
-  padding: 24px 0;
 }
+.faq__item:first-child { border-top: 1px solid var(--ink); }
+.faq__item:last-child { border-bottom: 1px solid var(--ink); }
 
-.faq__item:first-of-type {
-  border-top: 1px solid var(--ink);
-}
-
-.faq__q {
-  font-size: 1.125rem;
+.faq__item > summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 20px 36px 20px 0;
+  position: relative;
+  font-size: 1rem;
   font-weight: 700;
   color: var(--ink);
-  margin-bottom: 8px;
   line-height: 1.35;
 }
+.faq__item > summary::-webkit-details-marker { display: none; }
+.faq__item > summary::after {
+  content: "+";
+  position: absolute;
+  right: 4px;
+  top: 18px;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--ink-muted);
+  line-height: 1;
+}
+.faq__item[open] > summary::after { content: "−"; }
 
 .faq__a {
-  font-size: 1rem;
+  padding: 0 0 20px 0;
+  font-size: 0.9375rem;
   color: var(--ink-soft);
   line-height: 1.55;
-  max-width: 60ch;
+  max-width: 64ch;
 }
 
-/* Final CTA ---------------------------------------------- */
+@media (min-width: 768px) {
+  .faq__item > summary { font-size: 1.0625rem; padding: 24px 40px 24px 0; }
+  .faq__item > summary::after { top: 22px; }
+}
+
+/* ============================================================
+   FINAL CTA — HUGE inverted (100vh)
+   ============================================================ */
 
 .final {
-  text-align: left;
+  background: var(--bg-inverted);
+  color: var(--ink-inverted);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
   overflow: hidden;
+  border-bottom: none;
 }
 
 .final__headline {
-  font-size: clamp(2rem, 5vw, 3.25rem);
+  font-size: clamp(2.25rem, 9vw, 3.5rem);
   font-weight: 900;
   letter-spacing: -0.03em;
   line-height: 1.05;
-  margin-bottom: 40px;
+  margin-bottom: 32px;
   max-width: 16ch;
+  color: var(--ink-inverted);
 }
 
-/* Footer ------------------------------------------------- */
+.final .cta__hint { color: var(--ink-muted-inverted); }
+.final .cta__hint a { color: var(--ink-inverted); }
+
+@media (min-width: 768px) {
+  .final__headline { font-size: clamp(3rem, 7vw, 5rem); }
+}
+
+@media (min-width: 1280px) {
+  .final__headline { font-size: clamp(4rem, 7vw, 7rem); }
+}
+
+/* ============================================================
+   Footer
+   ============================================================ */
 
 footer {
-  padding: 48px 0;
-  font-size: 0.875rem;
+  background: var(--bg);
+  padding: 32px 0;
+  font-size: 0.8125rem;
   color: var(--ink-muted);
   border-top: 1px solid var(--line);
 }
 
 footer .wrap {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  gap: 24px;
+  flex-direction: column;
+  gap: 12px;
 }
 
 footer a {
   color: var(--ink-soft);
   text-decoration: none;
-  margin-right: 16px;
+  margin-right: 14px;
   font-weight: 500;
 }
+footer a:hover { color: var(--ink); text-decoration: underline; }
 
-footer a:hover {
-  color: var(--ink);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-/* TODO blocks (placeholders for content awaiting brief revision) */
-
-.todo-block {
-  margin: 24px 0;
-  padding: 24px;
-  border: 2px dashed var(--ink-muted);
-  background: rgba(0, 0, 0, 0.03);
-  font-family: 'Inter', monospace;
-  font-size: 0.875rem;
-  line-height: 1.5;
-  color: var(--ink-soft);
-}
-
-.todo-block strong {
-  display: block;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--ink);
-  margin-bottom: 8px;
-  font-size: 0.75rem;
+@media (min-width: 768px) {
+  footer .wrap {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
 }
 
 /* Reduce motion safety net */
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-  * {
-    transition: none !important;
-  }
+  html { scroll-behavior: auto; }
+  * { transition: none !important; }
 }
 </style>
 </head>
 <body>
 
 <!-- ============================================================
-     ЭКРАН 1 — Hero
-     Anchor camerton цитата Дениса + дата + цена + единственный CTA
+     NAV — sticky top bar
+     Mobile: logo + CTA + burger. Desktop: logo + links + CTA.
+     ============================================================ -->
+<header class="nav">
+  <div class="nav__inner">
+    <a class="nav__logo" href="#hero">METHOD</a>
+    <nav class="nav__links">
+      <a class="nav__link" href="#format">Программа</a>
+      <a class="nav__link" href="#author">Кто ведёт</a>
+      <a class="nav__link" href="#offer">Цена</a>
+    </nav>
+    <a class="nav__cta" href="https://t.me/gotaddedvalue_bot" target="_blank" rel="noopener">
+      Купить место
+      <span aria-hidden="true">→</span>
+    </a>
+    <input type="checkbox" id="nav-toggle" aria-label="Меню">
+    <label class="nav__burger" for="nav-toggle" aria-label="Открыть меню">
+      <span></span>
+      <span></span>
+      <span></span>
+    </label>
+  </div>
+  <div class="nav__menu">
+    <a class="nav__link" href="#format">Программа</a>
+    <a class="nav__link" href="#author">Кто ведёт</a>
+    <a class="nav__link" href="#offer">Цена</a>
+  </div>
+</header>
+
+
+<!-- ============================================================
+     ЭКРАН 1 — Hero (HUGE 100vh)
+     Anchor цитата Дениса + дата + цена + единственный CTA
      ============================================================ -->
 <section class="hero" id="hero">
-  <div class="hero__topbar">
-    <span class="hero__logo">METHOD</span>
-    <span>Intensive · 13–14 июня 2026</span>
-  </div>
-
   <img class="cube cube--hero" src="assets/cube.png" alt="" aria-hidden="true">
 
-  <div class="wrap hero__content">
+  <div class="wrap section__content">
     <h1 class="hero__quote">Сидеть три дня перед пустым документом — это не креативный процесс. Это отсутствие процесса.</h1>
     <p class="hero__attribution">Денис Елисеев, автор курса Method</p>
 
@@ -688,7 +1222,7 @@ footer a:hover {
     <div class="hero__meta">
       <div class="hero__meta-item">
         <span class="hero__meta-label">Когда</span>
-        <span class="hero__meta-value">13–14 июня</span>
+        <span class="hero__meta-value">13–14 июня 2026</span>
       </div>
       <div class="hero__meta-item">
         <span class="hero__meta-label">Время</span>
@@ -701,7 +1235,7 @@ footer a:hover {
     </div>
 
     <a class="cta" href="https://t.me/gotaddedvalue_bot" target="_blank" rel="noopener">
-      Записаться через Telegram
+      Купить место
       <span class="cta__arrow" aria-hidden="true">→</span>
     </a>
     <p class="cta__hint">
@@ -712,7 +1246,7 @@ footer a:hover {
 
 
 <!-- ============================================================
-     ЭКРАН 2 — «Знакомо?» (pain mirror, реальные цитаты студентов)
+     ЭКРАН 2 — «Знакомо?» (MEDIUM 70–90vh, pain mirror, реальные цитаты студентов)
      6 драйверов из L2 архитектуры (см. /research/COPY_ARCHITECTURE.md)
      ============================================================ -->
 <section class="pain" id="pain">
@@ -745,9 +1279,9 @@ footer a:hover {
 
 
 <!-- ============================================================
-     ЭКРАН 3 — Что меняет Method (смысловое сердце)
-     thesis + 6 bridges (каждый: pain→element→proof) + implicit differentiation + outcome
-     См. /research/COPY_ARCHITECTURE.md L3 + L4
+     ЭКРАН 3 — Что меняет Method (MEDIUM scroll-heavy)
+     Каждый bridge: цитата-как-заголовок · attribution · hr · формула · развёртка
+     (Экран 7 «Отзывы» убран — цитаты переехали сюда.)
      ============================================================ -->
 <section class="shift" id="shift">
   <img class="cube cube--shift" src="assets/cube.png" alt="" aria-hidden="true">
@@ -757,247 +1291,259 @@ footer a:hover {
     <h2 class="shift__thesis">
       Креатив — не вдохновение. Это <em>процесс</em>. И этот процесс даёт независимость.
     </h2>
-    <p class="shift__body">
+    <p class="shift__lead">
       Креативный суверенитет — это когда результат не зависит от того, выспался ли ты, есть ли в команде сильный стратег и насколько щедр клиент сегодня. Каждый шаг интенсива снимает одну из этих зависимостей. Ниже — какую и через что.
     </p>
 
     <!-- BRIDGE B1 — D1 (хаос) → одностраничный бриф -->
-    <h3>Независимость от хаоса — через одностраничный бриф.</h3>
-    <p class="shift__body">
-      В Дне 1 после стратегической сессии получаешь бриф, который сам стимулирует генерацию идей. Не «бриф для исполнения», а креативная машина — та самая техника, которую выпускники называют «наш фрейм».
-    </p>
-    <div class="testimonial">
+    <article class="bridge">
       <!-- source: student_reactions_method3.md chat 4/28, Daria Ch (P1) -->
-      <p class="testimonial__quote">РЕБЯТ ЭТО ПУШКА Я ХЗ КАК ЖИЛА БЕЗ НЕГО ДО ЭТОГО.</p>
-      <p class="testimonial__cite">Креатор · креативное агентство, 5+ лет в индустрии</p>
-    </div>
+      <h3 class="bridge__quote">РЕБЯТ ЭТО ПУШКА Я ХЗ КАК ЖИЛА БЕЗ НЕГО ДО ЭТОГО.</h3>
+      <p class="bridge__cite">— Креатор · креативное агентство, 5+ лет в индустрии</p>
+      <hr class="bridge__rule">
+      <p class="bridge__formula">Независимость от хаоса — через одностраничный бриф.</p>
+      <p class="bridge__body">В Дне 1 после стратегической сессии получаешь бриф, который сам стимулирует генерацию идей. Не «бриф для исполнения», а креативная машина — та самая техника, которую выпускники называют «наш фрейм».</p>
+    </article>
 
     <!-- BRIDGE B2 — D2 (самозванец / «не возьмут Льва») → шкала относительности -->
-    <h3>Независимость от голоса самозванца — через шкалу относительности.</h3>
-    <p class="shift__body">
-      В Дне 1 на лекции «креатив не продаёт» Денис даёт диагностический инструмент: идея может быть «уже было» на уровне мира, но новой на уровне категории или региона. Объективная шкала вместо ощущения «недостаточно».
-    </p>
-    <div class="testimonial">
+    <article class="bridge">
       <!-- source: student_reactions_method3.md chat 3/25, Natalia Dundina (P2) -->
-      <p class="testimonial__quote">Можно делать классную работу и не страдать.</p>
-      <p class="testimonial__cite">Креативный группхэд · ex-Creative director Leo Burnett · 15+ лет</p>
-    </div>
+      <h3 class="bridge__quote">Можно делать классную работу и не страдать.</h3>
+      <p class="bridge__cite">— Креативный группхэд · ex-Creative director Leo Burnett · 15+ лет</p>
+      <hr class="bridge__rule">
+      <p class="bridge__formula">Независимость от голоса самозванца — через шкалу относительности.</p>
+      <p class="bridge__body">В Дне 1 на лекции «креатив не продаёт» Денис даёт диагностический инструмент: идея может быть «уже было» на уровне мира, но новой на уровне категории или региона. Объективная шкала вместо ощущения «недостаточно».</p>
+    </article>
 
     <!-- BRIDGE B3 — D3 (команда без меня) → transferable framework -->
-    <h3>Независимость от «всё держится на мне» — через фреймворк, который передаёшь команде.</h3>
-    <p class="shift__body">
-      В Дне 2 проживаешь, что фреймворк работает в чужих руках, не только в твоих. Командный шторминг + теория отбора идей — то, что унесёшь как процесс и повторишь с командой в понедельник.
-    </p>
-    <div class="testimonial">
+    <article class="bridge">
       <!-- source: pre_course_responses.md H#81 (P3) -->
-      <p class="testimonial__quote">Мне нужен фреймворк, которому я могу довериться и передать подчинённым, чтобы перестать заниматься креативом, а начать создавать комфортные условия для тех, кто им занимается.</p>
-      <p class="testimonial__cite">Креативный группхэд · из анкет до старта потока</p>
-    </div>
+      <h3 class="bridge__quote">Мне нужен фреймворк, которому я могу довериться и передать подчинённым.</h3>
+      <p class="bridge__cite">— Креативный группхэд · из анкет до старта потока</p>
+      <hr class="bridge__rule">
+      <p class="bridge__formula">Независимость от «всё держится на мне» — через фреймворк, который передаёшь команде.</p>
+      <p class="bridge__body">В Дне 2 проживаешь, что фреймворк работает в чужих руках, не только в твоих. Командный шторминг + теория отбора идей — то, что унесёшь как процесс и повторишь с командой в понедельник.</p>
+    </article>
 
     <!-- BRIDGE B4 — D4 (продажа клиенту) → драматизация -->
-    <h3>Независимость от «клиент боится смелого» — через драматизацию.</h3>
-    <p class="shift__body">
-      В Дне 2 на лекции «драматизация» получаешь технику сборки кейса. Та же методика, на которой кейсы выигрывают международные фестивали — работает и на внутренней защите клиенту: смелая идея становится безопасной для покупки.
-    </p>
-    <div class="testimonial">
+    <article class="bridge">
       <!-- source: pre_course_responses.md H#65 (P4) — голос ICP, запрос на «как продавать креатив» -->
-      <p class="testimonial__quote">Лучше связывать стратегию и креатив. Подача идеи. Как продавать креатив.</p>
-      <p class="testimonial__cite">Креативный директор · из анкет до старта потока</p>
-    </div>
+      <h3 class="bridge__quote">Лучше связывать стратегию и креатив. Подача идеи. Как продавать креатив.</h3>
+      <p class="bridge__cite">— Креативный директор · из анкет до старта потока</p>
+      <hr class="bridge__rule">
+      <p class="bridge__formula">Независимость от «клиент боится смелого» — через драматизацию.</p>
+      <p class="bridge__body">В Дне 2 на лекции «драматизация» получаешь технику сборки кейса. Та же методика, на которой кейсы выигрывают международные фестивали — работает и на внутренней защите клиенту: смелая идея становится безопасной для покупки.</p>
+    </article>
 
     <!-- BRIDGE B5 — D5 (туннельное зрение) → глубинное интервью «5 в глубину» -->
-    <h3>Независимость от шаблонов — через глубинное интервью «5 в глубину».</h3>
-    <p class="shift__body">
-      За неделю до интенсива делаешь 3–5 интервью на заданную тему. В Дне 1 разбираем материал — и инсайт приходит оттуда, куда раньше не заглядывал. Это и есть выход из шаблона: не «придумать новое», а увидеть людей по-настоящему.
-    </p>
-    <div class="testimonial">
+    <article class="bridge">
       <!-- source: three_things_post_course.md Response 18 (P5) -->
-      <p class="testimonial__quote">Я в шоке что у меня получилось придумать столько идей. Если бы я начала придумывать на наш бриф вне курса — было бы от силы 5 идей и они были бы посредственными.</p>
-      <p class="testimonial__cite">Выпускник Method, уровень «Начинающий», поток 2024</p>
-    </div>
+      <h3 class="bridge__quote">Я в шоке что у меня получилось придумать столько идей.</h3>
+      <p class="bridge__cite">— Выпускник Method, уровень «Начинающий», поток 2024</p>
+      <hr class="bridge__rule">
+      <p class="bridge__formula">Независимость от шаблонов — через глубинное интервью «5 в глубину».</p>
+      <p class="bridge__body">За неделю до интенсива делаешь 3–5 интервью на заданную тему. В Дне 1 разбираем материал — и инсайт приходит оттуда, куда раньше не заглядывал. Это и есть выход из шаблона: не «придумать новое», а увидеть людей по-настоящему.</p>
+    </article>
 
     <!-- BRIDGE B6 — D6 (надрыв / выгорание) → процесс, который бережёт людей -->
-    <h3>Независимость от «без надрыва — недостаточно» — через процесс, который бережёт людей.</h3>
-    <p class="shift__body">
-      Структура двух дней снимает героизм. Ты не «выжимаешь идею из себя» — ты идёшь по шагам: интервью → синтез → бриф → шторминг → отбор → драматизация → борд. Каждый шаг готовит следующий. Выгорание — симптом плохого процесса, а не плата за хороший креатив.
-    </p>
-    <div class="testimonial">
+    <article class="bridge">
       <!-- source: three_things_post_course.md Response 17 (P6) -->
-      <p class="testimonial__quote">Создание рекламы теперь никогда не будет прежним ;)</p>
-      <p class="testimonial__cite">Выпускник Method, поток 2024</p>
-    </div>
+      <h3 class="bridge__quote">Создание рекламы теперь никогда не будет прежним ;)</h3>
+      <p class="bridge__cite">— Выпускник Method, поток 2024</p>
+      <hr class="bridge__rule">
+      <p class="bridge__formula">Независимость от «без надрыва — недостаточно» — через процесс, который бережёт людей.</p>
+      <p class="bridge__body">Структура двух дней снимает героизм. Ты не «выжимаешь идею из себя» — ты идёшь по шагам: интервью → синтез → бриф → шторминг → отбор → драматизация → борд. Каждый шаг готовит следующий. Выгорание — симптом плохого процесса, а не плата за хороший креатив.</p>
+    </article>
 
-    <!-- IMPLICIT DIFFERENTIATION (требование архитектора) -->
-    <p class="shift__body" style="margin-top: 48px;">
-      <strong>Это не курс «как креативить». Это курс «как иметь процесс».</strong> Разница — в том, как ты работаешь через год.
-    </p>
-
-    <!-- OUTCOME-CITE / after-картина (требование архитектора — закрывающая) -->
-    <div class="testimonial">
+    <!-- IMPLICIT DIFFERENTIATION + OUTCOME-CITE -->
+    <div class="shift__close">
+      <p class="shift__diff">
+        <strong>Это не курс «как креативить». Это курс «как иметь процесс».</strong> Разница — в том, как ты работаешь через год.
+      </p>
       <!-- source: three_things_post_course.md Response 14 (outcome / after-картина) -->
-      <p class="testimonial__quote">За эти месяцы я получил знания, которые помогли вспомнить, почему я люблю свою профессию и остаюсь в ней. Заряжен энергией для новых свершений.</p>
-      <p class="testimonial__cite">Выпускник Method, поток 2024 · отзыв после курса</p>
+      <p class="shift__outcome">За эти месяцы я получил знания, которые помогли вспомнить, почему я люблю свою профессию и остаюсь в ней. Заряжен энергией для новых свершений.</p>
+      <p class="shift__outcome-cite">Выпускник Method, поток 2024 · отзыв после курса</p>
     </div>
   </div>
 </section>
 
 
 <!-- ============================================================
-     ЭКРАН 4 — Что внутри · 2 дня (структура воркшопа)
-     Последовательность активностей, БЕЗ внутренних таймингов.
+     ЭКРАН 4 — Программа (COMPACT, ≤60vh на desktop)
+     Mobile: accordion <details>. Desktop: 2-col side-by-side.
      ============================================================ -->
 <section id="format">
   <div class="wrap section__content">
     <span class="eyebrow">Что внутри · 2 дня</span>
     <h2>Полный мини-цикл Method за уикенд.</h2>
 
-    <h3 style="margin-top: 48px;">За неделю до интенсива</h3>
-    <p class="shift__body">
-      Получаешь домашку: 3–5 глубинных интервью на заданную тему. Это исходник, с которым работаешь все два дня — твоя реальная задача, твои реальные люди.
-    </p>
+    <div class="program__intro">
+      <h3>За неделю до интенсива</h3>
+      <p>Получаешь домашку: 3–5 глубинных интервью на заданную тему. Это исходник, с которым работаешь все два дня — твоя реальная задача, твои реальные люди.</p>
+    </div>
 
-    <h3 style="margin-top: 32px;">День 1 — суббота</h3>
-    <ul class="foryou__list">
-      <li>Знакомство группы и сверка задач.</li>
-      <li>Лекция «как появился метод» — личная история Дениса и почему метод устроен так.</li>
-      <li>Лекция «креатив не продаёт» + разбор интервью, которые ты сделал на этой неделе.</li>
-      <li>Перерыв.</li>
-      <li>Стратегическая сессия — синтез смыслов из интервью.</li>
-      <li>Одностраничный бриф: теория + один час практики на твоей задаче.</li>
-    </ul>
+    <div class="program__grid">
+      <details class="program__day" open>
+        <summary>День 1 — суббота</summary>
+        <ul>
+          <li>Знакомство группы и сверка задач.</li>
+          <li>Лекция «как появился метод» — личная история Дениса и почему метод устроен так.</li>
+          <li>Лекция «креатив не продаёт» + разбор интервью, которые ты сделал на этой неделе.</li>
+          <li>Перерыв.</li>
+          <li>Стратегическая сессия — синтез смыслов из интервью.</li>
+          <li>Одностраничный бриф: теория + один час практики на твоей задаче.</li>
+        </ul>
+      </details>
 
-    <h3 style="margin-top: 32px;">День 2 — воскресенье</h3>
-    <ul class="foryou__list">
-      <li>Индивидуальный шторминг по твоему брифу.</li>
-      <li>Командный шторминг — фреймворк проверяется в чужих руках.</li>
-      <li>Перерыв.</li>
-      <li>Отбор идей — теория плюс прогон через шкалу относительности.</li>
-      <li>Драматизация — теория сборки кейса, которая выигрывает международные фестивали.</li>
-      <li>Сборка презентационных бордов.</li>
-      <li>Внутреннее закрытое голосование группы + объявление результатов.</li>
-    </ul>
+      <details class="program__day" open>
+        <summary>День 2 — воскресенье</summary>
+        <ul>
+          <li>Индивидуальный шторминг по твоему брифу.</li>
+          <li>Командный шторминг — фреймворк проверяется в чужих руках.</li>
+          <li>Перерыв.</li>
+          <li>Отбор идей — теория плюс прогон через шкалу относительности.</li>
+          <li>Драматизация — теория сборки кейса, которая выигрывает международные фестивали.</li>
+          <li>Сборка презентационных бордов.</li>
+          <li>Внутреннее закрытое голосование группы + объявление результатов.</li>
+        </ul>
+      </details>
+    </div>
 
-    <h3 style="margin-top: 48px;">На выходе</h3>
-    <ul class="foryou__list">
-      <li>Одностраничный бриф на твою реальную задачу.</li>
-      <li>Презентационный борд готовой идеи.</li>
-      <li>Результат внутреннего голосования — мини-формат фестивального дипломного борда.</li>
-      <li>Видеозапись интенсива (~14 часов) — пересматриваешь, когда нужно повторить шаг с командой.</li>
-    </ul>
+    <div class="program__outro">
+      <h3>На выходе у тебя в руках</h3>
+      <ul>
+        <li>Одностраничный бриф на твою реальную задачу.</li>
+        <li>Презентационный борд готовой идеи.</li>
+        <li>Результат внутреннего голосования — мини-формат фестивального дипломного борда.</li>
+        <li>Видеозапись интенсива (~14 часов) — пересматриваешь, когда нужно повторить шаг с командой.</li>
+      </ul>
+    </div>
   </div>
 </section>
 
 
 <!-- ============================================================
-     ЭКРАН 5 — Это попробовать, не купить ($50 нетто механика)
-     Funnel = primary offer. Закрывает O#1 (цена) + часть O#7 (vs MADS).
+     ЭКРАН 5 — $50 offer (DRAMA inverted, 60–70vh)
+     Огромное $50 слева JetBrains Mono · breakdown справа Mono.
      ============================================================ -->
 <section class="offer" id="offer">
   <div class="wrap section__content">
     <span class="eyebrow">Главное про цену</span>
-    <h2 class="offer__headline">Это попробовать, не купить.</h2>
 
-    <div class="offer__breakdown">
-      <div class="offer__row">
-        <span class="offer__label">Интенсив</span>
-        <span class="offer__value">$350</span>
+    <div class="offer__layout">
+      <div class="offer__hero">
+        <div class="offer__number">$50</div>
+        <div class="offer__caption">Фактическая цена попробовать</div>
       </div>
-      <div class="offer__row">
-        <span class="offer__label">В зачёт полного курса Method 3.0 (если решишь продолжать)</span>
-        <span class="offer__value">−$300</span>
-      </div>
-      <div class="offer__row offer__row--total">
-        <span class="offer__label">Фактическая цена попробовать</span>
-        <span class="offer__value">$50</span>
+
+      <div class="offer__body">
+        <h2 class="offer__headline">Это попробовать, не купить.</h2>
+
+        <div class="offer__breakdown">
+          <div class="offer__row">
+            <span>Интенсив</span>
+            <span>$350</span>
+          </div>
+          <div class="offer__row">
+            <span>В зачёт полного Method 3.0</span>
+            <span>−$300</span>
+          </div>
+          <div class="offer__row offer__row--total">
+            <span>Итого</span>
+            <span>$50</span>
+          </div>
+        </div>
+
+        <p class="offer__note">
+          Понравится — $300 из $350 идут в зачёт полного курса Method 3.0. Не понравится — у тебя в руках одностраничный бриф на твою реальную задачу, презентационный борд и видеозапись интенсива на ~14 часов. С этим работаешь с понедельника.
+        </p>
+
+        <a class="cta cta--inverted" href="https://t.me/gotaddedvalue_bot" target="_blank" rel="noopener">
+          Купить место
+          <span class="cta__arrow" aria-hidden="true">→</span>
+        </a>
       </div>
     </div>
-
-    <p class="offer__note">
-      Понравится — $300 из $350 идут в зачёт полного курса Method 3.0. Не понравится — у тебя в руках одностраничный бриф на твою реальную задачу, презентационный борд и видеозапись интенсива на ~14 часов. С этим работаешь с понедельника.
-    </p>
-
-    <a class="cta" href="https://t.me/gotaddedvalue_bot" target="_blank" rel="noopener" style="margin-top: 24px;">
-      Записаться через Telegram
-      <span class="cta__arrow" aria-hidden="true">→</span>
-    </a>
   </div>
 </section>
 
 
 <!-- ============================================================
-     ЭКРАН 6 — Кто ведёт
-     Денис: 450+ наград, NPS 9.1, founder GAV
+     ЭКРАН 6 — Кто ведёт (MEDIUM)
+     Awards: inline-row CANNES 3 · EPICA 2 · GOLDEN DRUM 2 · EUROBEST 1
      ============================================================ -->
 <section class="author" id="author">
   <div class="wrap section__content">
     <span class="eyebrow">Кто ведёт</span>
 
-    <div class="author__layout">
+    <h2 class="author__name">Денис Елисеев</h2>
+    <p class="author__role">CEO Got Added Value · Author of Method · Founder &amp; CCO Friends Moscow · Founder MADS</p>
+
+    <!-- TODO: фото в /assets/denis.jpg -->
+
+    <p class="author__bio">
+      В 21 год, на четвёртом курсе психологии, через КВН попал стажёром в McCann Erickson. Первые годы — выжигал из себя КВНщика. Дальше — 15 лет в международной рекламной индустрии и собственная система, из которой родился Method.
+    </p>
+
+    <!-- AWARDS inline-row — top-shelf фестивали с числом топ-побед (Gold/Bronze/Grand-Prix, без шортлистов) -->
+    <div class="awards">
+      <div class="awards__item">
+        <!-- source: awards.docx — Cannes Lions Bronze ×3 (Utair 2019 + Google Alive Memory Design 2016 + Cyber 2016) -->
+        <div class="awards__num">3</div>
+        <div class="awards__name">Cannes Lions</div>
+      </div>
+      <div class="awards__item">
+        <!-- source: awards.docx — Epica Awards Silver ×2 (Visible Bag + Don't be a man) -->
+        <div class="awards__num">2</div>
+        <div class="awards__name">Epica Awards</div>
+      </div>
+      <div class="awards__item">
+        <!-- source: awards.docx — Golden Drum GRAND-PRIX ×2 (RunToScroll + Alive Memory) -->
+        <div class="awards__num">2</div>
+        <div class="awards__name">Golden Drum</div>
+      </div>
+      <div class="awards__item">
+        <!-- source: awards.docx — Eurobest Silver (RunToScroll) -->
+        <div class="awards__num">1</div>
+        <div class="awards__name">Eurobest</div>
+      </div>
+      <p class="awards__note">Топ-фестивали мира. Полный список — на adforum / Cannes Lions Archive / Epica Winners.</p>
+    </div>
+
+    <p class="author__bio">
+      Работал с Google, Adidas, PepsiCo, Utair, Yota, Levi’s, WWF, Modulbank, Hotpoint, Kaspersky Lab, Uzum Market, Adrenaline Rush. Два кейса, на которых строилась методика:
+    </p>
+
+    <div class="cases">
+      <div class="case">
+        <!-- source: xlsx «Preparation of the case», sheet Main List, R62 -->
+        <h3 class="case__title">Utair «Where You Belong» — №8 → №2 в категории airlines</h3>
+        <p class="case__body">Российская авиакомпания, до кампании №8 в категории. Бюджет — 250 млн ₽. Бюджет S7 в это же время — 2 млрд ₽. За год после кампании Utair вышел на второе место, разделив позицию с S7. Cannes Lions Bronze, Red Apple Gold ×2, ADCE Silver, ADCR Gold.</p>
+      </div>
+
+      <div class="case">
+        <!-- source: awards.docx — Adidas RunToScroll -->
+        <h3 class="case__title">Adidas «RunToScroll» — Golden Drum GRAND-PRIX</h3>
+        <p class="case__body">Мобильная активация по линейке NMD: лента контента превращается в физический бег. Golden Drum GRAND-PRIX (Activation), Eurobest Silver, ADCE Bronze ×3, White Square Silver ×4. На тот момент — самая титулованная цифровая активация на постсоветском пространстве.</p>
+      </div>
+    </div>
+
+    <p class="author__bio">
+      Помимо Friends Moscow Денис — основатель и креативный директор школы концептуального мышления MADS (3000+ выпускников, в 2021 — лучшая рекламная школа мира по совокупности побед студентов). Member of Art Directors Club Russia + Europe. В 2021 — в списке 100 самых креативных людей России. Председатель жюри ADCR и TAF (крупнейший фестиваль ЦА). GRAND Jury New York Advertising Festival. Помог Узбекистану получить первый Cannes Lions shortlist за 20 лет.
+    </p>
+
+    <div class="author__stats">
       <div>
-        <h2 class="author__name">Денис Елисеев</h2>
-        <p class="author__role">CEO Got Added Value · Author of Method · Founder & CCO Friends Moscow · Founder MADS</p>
-
-        <!-- TODO: фото в /assets/denis.jpg -->
-
-        <p class="author__bio">
-          В 21 год, на четвёртом курсе психологии, через КВН попал стажёром в McCann Erickson. Первые годы — выжигал из себя КВНщика. Дальше — 15 лет в международной рекламной индустрии и собственная система, из которой родился Method.
-        </p>
-
-        <p class="author__bio">
-          Конкретные победы — те, что есть в публичных базах фестивалей:
-        </p>
-        <ul class="foryou__list">
-          <!-- source: awards.docx — Cannes Lions BRONZE 2019 -->
-          <li>Cannes Lions BRONZE · Challenger Brand Strategy · Utair «Where You Belong» · 2019.</li>
-          <!-- source: awards.docx — Cannes Lions BRONZE × 2 2016 -->
-          <li>Cannes Lions BRONZE × 2 · Google «Alive Memory» · Design Website + Cyber Microsite · 2016.</li>
-          <!-- source: awards.docx — Epica Awards SILVER 2025 -->
-          <li>Epica Awards SILVER · Uzum Market / Gross Insurance «Visible Bag» · 2025.</li>
-          <!-- source: awards.docx — Epica Awards SILVER 2024 -->
-          <li>Epica Awards SILVER · Public Interest / Gender Equity · «Don’t be a man» · 2024.</li>
-          <!-- source: awards.docx — Golden Drum GRAND-PRIX 2018 -->
-          <li>Golden Drum GRAND-PRIX · Activation · Adidas «RunToScroll» · 2018.</li>
-          <!-- source: awards.docx — Golden Drum GRAND-PRIX 2016 -->
-          <li>Golden Drum GRAND-PRIX · Capture of Local Spirit · Google «Alive Memory» · 2016.</li>
-          <!-- source: awards.docx — Eurobest SILVER 2017 -->
-          <li>Eurobest SILVER · Activation by Location · Adidas «RunToScroll» · 2017.</li>
-          <!-- source: awards.docx — Cannes Lions SHORTLIST Creative Strategy Uzbekistan 2022 -->
-          <li>Cannes Lions SHORTLIST · Creative Strategy · Uzbekistan «Kindergarten on the Wheel» · 2022.</li>
-        </ul>
-        <p class="author__bio">
-          Работал с Google, Adidas, PepsiCo, Utair, Yota, Levi’s, WWF, Modulbank, Hotpoint, Kaspersky Lab, Uzum Market, Adrenaline Rush. Кейсы, на которых строилась методика:
-        </p>
-
-        <h3 style="margin-top: 24px;">Utair «Where You Belong» — №8 → №2 в категории airlines</h3>
-        <p class="author__bio">
-          <!-- source: xlsx «Preparation of the case», sheet Main List, R62 -->
-          Российская авиакомпания, до кампании №8 в категории. Бюджет — 250 млн ₽. Бюджет S7 в это же время — 2 млрд ₽. За год после кампании Utair вышел на второе место, разделив позицию с S7. Cannes Lions Bronze, Red Apple Gold ×2, ADCE Silver, ADCR Gold.
-        </p>
-
-        <h3 style="margin-top: 24px;">Adidas «RunToScroll» — Golden Drum GRAND-PRIX</h3>
-        <p class="author__bio">
-          <!-- source: awards.docx — Adidas RunToScroll -->
-          Мобильная активация по линейке NMD: лента контента превращается в физический бег. Golden Drum GRAND-PRIX (Activation), Eurobest Silver, ADCE Bronze ×3, White Square Silver ×4. На тот момент — самая титулованная цифровая активация на постсоветском пространстве.
-        </p>
-
-        <p class="author__bio" style="margin-top: 24px;">
-          Помимо Friends Moscow Денис — основатель и креативный директор школы концептуального мышления MADS (3000+ выпускников, в 2021 — лучшая рекламная школа мира по совокупности побед студентов). Member of Art Directors Club Russia + Europe. В 2021 — в списке 100 самых креативных людей России. Председатель жюри ADCR 2020 и TAF 2020 (крупнейший фестиваль ЦА). GRAND Jury New York Advertising Festival. Помог Узбекистану получить первый Cannes Lions shortlist за 20 лет.
-        </p>
+        <div class="author__stat-value">450+</div>
+        <div class="author__stat-label">международных наград автора</div>
       </div>
-
-      <div class="author__stats">
-        <div>
-          <div class="author__stat-value">450+</div>
-          <div class="author__stat-label">международных наград автора</div>
-        </div>
-        <div>
-          <div class="author__stat-value">9.1</div>
-          <div class="author__stat-label">NPS выпускников Method</div>
-        </div>
-        <div>
-          <div class="author__stat-value">15</div>
-          <div class="author__stat-label">лет в международной индустрии</div>
-        </div>
+      <div>
+        <div class="author__stat-value">9.1</div>
+        <div class="author__stat-label">NPS выпускников Method</div>
+      </div>
+      <div>
+        <div class="author__stat-value">15+</div>
+        <div class="author__stat-label">лет в международной индустрии</div>
       </div>
     </div>
   </div>
@@ -1005,55 +1551,7 @@ footer a:hover {
 
 
 <!-- ============================================================
-     ЭКРАН 7 — Отзывы про метод (6 разных выпускников)
-     Каждый = разный человек, разный outcome (см. COPY_ARCHITECTURE.md R1-R6)
-     ============================================================ -->
-<section class="reviews" id="reviews">
-  <div class="wrap section__content">
-    <span class="eyebrow">Отзывы про метод</span>
-    <h2>Шесть выпускников — шесть разных сдвигов.</h2>
-
-    <div class="testimonial">
-      <!-- source: student_reactions_method3.md chat 3/15, Lada (R1 — энергия формата) -->
-      <p class="testimonial__quote">Удивительное чувство, когда четырёхчасовой созвон не посадил твою социальную батарейку, а наоборот.</p>
-      <p class="testimonial__cite">Art director · агентство, Москва · 4+ года</p>
-    </div>
-
-    <div class="testimonial">
-      <!-- source: student_reactions_method3.md chat 3/22, Григорий Скоробогатько (R2 — переопределение «зачем креатив») -->
-      <p class="testimonial__quote">Зачем стратегия, зачем креатив, плюс глубинный анализ — докапываться до истины через «почему».</p>
-      <p class="testimonial__cite">Стратег · агентство Mushrooms, Алматы</p>
-    </div>
-
-    <div class="testimonial">
-      <!-- source: student_reactions_method3.md chat 4/12, Tatiana Sur (R3 — креатив + клиент) -->
-      <p class="testimonial__quote">Можно делать креативно в рамках ожидания клиента.</p>
-      <p class="testimonial__cite">Креатор · 7+ лет в индустрии · ранее проходила MADS Concepting</p>
-    </div>
-
-    <div class="testimonial">
-      <!-- source: three_things_post_course.md Response 29 (R4 — переадресация ответственности) -->
-      <p class="testimonial__quote">Нет плохих креативщиков (есть ленивые). Есть плохие брифы и плохие процессы.</p>
-      <p class="testimonial__cite">Выпускник Method · уровень «Продвинутый» · поток 2024</p>
-    </div>
-
-    <div class="testimonial">
-      <!-- source: three_things_post_course.md Response 7 (R5 — глубинный ресёрч против туннельного зрения) -->
-      <p class="testimonial__quote">Без рисёрча глубинного ЦА не сделать качественный креатив. Иначе — туннельное зрение и профессиональный надлом.</p>
-      <p class="testimonial__cite">Выпускник Method · уровень «Продвинутый» · поток 2024</p>
-    </div>
-
-    <div class="testimonial">
-      <!-- source: three_things_post_course.md Response 1 (R6 — заряд формата) -->
-      <p class="testimonial__quote">Спасибо! Это были лучшие субботние ночи за последние годы.</p>
-      <p class="testimonial__cite">Выпускник Method · поток 2024</p>
-    </div>
-  </div>
-</section>
-
-
-<!-- ============================================================
-     ЭКРАН 8 — Это для тебя если
+     ЭКРАН 7 — Это для тебя если (COMPACT)
      6 пунктов из реальных fear-структур 03_student_questions.md
      ============================================================ -->
 <section class="foryou" id="foryou">
@@ -1076,18 +1574,17 @@ footer a:hover {
       <li>Хочешь понимать, тянет ли идея на международный фестиваль, или это «нравится только мне».</li>
     </ul>
 
-    <div class="testimonial">
+    <div class="foryou__quote">
       <!-- source: three_things_post_course.md Response 9 (закрывающая, НЕ Дундина) -->
-      <p class="testimonial__quote">Просто открыл глаза, что называется.</p>
-      <p class="testimonial__cite">Выпускник Method · поток 2024</p>
+      <p class="foryou__quote-text">Просто открыл глаза, что называется.</p>
+      <p class="foryou__quote-cite">Выпускник Method · поток 2024</p>
     </div>
   </div>
 </section>
 
 
 <!-- ============================================================
-     ЭКРАН 9 — FAQ
-     Вопросы про структуру воркшопа + артефакты + общие.
+     ЭКРАН 8 — FAQ (COMPACT accordion <details>, закрыт по умолчанию)
      ============================================================ -->
 <section class="faq" id="faq">
   <div class="wrap section__content">
@@ -1095,72 +1592,72 @@ footer a:hover {
     <h2>Ответы на основное.</h2>
 
     <div class="faq__list">
-      <div class="faq__item">
-        <p class="faq__q">Что будет в День 1?</p>
+      <details class="faq__item">
+        <summary>Что будет в День 1?</summary>
         <p class="faq__a">Лекция «как появился метод», лекция «креатив не продаёт», разбор интервью, которые ты сделал на этой неделе, стратегическая сессия (синтез смыслов) и одностраничный бриф — теория плюс час практики на твоей задаче.</p>
-      </div>
+      </details>
 
-      <div class="faq__item">
-        <p class="faq__q">Что будет в День 2?</p>
+      <details class="faq__item">
+        <summary>Что будет в День 2?</summary>
         <p class="faq__a">Индивидуальный шторминг, командный шторминг, теория отбора идей, лекция по драматизации (та самая, что выигрывает международные фестивали), сборка презентационных бордов и внутреннее закрытое голосование группы.</p>
-      </div>
+      </details>
 
-      <div class="faq__item">
-        <p class="faq__q">Что я унесу в руках?</p>
+      <details class="faq__item">
+        <summary>Что я унесу в руках?</summary>
         <p class="faq__a">Одностраничный бриф на твою реальную задачу, презентационный борд готовой идеи, результат внутреннего голосования (мини-формат фестивального дипломного борда) и видеозапись интенсива на ~14 часов.</p>
-      </div>
+      </details>
 
-      <div class="faq__item">
-        <p class="faq__q">А если у меня нет реальной задачи для практики?</p>
+      <details class="faq__item">
+        <summary>А если у меня нет реальной задачи для практики?</summary>
         <p class="faq__a">Тогда работаем на типовом брифе из практики Дениса — уровня Утаир, Адидас, Гугл, на готовых исходниках. Фреймворк проживёшь полностью. Но если придёшь со своим брифом — унесёшь не только фреймворк, а решение для своей задачи.</p>
-      </div>
+      </details>
 
-      <div class="faq__item">
-        <p class="faq__q">Будут ли международные кейсы?</p>
+      <details class="faq__item">
+        <summary>Будут ли международные кейсы?</summary>
         <p class="faq__a">Да. Денис разбирает работы, на которых он сам брал Cannes Lions, Epica, Golden Drum, Eurobest, ADCE — Utair «Where You Belong», Google «Alive Memory», Adidas «RunToScroll», PepsiCo, Uzum Market и другие. Это не пересказ чужих кейсов, а разбор «как изнутри» с автором.</p>
-      </div>
+      </details>
 
-      <div class="faq__item">
-        <p class="faq__q">Сколько часов в день?</p>
+      <details class="faq__item">
+        <summary>Сколько часов в день?</summary>
         <p class="faq__a">Два дня, 10:00–20:00 по Ташкенту (UTC+5). С перерывами на еду и паузы.</p>
-      </div>
+      </details>
 
-      <div class="faq__item">
-        <p class="faq__q">Подходит ли новичкам?</p>
+      <details class="faq__item">
+        <summary>Подходит ли новичкам?</summary>
         <p class="faq__a">Интенсив рассчитан на mid–senior. Если ты только начинаешь — рекомендуем полный курс Method 3.0, где есть время на проработку.</p>
-      </div>
+      </details>
 
-      <div class="faq__item">
-        <p class="faq__q">А если мне не понравится?</p>
+      <details class="faq__item">
+        <summary>А если мне не понравится?</summary>
         <p class="faq__a">$300 из $350 идут в зачёт полного курса. Попробуй — и реши. Это и есть смысл механики.</p>
-      </div>
+      </details>
 
-      <div class="faq__item">
-        <p class="faq__q">Дадите запись?</p>
+      <details class="faq__item">
+        <summary>Дадите запись?</summary>
         <p class="faq__a">Да. Запись остаётся у тебя навсегда — можно пересматривать.</p>
-      </div>
+      </details>
 
-      <div class="faq__item">
-        <p class="faq__q">Подходит для in-house / не агентства?</p>
+      <details class="faq__item">
+        <summary>Подходит для in-house / не агентства?</summary>
         <p class="faq__a">Да. На курсах работают art-directors, copywriters, marketing-менеджеры, PR-leads, основатели агентств и небрендинговых компаний. Method не привязан к agency-контексту.</p>
-      </div>
+      </details>
 
-      <div class="faq__item">
-        <p class="faq__q">Кто ведёт кроме Дениса?</p>
+      <details class="faq__item">
+        <summary>Кто ведёт кроме Дениса?</summary>
         <p class="faq__a">Интенсив ведёт Денис сам. Расширенный состав (mindfulness-практика, AI-блок) — в полном курсе Method 3.0.</p>
-      </div>
+      </details>
 
-      <div class="faq__item">
-        <p class="faq__q">Возможна оплата от компании / B2B?</p>
+      <details class="faq__item">
+        <summary>Возможна оплата от компании / B2B?</summary>
         <p class="faq__a">Да. Детали — в Telegram-боте.</p>
-      </div>
+      </details>
     </div>
   </div>
 </section>
 
 
 <!-- ============================================================
-     ЭКРАН 9 — Финальный CTA
+     ЭКРАН 9 — Финальный CTA (HUGE 100vh inverted)
      ============================================================ -->
 <section class="final" id="final">
   <img class="cube cube--final" src="assets/cube.png" alt="" aria-hidden="true">
@@ -1168,8 +1665,8 @@ footer a:hover {
   <div class="wrap section__content">
     <h2 class="final__headline">Включи процесс. 13–14 июня.</h2>
 
-    <a class="cta" href="https://t.me/gotaddedvalue_bot" target="_blank" rel="noopener">
-      Записаться через Telegram
+    <a class="cta cta--inverted" href="https://t.me/gotaddedvalue_bot" target="_blank" rel="noopener">
+      Купить место
       <span class="cta__arrow" aria-hidden="true">→</span>
     </a>
     <p class="cta__hint">
