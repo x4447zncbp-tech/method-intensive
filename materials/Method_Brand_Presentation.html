@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Method — Бренд-платформа</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0f;
+  --text: #e8e6e1;
+  --dim: #8a8880;
+  --muted: #555;
+  --accent: #c89b3c;
+  --accent-l: #e4b958;
+  --accent-s: rgba(200, 155, 60, 0.10);
+  --gold: #d4a843;
+  --blue: #2563eb;
+  --border: rgba(255,255,255,0.06);
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'Manrope', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; height: 100%; overflow: hidden; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ========== ПРОГРЕСС-БАР ========== */
+.progress {
+  position: fixed; top: 0; left: 0; height: 2px; z-index: 200;
+  background: linear-gradient(90deg, var(--accent), var(--accent-l));
+  transition: width 0.4s;
+}
+
+/* ========== БЛОК-ЛЕЙБЛ ========== */
+.blk {
+  position: fixed; top: 3vh; left: 8vw;
+  font-family: var(--mono); font-size: 0.6rem;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--muted); z-index: 100;
+}
+
+/* ========== ПОДПИСИ ========== */
+.kh {
+  position: fixed; bottom: 3.5vh; left: 50%; transform: translateX(-50%);
+  font-family: var(--mono); font-size: 0.55rem; color: var(--muted);
+  opacity: 0.4; z-index: 100;
+}
+.credit {
+  position: fixed; bottom: 3.5vh; left: 8vw;
+  font-family: var(--mono); font-size: 0.55rem;
+  letter-spacing: 0.08em; color: var(--muted);
+  opacity: 0.45; z-index: 100;
+}
+
+/* ========== НАВИГАЦИЯ ========== */
+.nav {
+  position: fixed; bottom: 3.5vh; right: 8vw;
+  display: flex; align-items: center; gap: 12px; z-index: 200;
+}
+.nb {
+  width: 44px; height: 44px; border-radius: 50%;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.02);
+  color: var(--dim); cursor: pointer; font-size: 17px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.3s;
+  font-family: var(--sans);
+}
+.nb:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-s); }
+.nc { font-family: var(--mono); font-size: 0.7rem; color: var(--muted); letter-spacing: 0.1em; }
+
+/* ========== КОЛОДА ========== */
+.deck { width: 100%; height: 100%; position: relative; }
+.slide {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 6vh 8vw;
+  opacity: 0; visibility: hidden;
+  transition: opacity 0.5s, visibility 0.5s;
+  overflow-y: auto;
+}
+.slide.active { opacity: 1; visibility: visible; }
+
+/* ========== СТАГГЕР-АНИМАЦИЯ ========== */
+.slide.active .r  { animation: ru 0.65s cubic-bezier(0.22,1,0.36,1) forwards; }
+.slide.active .r1 { animation-delay: 0.08s; }
+.slide.active .r2 { animation-delay: 0.20s; }
+.slide.active .r3 { animation-delay: 0.35s; }
+.slide.active .r4 { animation-delay: 0.50s; }
+.slide.active .r5 { animation-delay: 0.65s; }
+.slide.active .r6 { animation-delay: 0.80s; }
+@keyframes ru {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.r { opacity: 0; transform: translateY(22px); }
+
+/* ========== ТИПОВЫЕ КЛАССЫ ========== */
+.label {
+  font-family: var(--mono); font-size: 0.6rem;
+  text-transform: uppercase; letter-spacing: 0.18em;
+  color: var(--accent); margin-bottom: 2.5vh;
+}
+
+h2 {
+  font-family: var(--serif); font-weight: 400;
+  font-size: clamp(2rem, 3.8vw, 3.4rem);
+  line-height: 1.1; letter-spacing: -0.01em;
+  color: var(--text); margin-bottom: 3vh;
+  max-width: 880px;
+}
+h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
+
+h3 {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+  line-height: 1.15; color: var(--text);
+  margin-bottom: 2vh;
+}
+h3 em { font-style: italic; color: var(--accent); font-weight: 500; }
+
+.sub {
+  font-size: 1.05rem; color: var(--dim);
+  max-width: 620px; font-weight: 300; line-height: 1.55;
+}
+
+.body {
+  font-size: 1rem; color: var(--dim);
+  max-width: 660px; font-weight: 300;
+  line-height: 1.65; margin-bottom: 2vh;
+}
+.body strong { color: var(--text); font-weight: 500; }
+
+.box {
+  border: 1px solid rgba(200, 155, 60, 0.18);
+  background: var(--accent-s);
+  border-radius: 8px;
+  padding: 2.5vh 2.5vw;
+  max-width: 720px; margin-top: 2.5vh;
+}
+.box .body { margin-bottom: 0; color: var(--text); }
+.hl { color: var(--accent-l); font-weight: 600; }
+
+.line { width: 50px; height: 1px; background: var(--muted); margin: 2vh 0; }
+
+.qt {
+  border-left: 2px solid var(--accent);
+  padding-left: 1.5vw;
+  font-style: italic; color: var(--dim);
+  font-family: var(--serif); font-size: 1.15rem;
+  line-height: 1.5;
+  max-width: 640px;
+  margin: 1.8vh 0;
+}
+.qt cite {
+  display: block;
+  font-family: var(--mono); font-size: 0.6rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--muted); font-style: normal;
+  margin-top: 1vh;
+}
+
+.bq {
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 2.8vw, 2.4rem);
+  font-style: italic; color: var(--text);
+  line-height: 1.25; max-width: 880px;
+  margin-bottom: 3vh;
+}
+
+.vs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5vw;
+  max-width: 900px;
+  margin-top: 2vh;
+}
+.vs-col-label {
+  font-family: var(--mono); font-size: 0.6rem;
+  text-transform: uppercase; letter-spacing: 0.15em;
+  color: var(--muted); margin-bottom: 1.5vh;
+}
+.vs-col h4 {
+  font-family: var(--serif); font-weight: 500;
+  font-size: 1.4rem; color: var(--text);
+  margin-bottom: 1.5vh; line-height: 1.3;
+}
+.vs-col p {
+  font-size: 0.92rem; color: var(--dim); line-height: 1.6;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2vw;
+  max-width: 1000px;
+  margin-top: 2vh;
+}
+.cards.c3 { grid-template-columns: 1fr 1fr 1fr; }
+
+.card {
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.015);
+  border-radius: 8px;
+  padding: 2.2vh 1.8vw;
+}
+.card.hot {
+  border-color: rgba(200, 155, 60, 0.25);
+  background: var(--accent-s);
+}
+.card-tag {
+  font-family: var(--mono); font-size: 0.55rem;
+  text-transform: uppercase; letter-spacing: 0.15em;
+  margin-bottom: 1.2vh; color: var(--muted);
+}
+.card-tag.hi { color: var(--accent-l); }
+.card-tag.lo { color: var(--muted); }
+.card-name {
+  font-family: var(--serif); font-size: 1.15rem;
+  font-weight: 500; color: var(--text);
+  margin-bottom: 1vh; line-height: 1.25;
+}
+.card-desc {
+  font-size: 0.85rem; color: var(--dim);
+  line-height: 1.55;
+}
+
+.cards.c3.hot .card { border-color: rgba(200,155,60,0.22); background: var(--accent-s); }
+
+.concept {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 3vh 2.5vw;
+  max-width: 880px;
+  margin-top: 2vh;
+}
+.concept.featured {
+  border-color: rgba(200, 155, 60, 0.30);
+  background: var(--accent-s);
+}
+.concept-axis {
+  font-family: var(--mono); font-size: 0.6rem;
+  text-transform: uppercase; letter-spacing: 0.15em;
+  color: var(--muted); margin-bottom: 1.5vh;
+}
+.concept .body { margin-top: 1.5vh; max-width: none; }
+
+.promise-block {
+  margin-top: 2.5vh; padding-top: 2.5vh;
+  border-top: 1px solid var(--border);
+}
+.promise-label {
+  font-family: var(--mono); font-size: 0.58rem;
+  text-transform: uppercase; letter-spacing: 0.15em;
+  color: var(--accent); margin-bottom: 1vh;
+}
+.promise-text {
+  font-size: 1rem; color: var(--text); line-height: 1.55;
+  max-width: 780px;
+}
+
+.formula-block {
+  margin-top: 2vh; padding-top: 2vh;
+  border-top: 1px solid var(--border);
+}
+.formula-label {
+  font-family: var(--mono); font-size: 0.58rem;
+  text-transform: uppercase; letter-spacing: 0.15em;
+  color: var(--muted); margin-bottom: 1vh;
+}
+.formula-text {
+  font-family: var(--serif); font-style: italic;
+  font-size: 1.4rem; color: var(--accent-l);
+  line-height: 1.3;
+}
+
+.crit-list {
+  margin-top: 2vh; max-width: 820px;
+}
+.crit {
+  display: flex; gap: 1.5vw;
+  padding: 1.5vh 0;
+  border-bottom: 1px solid var(--border);
+  align-items: baseline;
+}
+.crit:last-child { border-bottom: none; }
+.crit-n {
+  font-family: var(--mono); font-size: 0.62rem;
+  color: var(--accent-l); min-width: 1.5rem;
+  letter-spacing: 0.1em;
+}
+.crit-text {
+  font-size: 0.95rem; color: var(--dim);
+  line-height: 1.6; font-weight: 300;
+}
+.crit-text strong { color: var(--text); font-weight: 500; }
+
+/* Пирамида */
+.pyr {
+  max-width: 760px;
+  margin-top: 2vh;
+}
+.pyr-row {
+  display: flex; gap: 2vw;
+  padding: 1.3vh 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  align-items: baseline;
+}
+.pyr-row.top { border-color: rgba(200, 155, 60, 0.2); }
+.pyr-n {
+  font-family: var(--mono); font-size: 0.55rem;
+  color: var(--muted); width: 1.2rem;
+}
+.pyr-k {
+  font-size: 0.72rem; font-weight: 600;
+  color: var(--dim); text-transform: uppercase;
+  letter-spacing: 0.05em; width: 150px;
+  font-family: var(--sans);
+}
+.pyr-row.top .pyr-k { color: var(--accent-l); }
+.pyr-v {
+  font-size: 0.88rem; color: var(--text);
+  line-height: 1.45;
+}
+
+/* ========== СПЕЦИАЛЬНЫЕ СЛАЙДЫ ========== */
+
+/* Титульный */
+.slide.tp {
+  justify-content: flex-end;
+  padding-bottom: 12vh;
+}
+.tp-eyebrow {
+  font-family: var(--mono); font-size: 0.62rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 4vh;
+}
+.tp-logo {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(4rem, 9vw, 7.5rem);
+  line-height: 0.9; letter-spacing: -0.02em;
+  margin-bottom: 1vh;
+}
+.tp-logo em { color: var(--gold); font-style: italic; font-weight: 500; }
+.tp-tagline {
+  font-family: var(--serif); font-style: italic;
+  font-size: clamp(1.8rem, 3.5vw, 3rem);
+  color: var(--dim); margin-top: 2vh; margin-bottom: 4vh;
+  letter-spacing: -0.01em;
+}
+.tp-tagline em { color: var(--accent); font-style: italic; }
+.tp-divider {
+  width: 60px; height: 1px;
+  background: var(--accent); opacity: 0.5;
+  margin: 2vh 0;
+}
+.tp-meta {
+  font-family: var(--mono); font-size: 0.6rem;
+  letter-spacing: 0.12em; color: var(--muted);
+  text-transform: uppercase; margin-top: 1vh;
+}
+
+/* Слайд-глава */
+.slide.ch {
+  justify-content: center;
+  align-items: flex-start;
+}
+.ch-num {
+  font-family: var(--mono); font-size: 0.65rem;
+  text-transform: uppercase; letter-spacing: 0.2em;
+  color: var(--accent); opacity: 0.7; margin-bottom: 4vh;
+}
+.ch-q {
+  font-family: var(--serif); font-style: italic;
+  font-size: clamp(2.6rem, 5.5vw, 4.2rem);
+  line-height: 1.05; color: var(--text);
+  letter-spacing: -0.01em; max-width: 1000px;
+}
+.ch-q em { color: var(--accent); font-style: italic; }
+.ch-sub {
+  font-size: 0.9rem; color: var(--muted);
+  margin-top: 3vh; max-width: 580px;
+  font-weight: 300; line-height: 1.55;
+}
+
+/* Финал */
+.slide.fin {
+  justify-content: center; align-items: center;
+  text-align: center;
+}
+.fin-bq {
+  font-family: var(--serif); font-style: italic;
+  font-size: clamp(2rem, 3.8vw, 3.2rem);
+  line-height: 1.2; color: var(--text);
+  max-width: 880px; margin: 0 auto;
+  letter-spacing: -0.01em;
+}
+.fin-bq em { color: var(--accent); font-style: italic; }
+.fin-formula {
+  font-family: var(--serif); font-weight: 400;
+  font-size: clamp(1.3rem, 2.5vw, 2rem);
+  color: var(--dim); margin-top: 1.5vh;
+}
+.fin-sub {
+  font-family: var(--mono); font-size: 0.62rem;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--accent); margin-top: 1.5vh;
+}
+.fin-divider {
+  width: 60px; height: 1px;
+  background: var(--muted); opacity: 0.5;
+  margin: 4vh auto;
+}
+.fin-credit-label {
+  font-family: var(--mono); font-size: 0.58rem;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 1.5vh;
+}
+.fin-strataI {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700; font-size: 1.6rem;
+  letter-spacing: -0.01em;
+}
+.fin-strataI a { text-decoration: none; }
+.fin-strataI .s1 { color: var(--text); }
+.fin-strataI .s2 { color: var(--blue); }
+.fin-copy {
+  font-family: var(--mono); font-size: 0.55rem;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--muted); margin-top: 1.5vh;
+}
+
+/* ========== АДАПТИВ ========== */
+@media (max-width: 900px) {
+  .blk, .credit, .kh { display: none; }
+  .nav { right: 4vw; bottom: 2.5vh; }
+}
+
+@media (max-width: 480px) {
+  html, body { overflow: auto; height: auto; }
+  .deck { height: auto; position: static; }
+  .slide {
+    position: static !important;
+    display: flex !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    padding: 4vh 6vw;
+    min-height: 100svh;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    animation: none !important;
+    justify-content: center;
+  }
+  .slide .r {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+  h2, .sub, .body, .box, .bq, .ch-q, .concept, .pyr { max-width: 95%; }
+  .cards, .vs, .cards.c3 { grid-template-columns: 1fr; }
+  .progress, .blk, .nav, .credit, .kh { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+<div class="blk" id="bl"></div>
+<div class="kh">← → / свайп</div>
+<div class="credit">Method · 2026</div>
+
+<div class="nav">
+  <button class="nb" onclick="go(-1)" aria-label="Previous">←</button>
+  <div class="nc" id="c"></div>
+  <button class="nb" onclick="go(1)" aria-label="Next">→</button>
+</div>
+
+<div class="deck">
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 0 — ТИТУЛЬНЫЙ
+  ═══════════════════════════════════════════════════ -->
+  <section class="slide tp" data-block="">
+    <div class="r r1 tp-eyebrow">Бренд-платформа · 2026</div>
+    <div class="r r2 tp-logo">Metho<em>d</em></div>
+    <div class="r r3 tp-tagline">Не <em>случайно.</em></div>
+    <div class="r r4 tp-divider"></div>
+    <div class="r r5 tp-meta">
+      Got Added Value LLC&nbsp;&nbsp;·&nbsp;&nbsp;Аналитика: Strateg AI
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 1 — ГЛАВА 1: АУДИТОРИЯ
+  ═══════════════════════════════════════════════════ -->
+  <section class="slide ch" data-block="">
+    <div class="r r1 ch-num">01</div>
+    <div class="r r2 ch-q">Кто <em>эти люди</em>?</div>
+    <div class="r r3 ch-sub">Профессионалы с опытом, которые работают каждый день и не понимают, почему результат каждый раз разный.</div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 2 — Аудитория: кто это
+  ═══════════════════════════════════════════════════ -->
+  <section class="slide" data-block="Блок 1 · Аудитория">
+    <div class="r r1 label">Аудитория</div>
+    <h2 class="r r2">Не новички в профессии — <em>профессионалы, упёршиеся в потолок</em>.</h2>
+    <p class="r r3 body">Креативные директора, арт-директора, копирайтеры, основатели агентств. Россия и Центральная Азия. 25–40 лет. Работают в международных и локальных агентствах, придумывают каждый день. Большинство — middle и senior.</p>
+    <p class="r r4 body">Они уже знают, что такое инсайт, бриф и стратегия. Им не нужны базовые знания. Им нужно объяснение, почему вчера получилось придумать три концепции за час, а сегодня — третий час шторма и пустая доска.</p>
+    <div class="r r5 box">
+      <p class="body"><strong>Ключевое наблюдение:</strong> аудитория не ищет знания — она ищет <span class="hl">воспроизводимый процесс</span>, который даёт результат каждый раз, а не только в удачные дни.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 3 — Аудитория: голоса
+  ═══════════════════════════════════════════════════ -->
+  <section class="slide" data-block="Блок 1 · Аудитория">
+    <div class="r r1 label">Голос аудитории</div>
+    <h2 class="r r2">Так они сами <em>описывают</em> своё состояние.</h2>
+    <div class="r r3 qt">
+      «Отсутствие определённой системы, как придумывать креативные решения. Сейчас немного хаотично.»
+      <cite>Респондент 1</cite>
+    </div>
+    <div class="r r4 qt">
+      «Хочу контролировать свой мозг и свою креативность.»
+      <cite>Респондент 2</cite>
+    </div>
+    <div class="r r5 qt">
+      «Структурирование процессов. Мне не хватает теории и рабочих инструментов.»
+      <cite>Респондент 3, руководитель креативного отдела</cite>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 4 — ГЛАВА 2: МОТИВЫ
+  ═══════════════════════════════════════════════════ -->
+  <section class="slide ch" data-block="">
+    <div class="r r1 ch-num">02</div>
+    <div class="r r2 ch-q">Чего они <em>хотят</em>?</div>
+    <div class="r r3 ch-sub">Двенадцать мотивов, выстроенных от самого сильного к фоновому. Первые три объединяют почти всех.</div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 5 — Мотивы: топ-3
+  ═══════════════════════════════════════════════════ -->
+  <section class="slide" data-block="Блок 2 · Мотивы">
+    <div class="r r1 label">Главные мотивы</div>
+    <h2 class="r r2">Три желания, которые <em>объединяют всех</em>.</h2>
+    <div class="cards c3">
+      <div class="r r3 card hot">
+        <div class="card-tag hi">01</div>
+        <div class="card-name">Воспроизводимая система</div>
+        <div class="card-desc">Каждый бриф сейчас — лотерея. Кто-то начинает с мудборда, кто-то ждёт стратегию, кто-то ждёт музу. Результат зависит от состава команды, настроения и удачи. Хотят единый процесс, который работает на любом брифе.</div>
+      </div>
+      <div class="r r4 card hot">
+        <div class="card-tag hi">02</div>
+        <div class="card-name">Самостоятельный поиск инсайтов</div>
+        <div class="card-desc">Зависят от стратегов, которые приносят «инсайты» — часто поверхностные. Или придумывают из головы. Хотят сами проводить интервью и добывать настоящий материал, на котором стоит идея.</div>
+      </div>
+      <div class="r r5 card hot">
+        <div class="card-tag hi">03</div>
+        <div class="card-name">Скорость генерации идей</div>
+        <div class="card-desc">Ступор на шторме — главный страх. Хотят инструмент, который позволяет за одну сессию выдать десятки идей, а не ждать «того самого озарения». Много идей — это выбор, качество, уверенность.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 6 — Мотивы: остальные
+  ═══════════════════════════════════════════════════ -->
+  <section class="slide" data-block="Блок 2 · Мотивы">
+    <div class="r r1 label">Остальные мотивы</div>
+    <h2 class="r r2">Что ещё стоит за выбором.</h2>
+    <div class="cards c3">
+      <div class="r r2 card">
+        <div class="card-tag">04</div>
+        <div class="card-name">Побеждать на фестивалях</div>
+        <div class="card-desc">Фестивальные победы — валюта профессии. Упаковка кейса — отдельный навык.</div>
+      </div>
+      <div class="r r2 card">
+        <div class="card-tag">05</div>
+        <div class="card-name">Стабильно придумывать</div>
+        <div class="card-desc">Сегодня в потоке, завтра ступор. Хотят придумывать каждый день, не дожидаясь музы.</div>
+      </div>
+      <div class="r r3 card">
+        <div class="card-tag">06</div>
+        <div class="card-name">Избежать неуверенности</div>
+        <div class="card-desc">Синдром самозванца, страх «а вдруг идея плохая». Хотят опираться на метод, а не на веру в себя.</div>
+      </div>
+      <div class="r r3 card">
+        <div class="card-tag">07</div>
+        <div class="card-name">Продавать креатив</div>
+        <div class="card-desc">Придумать — полдела. Защитить идею у клиента — навык, которому нигде не учат.</div>
+      </div>
+      <div class="r r4 card">
+        <div class="card-tag">08</div>
+        <div class="card-name">Отбирать по критериям</div>
+        <div class="card-desc">«Нравится / не нравится» — единственный фильтр. Хотят объективные критерии оценки идеи.</div>
+      </div>
+      <div class="r r4 card">
+        <div class="card-tag">09</div>
+        <div class="card-name">Эффективная команда</div>
+        <div class="card-desc">Штормы хаотичны: все говорят одновременно, лидер тянет на себе. Хотят структуру командной работы.</div>
+      </div>
+      <div class="r r5 card">
+        <div class="card-tag">10</div>
+        <div class="card-name">Управлять состоянием</div>
+        <div class="card-desc">Тревожность, апатия, выгорание — рабочая реальность. Mindfulness как инструмент, не эзотерика.</div>
+      </div>
+      <div class="r r5 card">
+        <div class="card-tag">11</div>
+        <div class="card-name">Вырасти профессионально</div>
+        <div class="card-desc">Стать КД, выйти на международный рынок, открыть своё агентство.</div>
+      </div>
+      <div class="r r5 card">
+        <div class="card-tag">12</div>
+        <div class="card-name">Быстрый ресёрч</div>
+        <div class="card-desc">Клиенты не дают бюджет на исследования. Нужен качественный ресёрч в ограничениях.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 7 — ГЛАВА 3: КОНТЕКСТ
+  ═══════════════════════════════════════════════════ -->
+  <section class="slide ch" data-block="">
+    <div class="r r1 ch-num">03</div>
+    <div class="r r2 ch-q">Что <em>происходит</em> вокруг?</div>
+    <div class="r r3 ch-sub">Внешние данные, которые объясняют масштаб явлений и показывают, что это не личная история — это структурный сдвиг индустрии.</div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 8 — Контекст: выгорание
+  ═══════════════════════════════════════════════════ -->
+  <section class="slide" data-block="Блок 3 · Контекст">
+    <div class="r r1 label">Эпидемия, а не личная история</div>
+    <h2 class="r r2"><em>70%</em> креативщиков выгорают за год.</h2>
+    <p class="r r3 body">Mentally Healthy Survey 2024 на 2000+ респондентов из четырёх стран: 70% креативных профессионалов пережили burnout за последние 12 месяцев — против 53% в среднем по работающим. 44% столкнулись с депрессией за карьеру — против 17% по населению.</p>
+    <div class="r r4 box">
+      <p class="body"><strong>Что это значит для бренда:</strong> выгорание респондентов — <span class="hl">не личная слабость, а системный кризис</span>. Блок про устойчивость и состояние внутри метода — это не эзотерический бонус, а ответ на документированную эпидемию.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 9 — Контекст: AI и рынок
+  ═══════════════════════════════════════════════════ -->
+  <section class="slide" data-block="Блок 3 · Контекст">
+    <div class="r r1 label">Другая часть пейзажа</div>
+    <h2 class="r r2">Рынок растёт. AI ускоряет хаос.</h2>
+    <div class="cards">
+      <div class="r r3 card">
+        <div class="card-tag">Рост рынка ЦА</div>
+        <div class="card-name">+29%</div>
+        <div class="card-desc">Рекламные рынки Казахстана (+29% в Q1 2024) и Узбекистана (2,1 трлн сум) переживают взрывной рост. E-commerce растёт на 40%+ ежегодно. Спрос на креативные кадры опережает предложение. Амбиции аудитории из ЦА подкреплены реальной динамикой.</div>
+      </div>
+      <div class="r r4 card">
+        <div class="card-tag">AI без системы</div>
+        <div class="card-name">77% / 74%</div>
+        <div class="card-desc">77% агентств внедрили AI (McKinsey 2024), но 74% не могут его масштабировать. AI ускоряет генерацию контента — но без системы он лишь автоматизирует хаос. «Ещё больше средних идей быстрее.»</div>
+      </div>
+    </div>
+    <div class="r r5 box">
+      <p class="body"><strong>Что это значит для бренда:</strong> система + AI — это формула, в которой AI становится инструментом внутри процесса, а не заменой процесса. <span class="hl">Метод как ответ на хаос инструментов.</span></p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 10 — ГЛАВА 4: КОНКУРЕНТЫ
+  ═══════════════════════════════════════════════════ -->
+  <section class="slide ch" data-block="">
+    <div class="r r1 ch-num">04</div>
+    <div class="r r2 ch-q">Кто уже <em>говорит</em> с этой аудиторией?</div>
+    <div class="r r3 ch-sub">Карта занятых коммуникационных территорий — и территория, которая остаётся пустой.</div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 11 — Конкуренты: карта
+  ═══════════════════════════════════════════════════ -->
+  <section class="slide" data-block="Блок 4 · Конкуренты">
+    <div class="r r1 label">Конкурентные территории</div>
+    <h2 class="r r2">Каждый занял <em>одно слово</em>.</h2>
+    <div class="cards">
+      <div class="r r3 card">
+        <div class="card-tag lo">AI-инструменты</div>
+        <div class="card-name">Скорость</div>
+        <div class="card-desc">MidJourney, ChatGPT, Sora. Обещают: «генерируй быстрее». Не решают вопрос, что генерировать.</div>
+      </div>
+      <div class="r r3 card">
+        <div class="card-tag lo">Книги и гуру</div>
+        <div class="card-name">Мудрость</div>
+        <div class="card-desc">Огилви, Берн, лекции легенд индустрии. Дают принципы и истории. Не дают шагов.</div>
+      </div>
+      <div class="r r4 card">
+        <div class="card-tag lo">Курсы по креативу</div>
+        <div class="card-name">Знания</div>
+        <div class="card-desc">Учат, что такое инсайт, бриф, идея. Дают терминологию. Не дают сквозного процесса.</div>
+      </div>
+      <div class="r r4 card">
+        <div class="card-tag lo">Мотивационный контент</div>
+        <div class="card-name">Вдохновение</div>
+        <div class="card-desc">TED-talks, биографии, кейсы-победители. Заряжают эмоцией. Не дают воспроизводимости.</div>
+      </div>
+    </div>
+    <div class="r r5 box">
+      <p class="body"><strong>Незанятая территория:</strong> <span class="hl">сквозная пошаговая система полного креативного цикла</span> — от первого интервью до фестивального кейса. Не отдельные инструменты, не общие принципы, а единый рабочий процесс от практика с реальными победами.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 12 — ГЛАВА 5: НАПРЯЖЕНИЕ
+  ═══════════════════════════════════════════════════ -->
+  <section class="slide ch" data-block="">
+    <div class="r r1 ch-num">05</div>
+    <div class="r r2 ch-q">Между чем и чем <em>они разрываются</em>?</div>
+    <div class="r r3 ch-sub">Внутренний конфликт, который объясняет всё остальное: и то, чего они хотят, и то, чего они боятся.</div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 13 — Напряжение: vs
+  ═══════════════════════════════════════════════════ -->
+  <section class="slide" data-block="Блок 5 · Напряжение">
+    <div class="r r1 label">Внутренний конфликт</div>
+    <h2 class="r r2">Романтика таланта <em>против</em> реальности производства.</h2>
+    <div class="vs">
+      <div class="r r3 vs-col">
+        <div class="vs-col-label">Во что они верят</div>
+        <h4>Настоящий креатив — это талант, интуиция и вдохновение.</h4>
+        <p>Хорошая идея либо пришла, либо нет. Великие креативщики — талантливые. Принять систему — значит признать, что таланта недостаточно. Удар по самооценке.</p>
+      </div>
+      <div class="r r4 vs-col">
+        <div class="vs-col-label">Что они видят</div>
+        <h4>Результат непредсказуем. Каждый бриф — лотерея. Потолок не пробивается.</h4>
+        <p>Сегодня в потоке — завтра ступор. Команда зависит от лидера. Лидер ушёл — процесс встал. И никто не понимает почему.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 14 — Напряжение: парадокс
+  ═══════════════════════════════════════════════════ -->
+  <section class="slide" data-block="Блок 5 · Напряжение">
+    <div class="r r1 label">Парадокс</div>
+    <div class="r r2 bq">Чем сильнее ты <em>веришь в талант</em>, тем меньше ты <em>контролируешь свой результат</em>.</div>
+    <p class="r r3 body">Это красивая история — и она же ловушка. Если идея зависит от вдохновения, ты не управляешь, когда она придёт. Если ты руководишь командой, ты не можешь передать свой «талант» другим. Всё замыкается на тебе. И каждый новый бриф становится проверкой удачи — а не профессии.</p>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 15 — Напряжение: разрешение
+  ═══════════════════════════════════════════════════ -->
+  <section class="slide" data-block="Блок 5 · Напряжение">
+    <div class="r r1 label">Разрешение</div>
+    <h2 class="r r2">Система <em>не убивает</em> креатив. Она его освобождает.</h2>
+    <p class="r r3 body">Те, кто прошёл через это, описывают обратное эффекту, которого боялись. Когда не нужно ждать музу и каждый раз изобретать процесс заново, энергия идёт на качество идеи, а не на борьбу с пустым листом.</p>
+    <div class="r r4 box">
+      <p class="body">Метод — это <span class="hl">не клетка, а фундамент</span>. Он даёт почву под ногами. А что построить на ней — по-прежнему решает креативщик.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 16 — ГЛАВА 6: ПОЗИЦИОНИРОВАНИЕ
+  ═══════════════════════════════════════════════════ -->
+  <section class="slide ch" data-block="">
+    <div class="r r1 ch-num">06</div>
+    <div class="r r2 ch-q">Три гипотезы <em>позиционирования</em></div>
+    <div class="r r3 ch-sub">Разные оси. Одно напряжение — три способа его разрешить.</div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 17 — Концепция 1
+  ═══════════════════════════════════════════════════ -->
+  <section class="slide" data-block="Блок 6 · Позиционирование">
+    <div class="r r1 label">Концепция 1 из 3</div>
+    <div class="r r2 concept">
+      <div class="concept-axis">Ось: Талант — Ремесло</div>
+      <h3>Метод вместо <em>вдохновения</em></h3>
+      <p class="body">Эта концепция решает напряжение через прямое противопоставление. Креатив — не дар свыше, а ремесло, которому учатся. Великие креативщики не «талантливее» — они работают по процессу, который другие не видят. Method даёт этот процесс открыто и пошагово.</p>
+      <p class="body">Сильная сторона: ясность позиции, конфронтация с романтикой профессии. Риск: может оттолкнуть тех, кто строит идентичность на «таланте».</p>
+      <div class="promise-block">
+        <div class="promise-label">Обещание бренда</div>
+        <div class="promise-text">Креатив — это ремесло, которому можно научиться. Method учит ему системно, а не вдохновляющими примерами.</div>
+      </div>
+      <div class="formula-block">
+        <div class="formula-label">Краткая формулировка</div>
+        <div class="formula-text">Method — школа креативного ремесла</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 18 — Концепция 2
+  ═══════════════════════════════════════════════════ -->
+  <section class="slide" data-block="Блок 6 · Позиционирование">
+    <div class="r r1 label">Концепция 2 из 3</div>
+    <div class="r r2 concept">
+      <div class="concept-axis">Ось: Хаос — Структура</div>
+      <h3>Свобода <em>через систему</em></h3>
+      <p class="body">Эта концепция разрешает напряжение через парадокс. Система не отнимает свободу — она её даёт. Когда есть процесс, не нужно тратить силы на пустой лист. Энергия идёт на качество идеи, а не на борьбу с хаосом.</p>
+      <p class="body">Сильная сторона: снимает главный страх аудитории («процесс убьёт творчество»). Риск: требует объяснения парадокса, не работает в коротких форматах с лёту.</p>
+      <div class="promise-block">
+        <div class="promise-label">Обещание бренда</div>
+        <div class="promise-text">Пошаговая система превращает каждый бриф из лотереи в производство — освобождая креативность для главного.</div>
+      </div>
+      <div class="formula-block">
+        <div class="formula-label">Краткая формулировка</div>
+        <div class="formula-text">Method — система, освобождающая креативность от хаоса</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 19 — Концепция 3
+  ═══════════════════════════════════════════════════ -->
+  <section class="slide" data-block="Блок 6 · Позиционирование">
+    <div class="r r1 label">Концепция 3 из 3</div>
+    <div class="r r2 concept">
+      <div class="concept-axis">Ось: Зависимость — Автономия</div>
+      <h3>Креативный <em>суверенитет</em></h3>
+      <p class="body">Эта концепция переносит разговор с инструмента на результат. Метод — это путь к независимости от случая, от настроения, от стратега, от удачного дня. Креативщик с методом не ждёт ни вдохновения, ни команды, ни брифа из стратегии. Он сам управляет своим процессом — от первого интервью до упакованного кейса.</p>
+      <p class="body">Сильная сторона: говорит о финальной выгоде, а не о форме её достижения. Вбирает обе предыдущие концепции — и ремесло, и систему — как способы достичь суверенитета.</p>
+      <div class="promise-block">
+        <div class="promise-label">Обещание бренда</div>
+        <div class="promise-text">Method даёт полное владение своим креативным процессом — от добычи инсайта до фестивальной упаковки, без зависимости от внешних обстоятельств.</div>
+      </div>
+      <div class="formula-block">
+        <div class="formula-label">Краткая формулировка</div>
+        <div class="formula-text">Method освобождает креативность от случая</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 20 — РЕКОМЕНДАЦИЯ
+  ═══════════════════════════════════════════════════ -->
+  <section class="slide" data-block="Блок 7 · Рекомендация">
+    <div class="r r1 label">Рекомендация</div>
+    <h2 class="r r2">Креативный <em>суверенитет</em></h2>
+    <div class="r r3 concept featured">
+      <p class="body" style="color:var(--text);margin-top:0;">Из трёх концепций именно эта работает лучше всего — по четырём причинам:</p>
+      <div class="crit-list">
+        <div class="crit">
+          <div class="crit-n">01</div>
+          <div class="crit-text"><strong>Говорит о результате, а не о форме.</strong> «Ремесло» и «система» — это <em>как</em>. «Суверенитет» — это <em>что получает человек</em>. Аудитория покупает не процесс, а независимость, которую процесс даёт.</div>
+        </div>
+        <div class="crit">
+          <div class="crit-n">02</div>
+          <div class="crit-text"><strong>Вбирает обе альтернативы.</strong> Чтобы получить суверенитет, нужно одновременно освоить ремесло (концепция 1) и работать по системе (концепция 2). Концепция 3 не противоречит им — она их объединяет на уровень выше.</div>
+        </div>
+        <div class="crit">
+          <div class="crit-n">03</div>
+          <div class="crit-text"><strong>Работает на всех ролях.</strong> Арт-директор с суверенитетом — больше не зависит от стратега. Креативный групхэд с суверенитетом — больше не единственный фильтр в команде. Основатель агентства с суверенитетом — больше не зависит от ключевого сотрудника. Одна метафора, три применения.</div>
+        </div>
+        <div class="crit">
+          <div class="crit-n">04</div>
+          <div class="crit-text"><strong>Резонирует с культурным контекстом.</strong> Эпидемия выгорания, кризис агентской модели, AI-хаос — всё это про потерю контроля над своей профессией. «Суверенитет» прямо отвечает на этот фон.</div>
+        </div>
+      </div>
+    </div>
+    <p class="r r4 body" style="margin-top:2.5vh;">Две другие концепции встраиваются внутрь как <strong>обоснование</strong>. «Ремесло» отвечает на вопрос «откуда берётся суверенитет» (от навыка). «Система» отвечает на вопрос «как именно ремесло становится надёжным» (через процесс).</p>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 21 — ГЛАВА 7: ПИРАМИДА
+  ═══════════════════════════════════════════════════ -->
+  <section class="slide ch" data-block="">
+    <div class="r r1 ch-num">07</div>
+    <div class="r r2 ch-q">Что значит креативный <em>суверенитет</em>?</div>
+    <div class="r r3 ch-sub">Восемь уровней — от того, кто эта аудитория, до сути, ради которой бренд существует.</div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 22 — Пирамида: таблица
+  ═══════════════════════════════════════════════════ -->
+  <section class="slide" data-block="Блок 8 · Пирамида">
+    <div class="r r1 label">Пирамида бренда</div>
+    <h2 class="r r2">Method на восьми <em>уровнях</em>.</h2>
+    <div class="r r3 pyr">
+      <div class="pyr-row top">
+        <div class="pyr-n">8</div>
+        <div class="pyr-k">Суть</div>
+        <div class="pyr-v">Креативный суверенитет</div>
+      </div>
+      <div class="pyr-row top">
+        <div class="pyr-n">7</div>
+        <div class="pyr-k">Миссия</div>
+        <div class="pyr-v">Освободить креативных профессионалов от зависимости от случая</div>
+      </div>
+      <div class="pyr-row">
+        <div class="pyr-n">6</div>
+        <div class="pyr-k">Ценности</div>
+        <div class="pyr-v">Система сильнее таланта · Глубина быстрее поверхности · Процесс бережёт людей</div>
+      </div>
+      <div class="pyr-row">
+        <div class="pyr-n">5</div>
+        <div class="pyr-k">Характер</div>
+        <div class="pyr-v">Мастер, не гуру · Прямой · Требовательный и бережный · Без пафоса</div>
+      </div>
+      <div class="pyr-row">
+        <div class="pyr-n">4</div>
+        <div class="pyr-k">Эмоциональное</div>
+        <div class="pyr-v">Твёрдая почва под ногами</div>
+      </div>
+      <div class="pyr-row">
+        <div class="pyr-n">3</div>
+        <div class="pyr-k">Функциональные</div>
+        <div class="pyr-v">Предсказуемый результат на любом брифе · Автономность от стратега и вдохновения · Команда работает без тебя как единственного фильтра качества</div>
+      </div>
+      <div class="pyr-row">
+        <div class="pyr-n">2</div>
+        <div class="pyr-k">Атрибуты</div>
+        <div class="pyr-v">Сквозной цикл из шести шагов · Одностраничный бриф · Интервью «5 в глубину» · Драматизация кейса · Блок про устойчивость · Автор с 450+ международными наградами</div>
+      </div>
+      <div class="pyr-row">
+        <div class="pyr-n">1</div>
+        <div class="pyr-k">Аудитория</div>
+        <div class="pyr-v">Креативные профессионалы, которые хотят стабильно создавать сильные идеи, но зависят от вдохновения, настроения и случая</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 23 — Ценности развёрнуто
+  ═══════════════════════════════════════════════════ -->
+  <section class="slide" data-block="Блок 8 · Пирамида">
+    <div class="r r1 label">Ценности развёрнуто</div>
+    <h2 class="r r2">Три принципа, на которых <em>стоит бренд</em>.</h2>
+    <div class="cards c3 hot">
+      <div class="r r3 card">
+        <div class="card-tag hi">Принцип 01</div>
+        <div class="card-name">Система сильнее таланта</div>
+        <div class="card-desc">Стабильный результат рождается из процесса, а не из озарения. Креативщик с методом обойдёт креативщика, который полагается на вдохновение. Это не обесценивание таланта — это его взросление.</div>
+      </div>
+      <div class="r r4 card">
+        <div class="card-tag hi">Принцип 02</div>
+        <div class="card-name">Глубина быстрее поверхности</div>
+        <div class="card-desc">Тридцать минут настоящего разговора дают больше, чем неделя предположений. Поверхностная идея требует десятков итераций; глубокая работает с первого раза.</div>
+      </div>
+      <div class="r r5 card">
+        <div class="card-tag hi">Принцип 03</div>
+        <div class="card-name">Процесс бережёт людей</div>
+        <div class="card-desc">Выгорание — не цена за хороший креатив, а симптом плохого процесса. Хороший процесс создаёт условия, в которых люди могут быть продуктивными и здоровыми одновременно.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 24 — ГЛАВА 8: КОММУНИКАЦИИ
+  ═══════════════════════════════════════════════════ -->
+  <section class="slide ch" data-block="">
+    <div class="r r1 ch-num">08</div>
+    <div class="r r2 ch-q">Как это <em>звучит</em>?</div>
+    <div class="r r3 ch-sub">Несколько примеров — для главного экрана лендинга, для постов, для рекламы. Один слоган, разная глубина.</div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 25 — Лендинг
+  ═══════════════════════════════════════════════════ -->
+  <section class="slide" data-block="Блок 9 · Коммуникации">
+    <div class="r r1 label">Лендинг — главный экран</div>
+    <div class="r r2 bq">Талант привёл тебя в профессию. <em>Метод сделает тебя в ней непобедимым.</em></div>
+    <p class="r r3 body" style="font-style:italic;font-family:var(--serif);font-size:1.1rem;color:var(--dim);">Method — сквозная система полного креативного цикла от практика с 450+ международными наградами. От первого интервью до фестивального кейса — без зависимости от вдохновения, стратега или удачного дня.</p>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 26 — Пост
+  ═══════════════════════════════════════════════════ -->
+  <section class="slide" data-block="Блок 9 · Коммуникации">
+    <div class="r r1 label">Пост — провокация</div>
+    <div class="r r2 bq">Креативный директор с <em>450 наградами</em> не поймал 450 раз вдохновение.</div>
+    <p class="r r3 body" style="font-style:italic;font-family:var(--serif);font-size:1.1rem;color:var(--dim);">У него есть процесс. Исследование → инсайт → бриф → десятки идей → отбор по критериям → упакованный кейс. Один и тот же процесс. Каждый раз. На каждом брифе.</p>
+    <div class="r r4 box">
+      <p class="body" style="font-style:italic;font-family:var(--serif);font-size:1.3rem;line-height:1.4;color:var(--text);">Вдохновение — бонус. <span class="hl">Метод — профессия.</span></p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 27 — Реклама
+  ═══════════════════════════════════════════════════ -->
+  <section class="slide" data-block="Блок 9 · Коммуникации">
+    <div class="r r1 label">Баннер · Соцсети · Короткое видео</div>
+    <h2 class="r r2">Хватит ждать музу. <em>Включи метод.</em></h2>
+    <p class="r r3 body">Шесть шагов от исследования до кейса. Система, которая работает, когда вдохновение не приходит.</p>
+    <div class="r r4 line"></div>
+    <p class="r r5 body" style="font-style:italic;font-family:var(--serif);font-size:1.1rem;color:var(--dim);">Тридцать минут разговора с реальным человеком дают больше, чем неделя гугления «тренды 2025». Техника «5 вопросов в глубину» — за одну беседу ты доходишь до инсайта, из которого рождаются десятки идей. <strong>Ты сам добываешь фундамент своей работы. Это и есть суверенитет.</strong></p>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 28 — ФИНАЛ
+  ═══════════════════════════════════════════════════ -->
+  <section class="slide ch fin" data-block="">
+    <div class="r r1 fin-bq">Method даёт креативщикам то, чего <em>не даёт талант</em>: предсказуемость результата.</div>
+    <div class="r r2 line" style="width:60px;margin:3.5vh auto;background:var(--muted);"></div>
+    <div class="r r3 fin-formula">Method освобождает креативность <em style="color:var(--accent);font-style:italic;">от случая.</em></div>
+    <div class="r r4 fin-sub">Не случайно.</div>
+    <div class="r r5 fin-divider"></div>
+    <div class="r r5 fin-credit-label">Аналитика подготовлена продуктом</div>
+    <div class="r r5 fin-strataI">
+      <a href="https://gotaddedvalue.com/strategAI/" target="_blank" rel="noopener">
+        <span class="s1">Strateg</span><span class="s2">AI</span>
+      </a>
+    </div>
+    <div class="r r5 fin-copy">Got Added Value LLC · 2026</div>
+  </section>
+
+</div>
+
+<script>
+let cur = 0;
+const ss = document.querySelectorAll('.slide'), tot = ss.length;
+
+function show(i) {
+  ss.forEach(s => s.classList.remove('active'));
+  const el = ss[i];
+  el.querySelectorAll('.r').forEach(r => {
+    r.style.animation = 'none';
+    r.offsetHeight;
+    r.style.animation = '';
+  });
+  el.classList.add('active');
+  document.getElementById('c').textContent = (i + 1) + ' / ' + tot;
+  document.getElementById('progress').style.width = ((i + 1) / tot * 100) + '%';
+  var bl = document.getElementById('bl');
+  if (bl) bl.textContent = el.dataset.block || '';
+}
+
+function go(d) {
+  var n = cur + d;
+  if (n < 0 || n >= tot) return;
+  cur = n;
+  show(cur);
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); go(1); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); }
+});
+
+var tx = 0, ty = 0;
+document.addEventListener('touchstart', function(e) {
+  tx = e.touches[0].pageX;
+  ty = e.touches[0].pageY;
+}, { passive: true });
+document.addEventListener('touchend', function(e) {
+  var dx = e.changedTouches[0].pageX - tx;
+  var dy = e.changedTouches[0].pageY - ty;
+  if (Math.abs(dx) > Math.abs(dy) * 1.2 && Math.abs(dx) > 30) {
+    go(dx < 0 ? 1 : -1);
+  }
+}, { passive: true });
+
+show(0);
+</script>
+
+</body>
+</html>
