@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Method Intensive — двухдневный воркшоп. 13 и 14 июня 2026</title>
-<meta name="description" content="Method Intensive — двухдневный онлайн-воркшоп с Денисом Елисеевым 13 и 14 июня 2026. Шесть шагов от исследования до кейса. $300 в зачёт полного курса Method 3.0.">
+<meta name="description" content="Method Intensive — двухдневный онлайн-воркшоп с Денисом Елисеевым 13 и 14 июня 2026. Шесть шагов от исследования до кейса. $300 в зачёт следующего потока Method.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,6 +34,7 @@
   --line-inv: rgba(255, 255, 255, 0.10);
   --amber: #c89b3c;
   --amber-l: #d4ab4c;
+  --amber-d: #b8893a;
   --max-w: 1280px;
   --nav-h: 64px;
   --display: 'Bricolage Grotesque', system-ui, sans-serif;
@@ -70,8 +71,10 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 8px); }
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 100;
-  background: var(--bg);
-  border-bottom: 1px solid var(--line);
+  background: rgba(235, 235, 235, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(10, 10, 10, 0.06);
   height: var(--nav-h);
 }
 
@@ -109,10 +112,11 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 8px); }
 .nav__cta {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  text-align: center;
   padding: 9px 14px;
-  background: var(--ink);
-  color: var(--bg);
+  background: var(--amber);
+  color: var(--ink);
   font-family: var(--body);
   font-size: 13px;
   font-weight: 600;
@@ -120,7 +124,7 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 8px); }
   letter-spacing: 0.01em;
   white-space: nowrap;
 }
-.nav__cta:hover { background: #1c1c1c; }
+.nav__cta:hover { background: var(--amber-d); }
 
 #nav-toggle { display: none; }
 .nav__burger {
@@ -139,21 +143,26 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 8px); }
   display: block; width: 100%; height: 2px; background: var(--ink);
 }
 .nav__menu {
-  position: fixed;
-  top: var(--nav-h); left: 0; right: 0;
-  background: var(--bg);
-  border-bottom: 1px solid var(--line);
-  padding: 20px;
   display: none;
+  position: fixed;
+  top: var(--nav-h);
+  right: 0;
+  width: 75%;
+  max-width: 320px;
+  height: calc(100vh - var(--nav-h));
+  background: rgba(235, 235, 235, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-left: 1px solid rgba(10, 10, 10, 0.08);
   flex-direction: column;
-  gap: 16px;
+  gap: 8px;
+  padding: 32px 24px;
   z-index: 99;
 }
 #nav-toggle:checked ~ .nav__menu { display: flex; }
-.nav__menu .nav__link { font-size: 18px; }
+.nav__menu .nav__link { font-size: 18px; padding: 8px 0; }
 
 @media (min-width: 768px) {
-  .nav { position: sticky; }
   .nav__inner { padding: 0 32px; }
   .nav__links {
     display: flex;
@@ -171,9 +180,8 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 8px); }
   .nav__logo { height: 26px; }
 }
 
-/* Body offset under fixed nav on mobile */
+/* Body offset under fixed nav (now always fixed) */
 body { padding-top: var(--nav-h); }
-@media (min-width: 768px) { body { padding-top: 0; } }
 
 /* ============================================================
    Section base
@@ -262,8 +270,8 @@ h3 {
   align-items: center;
   gap: 12px;
   padding: 16px 26px;
-  background: var(--ink);
-  color: var(--bg);
+  background: var(--amber);
+  color: var(--ink);
   font-family: var(--body);
   font-size: 0.9375rem;
   font-weight: 600;
@@ -273,11 +281,11 @@ h3 {
   cursor: pointer;
   transition: background 0.15s ease, transform 0.15s ease;
 }
-.cta:hover { background: #1c1c1c; }
+.cta:hover { background: var(--amber-d); }
 .cta:active { transform: translateY(1px); }
 
-.cta--inverted { background: var(--ink-inv); color: var(--bg-inv); }
-.cta--inverted:hover { background: #ffffff; }
+.cta--inverted { background: var(--amber); color: var(--ink); }
+.cta--inverted:hover { background: var(--amber-d); }
 
 @media (min-width: 768px) {
   .cta { font-size: 1rem; padding: 18px 30px; }
@@ -304,11 +312,12 @@ h3 {
 .hero {
   min-height: 100vh;
   display: flex;
-  align-items: center;
-  padding: 120px 0 72px;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 96px 0 64px;
 }
 @media (min-width: 768px) {
-  .hero { padding: 160px 0 112px; }
+  .hero { padding: 128px 0 96px; }
 }
 
 .hero__h1 {
@@ -838,6 +847,24 @@ h3 {
 }
 .offer__anchor:hover { color: var(--amber-l); }
 
+.offer__note-link {
+  color: var(--ink-muted-inv);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.offer__note-link:hover { color: var(--amber); }
+
+.offer__refund {
+  display: inline-block;
+  margin-top: 20px;
+  font-family: var(--body);
+  font-size: 0.875rem;
+  color: var(--ink-muted-inv);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.offer__refund:hover { color: var(--amber); }
+
 .offer__note {
   font-size: 0.9375rem;
   line-height: 1.55;
@@ -883,7 +910,13 @@ h3 {
     flex-direction: row;
     gap: 48px;
   }
-  .author__photo { flex: 0 0 240px; max-width: 240px; }
+  .author__photo { flex: 0 0 320px; max-width: 320px; }
+  .author__photo img {
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    width: 100%;
+    height: auto;
+  }
 }
 @media (min-width: 1280px) {
   .author__layout { gap: 80px; }
@@ -1255,21 +1288,22 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
     </a>
     <nav class="nav__links">
       <a class="nav__link" href="#program">Программа</a>
+      <a class="nav__link" href="#outcomes">Что получишь</a>
       <a class="nav__link" href="#author">Кто ведёт</a>
       <a class="nav__link" href="#offer">Цена</a>
+      <a class="nav__link" href="#faq">Вопросы</a>
     </nav>
-    <a class="nav__cta" href="https://t.me/gotaddedvalue_bot" target="_blank" rel="noopener">
-      Купить место
-      <span aria-hidden="true">→</span>
-    </a>
+    <a class="nav__cta" href="https://t.me/gotaddedvalue_bot" target="_blank" rel="noopener">Купить место</a>
     <label class="nav__burger" for="nav-toggle" aria-label="Открыть меню">
       <span></span><span></span><span></span>
     </label>
   </div>
   <div class="nav__menu">
     <a class="nav__link" href="#program">Программа</a>
+    <a class="nav__link" href="#outcomes">Что получишь</a>
     <a class="nav__link" href="#author">Кто ведёт</a>
     <a class="nav__link" href="#offer">Цена</a>
+    <a class="nav__link" href="#faq">Вопросы</a>
   </div>
 </header>
 
@@ -1303,7 +1337,6 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
     <a class="cta" href="https://t.me/gotaddedvalue_bot" target="_blank" rel="noopener">
       Купить место <span class="cta__arrow" aria-hidden="true">→</span>
     </a>
-    <p class="cta__hint">$300 до 25 мая. Далее тариф растёт по неделям.</p>
   </div>
 </section>
 
@@ -1347,14 +1380,14 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
           <li><time>14:30–17:00</time><span><strong>Креатив не продаёт.</strong> Продают стратегия и медиа. Креатив — это блесна, которая делает крючок заметным; всё, что он делает, — снижает медиа-затраты. Лекция про то, за что на самом деле отвечает креатив. Понимание этого освобождает от давления «продай идеей клиенту страхом».</span></li>
           <li><time>17:15–19:00</time><span><strong>Глубинные интервью.</strong> Без стратега и без бюджета на исследования. Не «5 почему» из учебника — конкретная авторская техника: как составить анкету, как разговаривать, как услышать то, из чего рождается креатив. За одну 30-минутную беседу с реальным человеком — инсайт, из которого десятки идей.</span></li>
           <li><time>19:00–20:00</time><span><strong>Одностраничный бриф.</strong> Авторская техника. Бриф на одну страницу — не «бриф для исполнения», а машина генерации: <strong>20–30 идей самостоятельно, до 300 идей с ИИ</strong>. То, что выпускники называют «наш фрейм».</span></li>
-          <li class="program__tz"><time></time><span>* Время по Ташкенту. Москва, Киев, Рига —2 часа. Алматы, Бишкек — то же время.</span></li>
+          <li class="program__tz"><time></time><span>* Время по Ташкенту. Москва, Киев, Рига −2 часа. Алматы, Бишкек — то же время.</span></li>
         </ol>
       </details>
 
       <details class="program__day" open>
         <summary>14 июня · день 2</summary>
         <ol>
-          <li><time>10:00–10:30</time><span><strong>Установочная.</strong> Сверка домашки — что у каждого получилось в глубинных интервью. Разогрев на формат шторминга по Method-фрейму.</span></li>
+          <li><time>10:00–10:30</time><span><strong>Установочная.</strong> Разогрев и правила работы по фрейму перед индивидуальным штормингом — как заходить в генерацию, чтобы не ждать музу.</span></li>
           <li><time>10:30–11:30</time><span><strong>Индивидуальный шторминг.</strong> Час один-на-один с бумагой. Шторминг идёт по фрейму брифа, не по настроению. Структура замещает вдохновение — десятки идей даже у того, кто впервые.</span></li>
           <li><time>11:30–12:00</time><span><strong>Установочная на командный шторминг.</strong> Правила группового шторминга в Method-формате. Как сделать так, чтобы говорили все, а не только самые громкие.</span></li>
           <li><time>12:00–15:00</time><span><strong>Командный шторминг.</strong> На обычных шторминах большинство молчит, а потом проект тащит один человек. Method-формат разворачивает шторминг в инструмент, который параллельно делает две вещи: собирает идеи и сплочает команду. Включается даже самый тихий.</span></li>
@@ -1362,7 +1395,7 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
           <li><time>15:40–16:00</time><span><strong>Отбор идей.</strong> Авторская методика: как понять суть своей идеи, выбрать сильнейшую и усилить её через <strong>драматизацию</strong>. Не «голосование за то, что нравится» — структурный отбор по объективным критериям.</span></li>
           <li><time>16:00–19:00</time><span><strong>Подготовка финальных бордов.</strong> За несколько часов — от текстового описания до фестивального борда или готового видеоролика. То, что обычно занимает неделю с дизайнером, делаешь сам и сразу.</span></li>
           <li><time>19:00–20:00</time><span><strong>Презентация и обратная связь.</strong> Защищаешь свою идею перед группой. Калибровка по живой аудитории — слышишь, как работают твои аргументы и где идея проседает.</span></li>
-          <li class="program__tz"><time></time><span>* Время по Ташкенту. Москва, Киев, Рига —2 часа. Алматы, Бишкек — то же время.</span></li>
+          <li class="program__tz"><time></time><span>* Время по Ташкенту. Москва, Киев, Рига −2 часа. Алматы, Бишкек — то же время.</span></li>
         </ol>
       </details>
     </div>
@@ -1379,9 +1412,9 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
     <h2 class="outcomes__h">Не просто бриф и борд. Креативная техника, которая остаётся с тобой.</h2>
     <ul class="outcomes__list">
       <li><span class="outcomes__kicker">Метод</span><span class="outcomes__text">Авторская методика разработки креатива, которую ты применяешь к любой задаче после интенсива.</span></li>
-      <li><span class="outcomes__kicker">Бриф</span><span class="outcomes__text">Одностраничный бриф по реальной задаче — машина генерации, а не документ для исполнения.</span></li>
-      <li><span class="outcomes__kicker">Борд</span><span class="outcomes__text">Презентационный борд готовой идеи на уровне фестивальной упаковки.</span></li>
-      <li><span class="outcomes__kicker">Идея</span><span class="outcomes__text">Идея, прошедшая внутреннее голосование группы — драматизированная и проверенная.</span></li>
+      <li><span class="outcomes__kicker">Драматизация</span><span class="outcomes__text">Система драматизации для усиления идей и сборки кейсов под фестивали — как сделать сильную идею ещё сильнее.</span></li>
+      <li><span class="outcomes__kicker">Бриф</span><span class="outcomes__text">Уникальная форма брифа, которую ты сам заполняешь на своих проектах и используешь как креативную технику.</span></li>
+      <li><span class="outcomes__kicker">Борд</span><span class="outcomes__text">Несколько собранных фестивальных идей. Часть из них GAV реализует в Калифорнии, остальное ты кладёшь себе в портфолио.</span></li>
       <li><span class="outcomes__kicker">Запись</span><span class="outcomes__text">Видеозапись интенсива ~14 часов. Пересматриваешь, когда нужно повторить шаг с командой.</span></li>
     </ul>
   </div>
@@ -1403,7 +1436,7 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
       <h3 class="bridge__h">Освобождение <span class="amber">от хаоса</span>.</h3>
       <!-- source: student_reactions_method3.md chat 3/25, Natalia Dundina (P2) — swap v5 -->
       <p class="bridge__quote">Можно делать классную работу и не страдать.</p>
-      <p class="bridge__cite">Креативный группхэд · ex-Creative director Leo Burnett · 15+ лет</p>
+      <p class="bridge__cite">Креативный группхэд · крупное сетевое агентство · 15+ лет</p>
       <p class="bridge__body">Из стратегической сессии и интервью рождается <strong>одностраничный бриф</strong> — документ, который сам провоцирует генерацию. То, что выпускники называют «наш фрейм». Хаос превращается в одну страницу. <em>День&nbsp;1, 19:00–20:00.</em></p>
     </article>
 
@@ -1412,7 +1445,7 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
       <h3 class="bridge__h">Освобождение <span class="amber">от удачи</span>.</h3>
       <!-- source: student_reactions_method3.md chat 4/28, Daria Ch — swap v5, decap -->
       <p class="bridge__quote">Ребят, это пушка. Я хз как жила без него до этого.</p>
-      <p class="bridge__cite">Креатор · креативное агентство · 5+ лет в индустрии</p>
+      <p class="bridge__cite">Креатор · независимое агентство · 5+ лет</p>
       <p class="bridge__body">Инсайт перестаёт зависеть от того, «пришла идея» или нет. <strong>Тридцать минут разговора</strong> с реальным человеком дают больше, чем неделя гугления. Это не озарение — это <strong>техника «5 в глубину»</strong>. <em>День&nbsp;1, 17:15–19:00.</em></p>
     </article>
 
@@ -1421,7 +1454,7 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
       <h3 class="bridge__h">Освобождение <span class="amber">от плохой стратегии</span>.</h3>
       <!-- source: student_reactions_method3.md chat 3/22, Григорий Скоробогатько -->
       <p class="bridge__quote">Зачем стратегия, зачем креатив, плюс глубинный анализ — докапываться до истины через «почему».</p>
-      <p class="bridge__cite">Стратег · агентство Mushrooms, Алматы</p>
+      <p class="bridge__cite">Стратег · Алматы</p>
       <p class="bridge__body">Поверхностные «инсайты» съедают кампанию изнутри. После интенсива <strong>сам проводишь интервью, сам синтезируешь смыслы</strong>. Стратегия перестаёт быть слабым звеном. <em>Домашка за неделю до старта: 3–5 интервью на свою тему.</em></p>
     </article>
 
@@ -1430,7 +1463,7 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
       <h3 class="bridge__h">Освобождение <span class="amber">от музы</span>.</h3>
       <!-- source: three_things_post_course.md Response 18 (junior) -->
       <p class="bridge__quote">Я в шоке что у меня получилось придумать столько идей.</p>
-      <p class="bridge__cite">Выпускник Method · уровень «Начинающий»</p>
+      <p class="bridge__cite">Выпускник Method · только пришёл в профессию</p>
       <p class="bridge__body">Шторминг идёт <strong>по фрейму, не по настроению</strong>. Десятки идей за час — даже у того, кто впервые. Голос самозванца не успевает включиться: процесс везёт. <em>День&nbsp;2, 10:30–11:30.</em></p>
     </article>
 
@@ -1439,7 +1472,8 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
       <h3 class="bridge__h">Освобождение <span class="amber">от зависимости от команды</span>.</h3>
       <!-- source: three_things_post_course.md Response 29 (Продвинутый) -->
       <p class="bridge__quote">Нет плохих креативщиков. Есть плохие брифы и плохие процессы.</p>
-      <p class="bridge__cite">Выпускник Method · уровень «Продвинутый»</p>
+      <!-- [ASSUMED-FROM-LEVEL] Response 29 «уровень Продвинутый» → формула «10+ лет» по правке архитектора -->
+      <p class="bridge__cite">Выпускник Method · 10+ лет в индустрии</p>
       <p class="bridge__body">Фреймворк проверяется в чужих руках. Это <strong>процесс, который ты унесёшь обратно в свою команду</strong> — и который будет работать без тебя как единственного фильтра качества. <em>День&nbsp;2, 12:00–15:00.</em></p>
     </article>
 
@@ -1448,7 +1482,7 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
       <h3 class="bridge__h">Освобождение <span class="amber">от бессилия продать идею</span>.</h3>
       <!-- source: student_reactions_method3.md chat 4/12, Tatiana Sur (mid+, post-MADS) -->
       <p class="bridge__quote">Можно делать креативно в рамках ожидания клиента.</p>
-      <p class="bridge__cite">Креатор · 7+ лет в индустрии · post-MADS Concepting</p>
+      <p class="bridge__cite">Креатор · 7+ лет · после MADS Concepting</p>
       <p class="bridge__body">Понятийный сдвиг: <strong>креатив отвечает за «выделиться», стратегия — за «продажу»</strong>. Перестаёшь продавать смелую идею клиенту страхом — продаёшь её драматизированной упаковкой, которая делает смелое продаваемым. <em>День&nbsp;1, 14:30–17:00 + День&nbsp;2, 16:00–19:00.</em></p>
     </article>
   </div>
@@ -1475,14 +1509,16 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
           <div class="offer__row" data-until="2026-05-29"><span>до 29 мая</span><span class="offer__price">$350</span></div>
           <div class="offer__row" data-until="2026-06-05"><span>до 5 июня</span><span class="offer__price">$450</span></div>
           <div class="offer__row" data-until="2026-06-12"><span>до 12 июня</span><span class="offer__price">$500</span></div>
-          <div class="offer__row offer__row--zachet"><span>В зачёт любого следующего <a href="https://gotaddedvalue.com/method/" target="_blank" rel="noopener">Method</a> (с 4-го)</span><span>−$300</span></div>
+          <div class="offer__row offer__row--zachet"><span>В зачёт следующего <a href="https://gotaddedvalue.com/method/" target="_blank" rel="noopener" class="offer__note-link">Method</a></span><span>−$300</span></div>
         </div>
 
-        <p class="offer__note">$300 из любого тарифа идут в зачёт любого следующего <a href="https://gotaddedvalue.com/method/" target="_blank" rel="noopener">Method</a> (с 4-го; <a href="https://gotaddedvalue.com/method/" target="_blank" rel="noopener">Method 3.0</a> уже идёт). Не понравится — у тебя на руках бриф, борд и видеозапись интенсива на ~14 часов.</p>
+        <p class="offer__note">$300 из любого тарифа идут в зачёт следующего <a href="https://gotaddedvalue.com/method/" target="_blank" rel="noopener" class="offer__note-link">Method</a>. Не понравится — у тебя на руках бриф, борд и видеозапись интенсива на ~14 часов.</p>
 
         <a class="cta cta--inverted" href="https://t.me/gotaddedvalue_bot" target="_blank" rel="noopener">
           Купить место <span class="cta__arrow" aria-hidden="true">→</span>
         </a>
+
+        <a class="offer__refund" href="https://gotaddedvalue.com/refund/" target="_blank" rel="noopener">Политика возврата</a>
 
         <p class="offer__rationale">
           Зачем этот курс — <a href="#bridges" class="offer__anchor">шесть зависимостей, которые он снимает</a>.
@@ -1625,15 +1661,15 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
       </details>
       <details class="faq__item">
         <summary>Я новичок, мне подойдёт?</summary>
-        <p class="faq__a">Курс подходит и новичку — отличие только в том, что всё интенсивнее. Если ты впервые — домашка будет 2–3 интервью вместо 5, остальное то же. Дополнительно: <strong>скидка на любой следующий поток Method начиная с 4-го</strong> (<a href="https://gotaddedvalue.com/method/" target="_blank" rel="noopener">Method 3.0</a> уже идёт).</p>
+        <p class="faq__a">Курс подходит и новичку — отличие только в том, что всё интенсивнее. Если ты впервые — домашка будет 2–3 интервью вместо 5, остальное то же. Дополнительно: <strong>скидка на любой следующий поток <a href="https://gotaddedvalue.com/method/" target="_blank" rel="noopener">Method</a></strong>.</p>
       </details>
       <details class="faq__item">
         <summary>Что если не зайдёт?</summary>
-        <p class="faq__a">$300 из любого тарифа идут в зачёт любого следующего <a href="https://gotaddedvalue.com/method/" target="_blank" rel="noopener">Method</a> (с 4-го). Не понравится — у тебя в руках одностраничный бриф, борд и видеозапись.</p>
+        <p class="faq__a">$300 из любого тарифа идут в зачёт следующего <a href="https://gotaddedvalue.com/method/" target="_blank" rel="noopener">Method</a>. Не понравится — у тебя в руках одностраничный бриф, борд и видеозапись.</p>
       </details>
       <details class="faq__item">
         <summary>Какой формат домашки?</summary>
-        <p class="faq__a">За неделю до старта — 3–5 глубинных интервью на свою тему. Это исходник, с которым ты работаешь все два дня. Плюс одна прежаписанная лекция «Что из себя представляет современная реклама» — час, чтобы выровнять контекст перед полным курсом <a href="https://gotaddedvalue.com/method/" target="_blank" rel="noopener">Method 3.0</a>.</p>
+        <p class="faq__a">За неделю до старта — 2–3 глубинных интервью на свою тему. Это исходник, с которым ты работаешь все два дня. Технику интервью разбираем на интенсиве — приходить с готовым навыком не нужно.</p>
       </details>
       <details class="faq__item">
         <summary>Как оплатить?</summary>
@@ -1659,7 +1695,7 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
     <h2 class="final__tagline">Не случайно.</h2>
 
     <p class="final__meta">
-      <strong>13 и 14 июня 2026</strong> · онлайн · $300 · в зачёт следующего <a href="https://gotaddedvalue.com/method/" target="_blank" rel="noopener">Method</a>
+      <strong>13 и 14 июня 2026</strong> · онлайн · от $300
     </p>
 
     <a class="cta cta--inverted" href="https://t.me/gotaddedvalue_bot" target="_blank" rel="noopener">
