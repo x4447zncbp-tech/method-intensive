@@ -51,8 +51,9 @@ body {
   background: var(--bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+  /* overflow-x: hidden убран — он создаёт scroll-container и ломает position:fixed у .nav на mobile */
 }
+html { overflow-x: clip; }
 
 img { max-width: 100%; height: auto; display: block; }
 p + p { margin-top: 1em; }
@@ -653,17 +654,8 @@ h3 {
 }
 
 /* ============================================================
-   S4 — Что меняет Method / Bridges (MEDIUM scroll-heavy)
+   S4 — Bridges (MEDIUM scroll-heavy)
    ============================================================ */
-
-.bridges__minilead {
-  font-family: var(--body);
-  font-size: clamp(1rem, 1.6vw, 1.125rem);
-  line-height: 1.5;
-  color: var(--ink-soft);
-  max-width: 52ch;
-  margin: 16px 0 56px;
-}
 
 .bridge {
   padding: 56px 24px;
@@ -793,6 +785,25 @@ h3 {
   color: var(--ink-inv);
 }
 
+.offer__seats {
+  margin-bottom: 20px;
+  min-height: 28px;
+  display: flex;
+  align-items: center;
+}
+.offer__seats-count {
+  font-family: var(--body);
+  font-variant-numeric: tabular-nums;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--ink-inv);
+}
+.offer__seats-count b {
+  font-weight: 700;
+  color: var(--ink-inv);
+}
+
 .offer__breakdown {
   font-family: var(--body);
   font-variant-numeric: tabular-nums;
@@ -854,16 +865,6 @@ h3 {
 }
 .offer__note-link:hover { color: var(--amber); }
 
-.offer__refund {
-  display: inline-block;
-  margin-top: 20px;
-  font-family: var(--body);
-  font-size: 0.875rem;
-  color: var(--ink-muted-inv);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-.offer__refund:hover { color: var(--amber); }
 
 .offer__note {
   font-size: 0.9375rem;
@@ -1215,23 +1216,11 @@ h3 {
   margin-bottom: 40px;
 }
 
-.final__meta {
-  font-family: var(--body);
-  font-size: 0.9375rem;
-  font-weight: 500;
-  letter-spacing: 0.01em;
-  color: var(--ink-muted-inv);
-  margin-bottom: 32px;
-}
-.final__meta strong { color: var(--ink-inv); font-weight: 600; }
-.final__meta a { color: var(--ink-inv); text-decoration: underline; text-underline-offset: 3px; }
-
 .final .cta__hint { color: var(--ink-muted-inv); }
 .final .cta__hint a { color: var(--ink-inv); }
 
 @media (min-width: 768px) {
   .final__tagline { font-size: clamp(5rem, 11vw, 8rem); margin-bottom: 56px; }
-  .final__meta { font-size: 1.0625rem; }
 }
 @media (min-width: 1280px) {
   .final__tagline { font-size: clamp(7rem, 10vw, 11rem); }
@@ -1422,15 +1411,11 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
 
 
 <!-- ============================================================
-     S4 — Что меняет Method · 6 bridges
+     S4 — Bridges · 6 шт.
      (источник: COPY_ARCHITECTURE_V2.md → L3 + Proof matrix финал)
      ============================================================ -->
 <section id="bridges">
   <div class="wrap section__content">
-    <span class="eyebrow">Что меняет Method</span>
-    <h2>Шесть зависимостей, которые снимает интенсив. <span class="amber">Не случайно.</span></h2>
-    <p class="bridges__minilead">Каждая зависимость снимается конкретным шагом программы. Ниже — что меняется и где это происходит в эти два дня.</p>
-
     <!-- BRIDGE B1 — хаос → одностраничный бриф (v5: цитата Дундины — senior anchor) (v6: inverted) -->
     <article class="bridge bridge--inv">
       <h3 class="bridge__h">Освобождение <span class="amber">от хаоса</span>.</h3>
@@ -1504,6 +1489,11 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
       <div class="offer__body">
         <h2 class="offer__headline">Это попробовать, не купить.</h2>
 
+        <!-- Слот под живой счётчик; phase 2 — JS подменит innerHTML на «Осталось <b>N</b> из 30» -->
+        <div class="offer__seats">
+          <span class="offer__seats-count" id="seats-count">Всего 30 мест</span>
+        </div>
+
         <div class="offer__breakdown" id="tiering">
           <div class="offer__row" data-until="2026-05-25"><span>Интенсив до 25 мая</span><span class="offer__price">$300</span></div>
           <div class="offer__row" data-until="2026-05-29"><span>до 29 мая</span><span class="offer__price">$350</span></div>
@@ -1517,8 +1507,6 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
         <a class="cta cta--inverted" href="https://t.me/gotaddedvalue_bot" target="_blank" rel="noopener">
           Купить место <span class="cta__arrow" aria-hidden="true">→</span>
         </a>
-
-        <a class="offer__refund" href="https://gotaddedvalue.com/refund/" target="_blank" rel="noopener">Политика возврата</a>
 
         <p class="offer__rationale">
           Зачем этот курс — <a href="#bridges" class="offer__anchor">шесть зависимостей, которые он снимает</a>.
@@ -1648,7 +1636,7 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
 <section id="faq">
   <div class="wrap section__content">
     <span class="eyebrow">FAQ</span>
-    <h2>Шесть вопросов, которые обычно задают.</h2>
+    <h2>Вопросы, которые обычно задают.</h2>
 
     <div class="faq__list">
       <details class="faq__item">
@@ -1669,11 +1657,35 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
       </details>
       <details class="faq__item">
         <summary>Какой формат домашки?</summary>
-        <p class="faq__a">За неделю до старта — 2–3 глубинных интервью на свою тему. Это исходник, с которым ты работаешь все два дня. Технику интервью разбираем на интенсиве — приходить с готовым навыком не нужно.</p>
+        <p class="faq__a">За неделю до старта — 5 глубинных интервью на свою тему. Это исходник, с которым ты работаешь все два дня. Если ты только пришёл в профессию — достаточно 2–3 интервью. Технику интервью разбираем на интенсиве — приходить с готовым навыком не нужно.</p>
       </details>
       <details class="faq__item">
         <summary>Как оплатить?</summary>
         <p class="faq__a">После записи через Telegram-бот мы пришлём индивидуальную ссылку на оплату. Возможна оплата от компании / B2B — детали в боте.</p>
+      </details>
+
+      <!-- source: research/03_student_questions.md, кластер Q9 «Будет ли индивидуальный фидбек по моим кейсам» (Q#13, Q#55) -->
+      <details class="faq__item">
+        <summary>Будет ли фидбек по моей реальной задаче?</summary>
+        <p class="faq__a">Да. С первого до последнего шага ты работаешь на своей задаче — её разбираем в стратегической сессии, по ней пишешь бриф, по ней штормишь индивидуально и в команде, по ней собираешь борд. На презентации в воскресенье получаешь обратную связь от Дениса и группы. Если хочешь дополнительный разбор после интенсива — пиши в <a href="https://t.me/gotaddedvalue_bot" target="_blank" rel="noopener">бот</a>.</p>
+      </details>
+
+      <!-- source: research/03_student_questions.md, кластер Q5 «Спикеры / лекторы» (~10 упоминаний) -->
+      <details class="faq__item">
+        <summary>Кто ведёт кроме Дениса?</summary>
+        <p class="faq__a">Интенсив ведёт Денис сам — это его авторская методика, и на двух днях он сам показывает все шаги. Расширенный состав (mindfulness-блок Лены Шиляевой, AI-блок Саши Доброкотова) — в полном курсе <a href="https://gotaddedvalue.com/method/" target="_blank" rel="noopener">Method</a>.</p>
+      </details>
+
+      <!-- source: research/03_student_questions.md, кластер F11 «Фестивальный потенциал идеи» (Q#12, Q#4, Q#32, Q#34) -->
+      <details class="faq__item">
+        <summary>У меня нет фестивальных побед — это всё-таки для меня?</summary>
+        <p class="faq__a">Да. Цель интенсива не «выиграть Cannes» — а собрать процесс, который даёт сильную идею на любой реальной задаче. Если фестиваль появится в горизонте — у тебя уже будет техника драматизации, на которой кейсы выигрывают. Если не появится — у тебя будет процесс, который ускоряет любой проект.</p>
+      </details>
+
+      <!-- source: research/05_objection_map.md, O#3 «Часовой пояс» (внешнее возражение, первый экран) -->
+      <details class="faq__item">
+        <summary>Я в другой таймзоне — что делать?</summary>
+        <p class="faq__a">Время в программе — по Ташкенту (UTC+5). Москва, Киев, Рига — на 2 часа раньше. Алматы, Бишкек — то же время. Если в твоём часовом поясе расписание не складывается, можно посмотреть записи и параллельно списываться с группой в чате — пиши в <a href="https://t.me/gotaddedvalue_bot" target="_blank" rel="noopener">бот</a>, разберём индивидуально.</p>
       </details>
     </div>
 
@@ -1694,10 +1706,6 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
     </div>
     <h2 class="final__tagline">Не случайно.</h2>
 
-    <p class="final__meta">
-      <strong>13 и 14 июня 2026</strong> · онлайн · от $300
-    </p>
-
     <a class="cta cta--inverted" href="https://t.me/gotaddedvalue_bot" target="_blank" rel="noopener">
       Купить место <span class="cta__arrow" aria-hidden="true">→</span>
     </a>
@@ -1717,6 +1725,7 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
     <span>
       <a href="https://t.me/gotaddedvalue_bot" target="_blank" rel="noopener">Telegram</a>
       <a href="https://www.instagram.com/denis_eliseev/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://gotaddedvalue.com/refund/" target="_blank" rel="noopener">Политика возврата</a>
     </span>
   </div>
 </footer>
