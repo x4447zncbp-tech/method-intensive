@@ -95,9 +95,16 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 8px); }
   align-items: center;
   height: 22px;
   flex-shrink: 0;
-  min-width: 80px;
+  text-decoration: none;
 }
-.nav__logo img { height: 100%; width: auto; display: block; }
+.nav__logo-text {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  color: var(--ink);
+}
 
 .nav__links { display: none; }
 .nav__link {
@@ -174,11 +181,13 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 8px); }
   .nav__burger, #nav-toggle, .nav__menu { display: none !important; }
   .nav__cta { font-size: 14px; padding: 10px 18px; }
   .nav__logo { height: 24px; }
+  .nav__logo-text { font-size: 20px; }
 }
 @media (min-width: 1280px) {
   .nav__inner { padding: 0 48px; }
   .nav__links { gap: 36px; }
   .nav__logo { height: 26px; }
+  .nav__logo-text { font-size: 22px; }
 }
 
 /* Body offset under fixed nav (now always fixed) */
@@ -315,10 +324,10 @@ h3 {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding: 96px 0 64px;
+  padding: 20px 0 64px;
 }
 @media (min-width: 768px) {
-  .hero { padding: 128px 0 96px; }
+  .hero { padding: 40px 0 96px; }
 }
 
 .hero__h1 {
@@ -370,7 +379,7 @@ h3 {
 }
 @media (min-width: 768px) {
   .hero__meta {
-    grid-template-columns: repeat(3, auto);
+    grid-template-columns: repeat(4, auto);
     gap: 40px;
     margin-bottom: 40px;
     max-width: none;
@@ -394,6 +403,7 @@ h3 {
   color: var(--ink);
   line-height: 1.3;
 }
+
 
 /* ============================================================
    S2 — Освободи свой креатив (DRAMA inverted, big-words)
@@ -1273,7 +1283,7 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
   <input type="checkbox" id="nav-toggle" aria-label="Меню">
   <div class="nav__inner">
     <a class="nav__logo" href="#hero" aria-label="Method">
-      <img src="assets/Union-1.png" alt="METHOD">
+      <span class="nav__logo-text">METHOD</span>
     </a>
     <nav class="nav__links">
       <a class="nav__link" href="#program">Программа</a>
@@ -1282,7 +1292,7 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
       <a class="nav__link" href="#offer">Цена</a>
       <a class="nav__link" href="#faq">Вопросы</a>
     </nav>
-    <a class="nav__cta" href="https://t.me/gotaddedvalue_bot" target="_blank" rel="noopener">Купить место</a>
+    <a class="nav__cta" href="https://buy.stripe.com/7sY3cu9sjdFm2sm3Die7m0U" target="_blank" rel="noopener">Купить место</a>
     <label class="nav__burger" for="nav-toggle" aria-label="Открыть меню">
       <span></span><span></span><span></span>
     </label>
@@ -1321,9 +1331,13 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
         <span class="hero__meta-label">Стоимость</span>
         <span class="hero__meta-value" id="hero-price">от $300</span>
       </div>
+      <div>
+        <span class="hero__meta-label" id="hero-seats-word">мест</span>
+        <span class="hero__meta-value" id="hero-seats">25</span>
+      </div>
     </div>
 
-    <a class="cta" href="https://t.me/gotaddedvalue_bot" target="_blank" rel="noopener">
+    <a class="cta" href="https://buy.stripe.com/7sY3cu9sjdFm2sm3Die7m0U" target="_blank" rel="noopener">
       Купить место <span class="cta__arrow" aria-hidden="true">→</span>
     </a>
   </div>
@@ -1369,7 +1383,7 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
           <li><time>14:30–17:00</time><span><strong>Креатив не продаёт.</strong> Продают стратегия и медиа. Креатив — это блесна, которая делает крючок заметным; всё, что он делает, — снижает медиа-затраты. Лекция про то, за что на самом деле отвечает креатив. Понимание этого освобождает от давления «продай идеей клиенту страхом».</span></li>
           <li><time>17:15–19:00</time><span><strong>Глубинные интервью.</strong> Без стратега и без бюджета на исследования. Не «5 почему» из учебника — конкретная авторская техника: как составить анкету, как разговаривать, как услышать то, из чего рождается креатив. За одну 30-минутную беседу с реальным человеком — инсайт, из которого десятки идей.</span></li>
           <li><time>19:00–20:00</time><span><strong>Одностраничный бриф.</strong> Авторская техника. Бриф на одну страницу — не «бриф для исполнения», а машина генерации: <strong>20–30 идей самостоятельно, до 300 идей с ИИ</strong>. То, что выпускники называют «наш фрейм».</span></li>
-          <li class="program__tz"><time></time><span>* Время по Ташкенту. Москва, Киев, Рига −2 часа. Алматы, Бишкек — то же время.</span></li>
+          <li class="program__tz"><time></time><span>* Время по Ташкенту. Москва, Киев, Рига −2 часа. Алматы — то же время, Бишкек — на час позже.</span></li>
         </ol>
       </details>
 
@@ -1384,7 +1398,7 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
           <li><time>15:40–16:00</time><span><strong>Отбор идей.</strong> Авторская методика: как понять суть своей идеи, выбрать сильнейшую и усилить её через <strong>драматизацию</strong>. Не «голосование за то, что нравится» — структурный отбор по объективным критериям.</span></li>
           <li><time>16:00–19:00</time><span><strong>Подготовка финальных бордов.</strong> За несколько часов — от текстового описания до фестивального борда или готового видеоролика. То, что обычно занимает неделю с дизайнером, делаешь сам и сразу.</span></li>
           <li><time>19:00–20:00</time><span><strong>Презентация и обратная связь.</strong> Защищаешь свою идею перед группой. Калибровка по живой аудитории — слышишь, как работают твои аргументы и где идея проседает.</span></li>
-          <li class="program__tz"><time></time><span>* Время по Ташкенту. Москва, Киев, Рига −2 часа. Алматы, Бишкек — то же время.</span></li>
+          <li class="program__tz"><time></time><span>* Время по Ташкенту. Москва, Киев, Рига −2 часа. Алматы — то же время, Бишкек — на час позже.</span></li>
         </ol>
       </details>
     </div>
@@ -1440,7 +1454,7 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
       <!-- source: student_reactions_method3.md chat 3/22, Григорий Скоробогатько -->
       <p class="bridge__quote">Зачем стратегия, зачем креатив, плюс глубинный анализ — докапываться до истины через «почему».</p>
       <p class="bridge__cite">Стратег · Алматы</p>
-      <p class="bridge__body">Поверхностные «инсайты» съедают кампанию изнутри. После интенсива <strong>сам проводишь интервью, сам синтезируешь смыслы</strong>. Стратегия перестаёт быть слабым звеном. <em>Домашка за неделю до старта: 3–5 интервью на свою тему.</em></p>
+      <p class="bridge__body">Поверхностные «инсайты» съедают кампанию изнутри. После интенсива <strong>сам проводишь интервью, сам синтезируешь смыслы</strong>. Стратегия перестаёт быть слабым звеном. <em>Домашка за неделю до старта: 5 интервью на свою тему.</em></p>
     </article>
 
     <!-- BRIDGE B4 — муза → шторминг -->
@@ -1491,7 +1505,7 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
 
         <!-- Слот под живой счётчик; phase 2 — JS подменит innerHTML на «Осталось <b>N</b> из 30» -->
         <div class="offer__seats">
-          <span class="offer__seats-count" id="seats-count">Всего 30 мест</span>
+          <span class="offer__seats-count" id="seats-count">25 мест</span>
         </div>
 
         <div class="offer__breakdown" id="tiering">
@@ -1504,7 +1518,7 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
 
         <p class="offer__note">$300 из любого тарифа идут в зачёт следующего <a href="https://gotaddedvalue.com/method/" target="_blank" rel="noopener" class="offer__note-link">Method</a>. Не понравится — у тебя на руках бриф, борд и видеозапись интенсива на ~14 часов.</p>
 
-        <a class="cta cta--inverted" href="https://t.me/gotaddedvalue_bot" target="_blank" rel="noopener">
+        <a class="cta cta--inverted" href="https://buy.stripe.com/7sY3cu9sjdFm2sm3Die7m0U" target="_blank" rel="noopener">
           Купить место <span class="cta__arrow" aria-hidden="true">→</span>
         </a>
 
@@ -1661,13 +1675,13 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
       </details>
       <details class="faq__item">
         <summary>Как оплатить?</summary>
-        <p class="faq__a">После записи через Telegram-бот мы пришлём индивидуальную ссылку на оплату. Возможна оплата от компании / B2B — детали в боте.</p>
+        <p class="faq__a">Жми «Купить место» — откроется оплата картой, платёж проходит сразу, чек приходит на почту. Нужна оплата от компании — <a href="https://t.me/denis_eliseev_usa" target="_blank" rel="noopener">напиши в Telegram</a>, решим.</p>
       </details>
 
-      <!-- source: research/03_student_questions.md, кластер Q9 «Будет ли индивидуальный фидбек по моим кейсам» (Q#13, Q#55) -->
+      <!-- source: Денис напрямую, 2026-05-19 -->
       <details class="faq__item">
         <summary>Будет ли фидбек по моей реальной задаче?</summary>
-        <p class="faq__a">Да. С первого до последнего шага ты работаешь на своей задаче — её разбираем в стратегической сессии, по ней пишешь бриф, по ней штормишь индивидуально и в команде, по ней собираешь борд. На презентации в воскресенье получаешь обратную связь от Дениса и группы. Если хочешь дополнительный разбор после интенсива — пиши в <a href="https://t.me/gotaddedvalue_bot" target="_blank" rel="noopener">бот</a>.</p>
+        <p class="faq__a">Индивидуального разбора твоего кейса 1-на-1 нет. Ты работаешь на своей задаче на всех шагах; в группе — общее обсуждение идей, которые рождаются на интенсиве, и ответы на любые вопросы по процессу и методике.</p>
       </details>
 
       <!-- source: research/03_student_questions.md, кластер Q5 «Спикеры / лекторы» (~10 упоминаний) -->
@@ -1685,12 +1699,12 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
       <!-- source: research/05_objection_map.md, O#3 «Часовой пояс» (внешнее возражение, первый экран) -->
       <details class="faq__item">
         <summary>Я в другой таймзоне — что делать?</summary>
-        <p class="faq__a">Время в программе — по Ташкенту (UTC+5). Москва, Киев, Рига — на 2 часа раньше. Алматы, Бишкек — то же время. Если в твоём часовом поясе расписание не складывается, можно посмотреть записи и параллельно списываться с группой в чате — пиши в <a href="https://t.me/gotaddedvalue_bot" target="_blank" rel="noopener">бот</a>, разберём индивидуально.</p>
+        <p class="faq__a">Время в программе — по Ташкенту (UTC+5). Москва, Киев, Рига — на 2 часа раньше. Алматы — то же время, Бишкек — на час позже. Если в твоём часовом поясе расписание не складывается, можно посмотреть записи и параллельно списываться с группой в чате — пиши в <a href="https://t.me/denis_eliseev_usa" target="_blank" rel="noopener">Telegram</a>, разберём индивидуально.</p>
       </details>
     </div>
 
     <p class="faq__rationale">
-      Не нашёл свой вопрос? <a href="https://t.me/gotaddedvalue_bot" target="_blank" rel="noopener" class="faq__anchor">Напиши боту</a> — или посмотри, <a href="#liberation" class="faq__anchor">от чего этот интенсив освобождает</a>.
+      Не нашёл свой вопрос? <a href="https://t.me/denis_eliseev_usa" target="_blank" rel="noopener" class="faq__anchor">Напиши в Telegram</a> — или посмотри, <a href="#liberation" class="faq__anchor">от чего этот интенсив освобождает</a>.
     </p>
   </div>
 </section>
@@ -1706,11 +1720,11 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
     </div>
     <h2 class="final__tagline">Не случайно.</h2>
 
-    <a class="cta cta--inverted" href="https://t.me/gotaddedvalue_bot" target="_blank" rel="noopener">
+    <a class="cta cta--inverted" href="https://buy.stripe.com/7sY3cu9sjdFm2sm3Die7m0U" target="_blank" rel="noopener">
       Купить место <span class="cta__arrow" aria-hidden="true">→</span>
     </a>
     <p class="cta__hint">
-      Или задать любой вопрос — <a href="https://t.me/gotaddedvalue_bot" target="_blank" rel="noopener">t.me/gotaddedvalue_bot</a>
+      Или задать любой вопрос — <a href="https://t.me/denis_eliseev_usa" target="_blank" rel="noopener">t.me/denis_eliseev_usa</a>
     </p>
   </div>
 </section>
@@ -1723,9 +1737,9 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
   <div class="wrap">
     <span><a href="https://gotaddedvalue.com/method/" target="_blank" rel="noopener">Method 3.0</a> · © Got Added Value LLC</span>
     <span>
-      <a href="https://t.me/gotaddedvalue_bot" target="_blank" rel="noopener">Telegram</a>
+      <a href="https://t.me/denis_eliseev_usa" target="_blank" rel="noopener">Telegram</a>
       <a href="https://www.instagram.com/denis_eliseev/" target="_blank" rel="noopener">Instagram</a>
-      <a href="https://gotaddedvalue.com/refund/" target="_blank" rel="noopener">Политика возврата</a>
+      <a href="https://gotaddedvalue.com/refund/" target="_blank" rel="noopener">Refund policy</a>
     </span>
   </div>
 </footer>
@@ -1746,6 +1760,28 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
     const heroPrice = document.getElementById('hero-price');
     if (heroPrice) heroPrice.textContent = 'от ' + activePrice;
   }
+
+  const SEATS = 25;
+  function seatWord(n){
+    const a = n % 100, b = n % 10;
+    if (a > 10 && a < 20) return 'мест';
+    if (b === 1) return 'место';
+    if (b >= 2 && b <= 4) return 'места';
+    return 'мест';
+  }
+  const heroSeats = document.getElementById('hero-seats');
+  if (heroSeats) heroSeats.textContent = SEATS;
+  const heroSeatsWord = document.getElementById('hero-seats-word');
+  if (heroSeatsWord) heroSeatsWord.textContent = seatWord(SEATS);
+  const seatsCount = document.getElementById('seats-count');
+  if (seatsCount) seatsCount.textContent = SEATS + ' ' + seatWord(SEATS);
+
+  document.querySelectorAll('.nav__menu .nav__link').forEach(function(a){
+    a.addEventListener('click', function(){
+      var t = document.getElementById('nav-toggle');
+      if (t) t.checked = false;
+    });
+  });
 })();
 </script>
 
