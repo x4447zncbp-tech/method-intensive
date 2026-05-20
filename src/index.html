@@ -90,6 +90,8 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 8px); }
   display: inline-flex;
   align-items: center;
   height: 22px;
+  flex-shrink: 0;
+  min-width: 80px;
 }
 .nav__logo img { height: 100%; width: auto; display: block; }
 
@@ -300,30 +302,32 @@ h3 {
    ============================================================ */
 
 .hero {
-  min-height: calc(100svh - var(--nav-h));
+  min-height: 100vh;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 56px 0 56px;
+  align-items: center;
+  padding: 120px 0 72px;
 }
 @media (min-width: 768px) {
-  .hero { min-height: 100vh; padding: 80px 0 64px; }
+  .hero { padding: 160px 0 112px; }
 }
 
 .hero__h1 {
   font-family: var(--display);
   font-weight: 700;
-  font-size: clamp(2.5rem, 9vw, 5.5rem);
-  line-height: 1.05;
+  font-size: clamp(3.75rem, 14vw, 10rem);
+  line-height: 0.95;
   letter-spacing: -0.04em;
   color: var(--ink);
-  margin-bottom: 24px;
+  margin-bottom: 32px;
   overflow-wrap: break-word;
 }
 .hero__h1 .amber {
   font-family: var(--display);
   font-weight: 700;
   letter-spacing: -0.01em;
+}
+@media (min-width: 768px) {
+  .hero__h1 { line-height: 0.92; margin-bottom: 48px; }
 }
 
 .hero__sub {
@@ -578,36 +582,102 @@ h3 {
   .program__grid { gap: 64px; }
 }
 
-.program__timezone-note {
-  font-size: 0.8125rem;
-  color: var(--ink-muted);
-  margin-top: 16px;
+.program__tz {
   font-style: italic;
+  color: var(--ink-muted);
+  font-size: 0.8125rem;
+  border-top: 1px dashed var(--line);
+  padding-top: 12px;
+  margin-top: 8px;
+}
+.program__tz time { visibility: hidden; }
+
+/* ============================================================
+   S3.5 — На выходе (inverted)
+   ============================================================ */
+
+.outcomes {
+  background: var(--bg-inv);
+  color: var(--ink-inv);
+}
+.eyebrow--inv { color: var(--ink-muted-inv); }
+.outcomes__h {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--ink-inv);
+  max-width: 22ch;
+  margin-bottom: 48px;
+}
+.outcomes__list {
+  list-style: none;
+  display: grid;
+  gap: 0;
+}
+.outcomes__list li {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 24px;
+  padding: 24px 0;
+  border-top: 1px solid var(--line-inv);
+  align-items: baseline;
+}
+.outcomes__list li:last-child { border-bottom: 1px solid var(--line-inv); }
+.outcomes__kicker {
+  font-family: var(--body);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--amber);
+}
+.outcomes__text {
+  font-family: var(--body);
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--ink-inv);
+}
+@media (max-width: 767px) {
+  .outcomes__list li { grid-template-columns: 1fr; gap: 8px; }
 }
 
 /* ============================================================
    S4 — Что меняет Method / Bridges (MEDIUM scroll-heavy)
    ============================================================ */
 
-.bridges__lead {
-  font-size: 1rem;
-  line-height: 1.6;
+.bridges__minilead {
+  font-family: var(--body);
+  font-size: clamp(1rem, 1.6vw, 1.125rem);
+  line-height: 1.5;
   color: var(--ink-soft);
-  max-width: 60ch;
-  margin-bottom: 48px;
+  max-width: 52ch;
+  margin: 16px 0 56px;
 }
 
 .bridge {
-  padding: 56px 0;
-  border-top: 1px solid var(--line);
-  max-width: 60ch;
+  padding: 56px 24px;
+  margin: 0 -24px;
 }
-.bridge:first-of-type { border-top: 1px solid var(--ink); }
+.bridge > * { max-width: 60ch; }
+.bridge--inv {
+  background: var(--bg-inv);
+  color: var(--ink-inv);
+}
+.bridge--inv .bridge__h { color: var(--ink-inv); }
+.bridge--inv .bridge__quote { color: var(--ink-inv); }
+.bridge--inv .bridge__quote::before,
+.bridge--inv .bridge__quote::after { color: var(--ink-muted-inv); }
+.bridge--inv .bridge__cite { color: var(--ink-muted-inv); }
+.bridge--inv .bridge__body { color: var(--ink-inv); }
+.bridge--inv .bridge__body strong { color: var(--ink-inv); }
+
 @media (min-width: 768px) {
-  .bridge { padding: 72px 0; }
+  .bridge { padding: 80px 40px; margin: 0 -40px; }
 }
 @media (min-width: 1280px) {
-  .bridge { padding: 96px 0; }
+  .bridge { padding: 96px 64px; margin: 0 -64px; }
 }
 
 .bridge__h {
@@ -755,6 +825,19 @@ h3 {
 .offer .offer__caption a { color: var(--ink-inv); text-decoration: underline; text-underline-offset: 3px; }
 .offer__note a { color: var(--ink-inv); text-decoration: underline; text-underline-offset: 3px; }
 
+.offer__rationale {
+  margin-top: 32px;
+  font-family: var(--body);
+  font-size: 0.9375rem;
+  color: var(--ink-muted-inv);
+}
+.offer__anchor {
+  color: var(--amber);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.offer__anchor:hover { color: var(--amber-l); }
+
 .offer__note {
   font-size: 0.9375rem;
   line-height: 1.55;
@@ -787,13 +870,13 @@ h3 {
   aspect-ratio: 1 / 1;
   width: 100%;
   max-width: 240px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--ink-muted);
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  overflow: hidden;
+}
+.author__photo img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
 }
 @media (min-width: 768px) {
   .author__layout {
@@ -898,15 +981,27 @@ h3 {
   color: var(--ink-soft);
   margin-top: 8px;
 }
-.awards__total {
-  grid-column: 1 / -1;
-  padding-top: 20px;
-  border-top: 1px solid var(--line);
+.awards-wrap {
+  background: var(--bg-inv);
+  padding: 40px 24px;
+  margin: 40px -24px;
+}
+.awards-wrap .awards {
+  border-top: 1px solid var(--line-inv);
+  border-bottom: 1px solid var(--line-inv);
+}
+.awards-wrap .award__num { color: var(--amber); }
+.awards-wrap .award__name { color: var(--ink-muted-inv); }
+.awards__h {
   font-family: var(--display);
   font-weight: 700;
-  font-size: clamp(1.5rem, 4vw, 1.875rem);
+  font-size: clamp(1.5rem, 3.5vw, 2rem);
   letter-spacing: -0.02em;
-  color: var(--ink);
+  color: var(--ink-inv);
+  margin-bottom: 24px;
+}
+@media (min-width: 768px) {
+  .awards-wrap { padding: 56px 40px; margin: 56px -40px; }
 }
 @media (min-width: 768px) {
   .awards {
@@ -1038,6 +1133,19 @@ h3 {
   .faq__item > summary { font-size: 1.1875rem; padding: 26px 40px 26px 0; }
   .faq__item > summary::after { top: 24px; }
 }
+
+.faq__rationale {
+  margin-top: 40px;
+  font-family: var(--body);
+  font-size: 0.9375rem;
+  color: var(--ink-muted);
+}
+.faq__anchor {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.faq__anchor:hover { color: var(--amber); }
 
 /* ============================================================
    S8 — Финал (HUGE 100vh inverted)
@@ -1233,48 +1341,49 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
       <details class="program__day" open>
         <summary>13 июня · день 1</summary>
         <ol>
-          <li><time>11:00–12:30</time><span>Как появился Method — как из 22 лет в McCann, BBDO, Friends Moscow вырос Method. Что не работало в индустрии и какие принципы остались.</span></li>
-          <li><time>12:40–13:40</time><span>Перестаньте молиться на идеи — главная ошибка профессии: ждать вдохновения. Что такое «уровень относительности» идеи: личный, агентский, категории, мира. «Уже было» — диагноз, а не приговор.</span></li>
+          <li><time>11:00–12:30</time><span><strong>Как появился Method.</strong> Не теория из учебника. Method вырос из 22 лет на стороне исполнителя (McCann, BBDO, Восход, Friends Moscow) и 350+ агентских наград. Система, отточенная под боевыми дедлайнами на реальных кампаниях йоты, карпрайса, премьера — а не родившаяся в кабинете.</span></li>
+          <li><time>12:40–13:40</time><span><strong>Перестаньте молиться на идеи.</strong> 99% Cannes Lions выигрывают не за идею, а за проект целиком: проблематика + стратегия + упаковка + крафт + медиа. Все учат «придумывать идеи» — Method учит собирать сильный проект, где идея — один из инструментов, не самоцель. Контр-нарратив, который освобождает.</span></li>
           <li class="break"><time>13:40–14:30</time><span>перерыв</span></li>
-          <li><time>14:30–17:00</time><span>Креатив не продаёт — что на самом деле покупает клиент. Креатив отвечает за «выделиться», стратегия — за «продажу». Эра УТП прошла: эмоциональная связь — то, на чём строится покупка.</span></li>
-          <li><time>17:15–19:00</time><span>Глубинные интервью — техника «5 почему»: за одну беседу 30 минут доходишь до инсайта, из которого рождаются десятки идей. Без стратега и без бюджета на исследования.</span></li>
-          <li><time>19:00–20:00</time><span>Одностраничный <span class="amber">бриф</span> — документ на одну страницу, не «бриф для исполнения», а машина генерации. После сборки шторминг идёт по нему, не по настроению.</span></li>
+          <li><time>14:30–17:00</time><span><strong>Креатив не продаёт.</strong> Продают стратегия и медиа. Креатив — это блесна, которая делает крючок заметным; всё, что он делает, — снижает медиа-затраты. Лекция про то, за что на самом деле отвечает креатив. Понимание этого освобождает от давления «продай идеей клиенту страхом».</span></li>
+          <li><time>17:15–19:00</time><span><strong>Глубинные интервью.</strong> Без стратега и без бюджета на исследования. Не «5 почему» из учебника — конкретная авторская техника: как составить анкету, как разговаривать, как услышать то, из чего рождается креатив. За одну 30-минутную беседу с реальным человеком — инсайт, из которого десятки идей.</span></li>
+          <li><time>19:00–20:00</time><span><strong>Одностраничный бриф.</strong> Авторская техника. Бриф на одну страницу — не «бриф для исполнения», а машина генерации: <strong>20–30 идей самостоятельно, до 300 идей с ИИ</strong>. То, что выпускники называют «наш фрейм».</span></li>
+          <li class="program__tz"><time></time><span>* Время по Ташкенту. Москва, Киев, Рига —2 часа. Алматы, Бишкек — то же время.</span></li>
         </ol>
       </details>
 
       <details class="program__day" open>
         <summary>14 июня · день 2</summary>
         <ol>
-          <!-- [NEEDS-LECTURE-TRANSCRIPT] Описание установочной — выверить с Денисом, транскрипта в репо нет -->
-          <li><time>10:00–10:30</time><span>Установочная — сверка с домашкой, разогрев, формат работы.</span></li>
-          <!-- [NEEDS-LECTURE-TRANSCRIPT] Индивидуальный шторминг — практика, описание не выверено -->
-          <li><time>10:30–11:30</time><span>Индивидуальный шторминг — час один-на-один с бумагой. Не ждать музу — генерировать.</span></li>
-          <!-- [NEEDS-LECTURE-TRANSCRIPT] Правила группового шторминга — описание не выверено -->
-          <li><time>11:30–12:00</time><span>Установочная на командный шторминг — правила группового шторминга в Method-формате.</span></li>
-          <!-- [NEEDS-LECTURE-TRANSCRIPT] Командный шторминг — практика, описание не выверено -->
-          <li><time>12:00–15:00</time><span>Командный шторминг — шторминг по бриф-фрейму в группе.</span></li>
+          <li><time>10:00–10:30</time><span><strong>Установочная.</strong> Сверка домашки — что у каждого получилось в глубинных интервью. Разогрев на формат шторминга по Method-фрейму.</span></li>
+          <li><time>10:30–11:30</time><span><strong>Индивидуальный шторминг.</strong> Час один-на-один с бумагой. Шторминг идёт по фрейму брифа, не по настроению. Структура замещает вдохновение — десятки идей даже у того, кто впервые.</span></li>
+          <li><time>11:30–12:00</time><span><strong>Установочная на командный шторминг.</strong> Правила группового шторминга в Method-формате. Как сделать так, чтобы говорили все, а не только самые громкие.</span></li>
+          <li><time>12:00–15:00</time><span><strong>Командный шторминг.</strong> На обычных шторминах большинство молчит, а потом проект тащит один человек. Method-формат разворачивает шторминг в инструмент, который параллельно делает две вещи: собирает идеи и сплочает команду. Включается даже самый тихий.</span></li>
           <li class="break"><time>15:00–15:40</time><span>перерыв</span></li>
-          <!-- [NEEDS-LECTURE-TRANSCRIPT] Отбор идей — описание не выверено -->
-          <li><time>15:40–16:00</time><span>Отбор идей — объективные критерии оценки, голосование по слабым и сильным сторонам.</span></li>
-          <!-- [NEEDS-LECTURE-TRANSCRIPT] Драматизация / подготовка бордов — описание не выверено -->
-          <li><time>16:00–19:00</time><span>Подготовка финальных бордов — идею превращаем в презентационный борд, то что можно показать клиенту.</span></li>
-          <!-- [NEEDS-LECTURE-TRANSCRIPT] Финальная защита — описание не выверено -->
-          <li><time>19:00–20:00</time><span>Презентация и обратная связь — защищаешь свою идею перед группой.</span></li>
+          <li><time>15:40–16:00</time><span><strong>Отбор идей.</strong> Авторская методика: как понять суть своей идеи, выбрать сильнейшую и усилить её через <strong>драматизацию</strong>. Не «голосование за то, что нравится» — структурный отбор по объективным критериям.</span></li>
+          <li><time>16:00–19:00</time><span><strong>Подготовка финальных бордов.</strong> За несколько часов — от текстового описания до фестивального борда или готового видеоролика. То, что обычно занимает неделю с дизайнером, делаешь сам и сразу.</span></li>
+          <li><time>19:00–20:00</time><span><strong>Презентация и обратная связь.</strong> Защищаешь свою идею перед группой. Калибровка по живой аудитории — слышишь, как работают твои аргументы и где идея проседает.</span></li>
+          <li class="program__tz"><time></time><span>* Время по Ташкенту. Москва, Киев, Рига —2 часа. Алматы, Бишкек — то же время.</span></li>
         </ol>
       </details>
     </div>
+  </div>
+</section>
 
-    <p class="program__timezone-note">* Время указано по Ташкенту. Москва, Киев, Рига — −2 часа. Алматы, Бишкек — то же время.</p>
 
-    <div class="program__outro">
-      <h3>На выходе у тебя в руках</h3>
-      <ul>
-        <li>Одностраничный <span class="amber">бриф</span> по реальной задаче.</li>
-        <li>Презентационный <span class="amber">борд</span> готовой идеи.</li>
-        <li><span class="amber">Идея</span>, прошедшая внутреннее голосование группы.</li>
-        <li>Видеозапись интенсива (~14 часов) — пересматриваешь, когда нужно повторить шаг с командой.</li>
-      </ul>
-    </div>
+<!-- ============================================================
+     S3.5 — На выходе (inverted) — отдельная секция (v6)
+     ============================================================ -->
+<section class="outcomes" id="outcomes">
+  <div class="wrap section__content">
+    <span class="eyebrow eyebrow--inv">На выходе</span>
+    <h2 class="outcomes__h">Не просто бриф и борд. Креативная техника, которая остаётся с тобой.</h2>
+    <ul class="outcomes__list">
+      <li><span class="outcomes__kicker">Метод</span><span class="outcomes__text">Авторская методика разработки креатива, которую ты применяешь к любой задаче после интенсива.</span></li>
+      <li><span class="outcomes__kicker">Бриф</span><span class="outcomes__text">Одностраничный бриф по реальной задаче — машина генерации, а не документ для исполнения.</span></li>
+      <li><span class="outcomes__kicker">Борд</span><span class="outcomes__text">Презентационный борд готовой идеи на уровне фестивальной упаковки.</span></li>
+      <li><span class="outcomes__kicker">Идея</span><span class="outcomes__text">Идея, прошедшая внутреннее голосование группы — драматизированная и проверенная.</span></li>
+      <li><span class="outcomes__kicker">Запись</span><span class="outcomes__text">Видеозапись интенсива ~14 часов. Пересматриваешь, когда нужно повторить шаг с командой.</span></li>
+    </ul>
   </div>
 </section>
 
@@ -1287,9 +1396,10 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
   <div class="wrap section__content">
     <span class="eyebrow">Что меняет Method</span>
     <h2>Шесть зависимостей, которые снимает интенсив. <span class="amber">Не случайно.</span></h2>
+    <p class="bridges__minilead">Каждая зависимость снимается конкретным шагом программы. Ниже — что меняется и где это происходит в эти два дня.</p>
 
-    <!-- BRIDGE B1 — хаос → одностраничный бриф (v5: цитата Дундины — senior anchor) -->
-    <article class="bridge">
+    <!-- BRIDGE B1 — хаос → одностраничный бриф (v5: цитата Дундины — senior anchor) (v6: inverted) -->
+    <article class="bridge bridge--inv">
       <h3 class="bridge__h">Освобождение <span class="amber">от хаоса</span>.</h3>
       <!-- source: student_reactions_method3.md chat 3/25, Natalia Dundina (P2) — swap v5 -->
       <p class="bridge__quote">Можно делать классную работу и не страдать.</p>
@@ -1306,8 +1416,8 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
       <p class="bridge__body">Инсайт перестаёт зависеть от того, «пришла идея» или нет. <strong>Тридцать минут разговора</strong> с реальным человеком дают больше, чем неделя гугления. Это не озарение — это <strong>техника «5 в глубину»</strong>. <em>День&nbsp;1, 17:15–19:00.</em></p>
     </article>
 
-    <!-- BRIDGE B3 — плохая стратегия → домашка интервью (signoff удалён v5) -->
-    <article class="bridge">
+    <!-- BRIDGE B3 — плохая стратегия → домашка интервью (signoff удалён v5, inverted v6) -->
+    <article class="bridge bridge--inv">
       <h3 class="bridge__h">Освобождение <span class="amber">от плохой стратегии</span>.</h3>
       <!-- source: student_reactions_method3.md chat 3/22, Григорий Скоробогатько -->
       <p class="bridge__quote">Зачем стратегия, зачем креатив, плюс глубинный анализ — докапываться до истины через «почему».</p>
@@ -1324,8 +1434,8 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
       <p class="bridge__body">Шторминг идёт <strong>по фрейму, не по настроению</strong>. Десятки идей за час — даже у того, кто впервые. Голос самозванца не успевает включиться: процесс везёт. <em>День&nbsp;2, 10:30–11:30.</em></p>
     </article>
 
-    <!-- BRIDGE B5 — зависимость от команды → командный шторминг -->
-    <article class="bridge">
+    <!-- BRIDGE B5 — зависимость от команды → командный шторминг (inverted v6) -->
+    <article class="bridge bridge--inv">
       <h3 class="bridge__h">Освобождение <span class="amber">от зависимости от команды</span>.</h3>
       <!-- source: three_things_post_course.md Response 29 (Продвинутый) -->
       <p class="bridge__quote">Нет плохих креативщиков. Есть плохие брифы и плохие процессы.</p>
@@ -1355,7 +1465,6 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
     <div class="offer__layout">
       <div class="offer__hero">
         <div class="offer__number"><span class="amber">$300</span></div>
-        <div class="offer__caption">в зачёт полного <a href="https://gotaddedvalue.com/method/" target="_blank" rel="noopener">Method 3.0</a></div>
       </div>
 
       <div class="offer__body">
@@ -1366,14 +1475,18 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
           <div class="offer__row" data-until="2026-05-29"><span>до 29 мая</span><span class="offer__price">$350</span></div>
           <div class="offer__row" data-until="2026-06-05"><span>до 5 июня</span><span class="offer__price">$450</span></div>
           <div class="offer__row" data-until="2026-06-12"><span>до 12 июня</span><span class="offer__price">$500</span></div>
-          <div class="offer__row offer__row--zachet"><span>В зачёт <a href="https://gotaddedvalue.com/method/" target="_blank" rel="noopener">Method 3.0</a></span><span>−$300</span></div>
+          <div class="offer__row offer__row--zachet"><span>В зачёт любого следующего <a href="https://gotaddedvalue.com/method/" target="_blank" rel="noopener">Method</a> (с 4-го)</span><span>−$300</span></div>
         </div>
 
-        <p class="offer__note">$300 из любого тарифа идут в зачёт полного <a href="https://gotaddedvalue.com/method/" target="_blank" rel="noopener">Method 3.0</a>. Не понравится — у тебя на руках бриф, борд и видеозапись интенсива на ~14 часов.</p>
+        <p class="offer__note">$300 из любого тарифа идут в зачёт любого следующего <a href="https://gotaddedvalue.com/method/" target="_blank" rel="noopener">Method</a> (с 4-го; <a href="https://gotaddedvalue.com/method/" target="_blank" rel="noopener">Method 3.0</a> уже идёт). Не понравится — у тебя на руках бриф, борд и видеозапись интенсива на ~14 часов.</p>
 
         <a class="cta cta--inverted" href="https://t.me/gotaddedvalue_bot" target="_blank" rel="noopener">
           Купить место <span class="cta__arrow" aria-hidden="true">→</span>
         </a>
+
+        <p class="offer__rationale">
+          Зачем этот курс — <a href="#bridges" class="offer__anchor">шесть зависимостей, которые он снимает</a>.
+        </p>
       </div>
     </div>
   </div>
@@ -1389,29 +1502,28 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
 
     <div class="author__layout">
       <div class="author__photo">
-        <!-- TODO: положить фото в /assets/denis.jpg -->
-        <span>Denis Eliseev</span>
+        <img src="assets/denis.jpg" alt="Денис Елисеев">
       </div>
 
       <div>
         <h2 class="author__name">Денис Елисеев</h2>
-        <p class="author__role">CEO Got Added Value · Author of Method</p>
+        <p class="author__role">CEO Got Added Value — Автор курса Method</p>
 
         <p class="author__bio">
-          Денис Елисеев — 22 года в индустрии. Работал в McCann, BBDO, Восходе. В 2010 сооснователь и CCO Friends Moscow — постоянно в топ-5 рейтинга креативности АКАР 2016–2019, дважды Most Effective Independent Agency of the Year на Effie Awards Russia (2016, 2018). В 2011 сооснователь MADS — лучшая международная школа по версии Young Glory, пять лет подряд лучшая рекламная школа России по версии битвы школ Red Apple. С 2022 года в Центральной Азии помогает агентствам выигрывать первые международные награды — в том числе помог получить первый за всю историю shortlist для Узбекистана на Каннском фестивале рекламы.
+          Денис Елисеев — 22 года в индустрии. Работал в McCann, BBDO, Восходе. В 2010 сооснователь и CCO Friends Moscow. В 2011 сооснователь MADS. С 2022 года в Центральной Азии помогает агентствам выигрывать первые международные награды — в том числе помог получить первый за всю историю shortlist для Узбекистана на Каннском фестивале рекламы.
         </p>
 
         <div class="author__cred">Регалии</div>
         <ul class="author__creds-list">
-          <li><strong>Сооснователь и CCO Friends Moscow</strong> (2010–2022) — Most Effective Independent Agency of the Year на Effie Awards Russia 2016 и 2018</li>
+          <li><strong>Сооснователь и CCO Friends Moscow</strong> (2010–2022) — постоянно в топ-5 рейтинга креативности АКАР 2016–2019. Most Effective Independent Agency of the Year на Effie Awards Russia 2016 и 2018</li>
           <li><strong>Сооснователь MADS</strong> (2010–2022) — школа концептуального мышления, 3000+ выпускников. Лучшая международная школа по Young Glory. Пять лет лучшая рекламная школа России по Red Apple</li>
           <li>Топ-100 самых креативных людей России</li>
           <li>Member of Art Directors Club Russia + ADC Europe</li>
           <li>Председатель жюри ADCR и TAF — крупнейший фестиваль Центральной Азии</li>
-          <li>GRAND Jury New York Advertising Festival</li>
-          <li><strong>350+ международных агентских наград</strong></li>
         </ul>
 
+        <div class="awards-wrap">
+        <h3 class="awards__h">350+ международных агентских наград</h3>
         <div class="awards">
           <div class="award">
             <div class="award__num">3</div>
@@ -1445,7 +1557,7 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
             <div class="award__num">6</div>
             <div class="award__name">Effie Russia<br>+ Indep. Agency of the Year 2016, 2018</div>
           </div>
-          <div class="awards__total">350+ агентских наград</div>
+        </div>
         </div>
 
         <div class="press">
@@ -1513,11 +1625,11 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
       </details>
       <details class="faq__item">
         <summary>Я новичок, мне подойдёт?</summary>
-        <p class="faq__a">Этот интенсив для тех, кто уже в профессии — есть опыт реальной работы, понимаешь, что такое бриф и инсайт. Для новичков рекомендуем полный курс <a href="https://gotaddedvalue.com/method/" target="_blank" rel="noopener">Method 3.0</a>, где есть время на проработку с нуля.</p>
+        <p class="faq__a">Курс подходит и новичку — отличие только в том, что всё интенсивнее. Если ты впервые — домашка будет 2–3 интервью вместо 5, остальное то же. Дополнительно: <strong>скидка на любой следующий поток Method начиная с 4-го</strong> (<a href="https://gotaddedvalue.com/method/" target="_blank" rel="noopener">Method 3.0</a> уже идёт).</p>
       </details>
       <details class="faq__item">
         <summary>Что если не зайдёт?</summary>
-        <p class="faq__a">$300 из любого тарифа идут в зачёт полного курса <a href="https://gotaddedvalue.com/method/" target="_blank" rel="noopener">Method 3.0</a>. Не понравится — у тебя в руках одностраничный бриф, борд и видеозапись.</p>
+        <p class="faq__a">$300 из любого тарифа идут в зачёт любого следующего <a href="https://gotaddedvalue.com/method/" target="_blank" rel="noopener">Method</a> (с 4-го). Не понравится — у тебя в руках одностраничный бриф, борд и видеозапись.</p>
       </details>
       <details class="faq__item">
         <summary>Какой формат домашки?</summary>
@@ -1528,6 +1640,10 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
         <p class="faq__a">После записи через Telegram-бот мы пришлём индивидуальную ссылку на оплату. Возможна оплата от компании / B2B — детали в боте.</p>
       </details>
     </div>
+
+    <p class="faq__rationale">
+      Не нашёл свой вопрос? <a href="https://t.me/gotaddedvalue_bot" target="_blank" rel="noopener" class="faq__anchor">Напиши боту</a> — или посмотри, <a href="#liberation" class="faq__anchor">от чего этот интенсив освобождает</a>.
+    </p>
   </div>
 </section>
 
@@ -1543,7 +1659,7 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
     <h2 class="final__tagline">Не случайно.</h2>
 
     <p class="final__meta">
-      <strong>13 и 14 июня 2026</strong> · онлайн · $300 · в зачёт полного <a href="https://gotaddedvalue.com/method/" target="_blank" rel="noopener">Method 3.0</a>
+      <strong>13 и 14 июня 2026</strong> · онлайн · $300 · в зачёт следующего <a href="https://gotaddedvalue.com/method/" target="_blank" rel="noopener">Method</a>
     </p>
 
     <a class="cta cta--inverted" href="https://t.me/gotaddedvalue_bot" target="_blank" rel="noopener">
