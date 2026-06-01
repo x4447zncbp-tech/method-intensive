@@ -1518,7 +1518,7 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
       </div>
       <div>
         <span class="hero__meta-label" id="hero-seats-word">мест</span>
-        <span class="hero__meta-value" id="hero-seats">25</span>
+        <span class="hero__meta-value" id="hero-seats">30</span>
       </div>
     </div>
 
@@ -1736,7 +1736,7 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
 
         <!-- Слот под живой счётчик; phase 2 — JS подменит innerHTML на «Осталось <b>N</b> из 30» -->
         <div class="offer__seats">
-          <span class="offer__seats-count" id="seats-count">25 мест</span>
+          <span class="offer__seats-count" id="seats-count">30 мест</span>
         </div>
 
         <div class="offer__breakdown" id="tiering"
@@ -2023,7 +2023,9 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
   const TIERS = [];
   if (tierContainer) {
     for (let i = 1; i <= 9; i++) {
-      const raw = tierContainer.dataset['tier' + i];
+      // ВАЖНО: dataset хранит data-tier-1 как dataset['tier-1'] (с дефисом),
+      // а НЕ как dataset['tier1']. Используем getAttribute для надёжности.
+      const raw = tierContainer.getAttribute('data-tier-' + i);
       if (!raw) break;
       try { TIERS.push(JSON.parse(raw)); } catch (e) {}
     }
@@ -2076,7 +2078,7 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
   }
 
   // === МЕСТА ===
-  const SEATS = 25;
+  const SEATS = 30;
   function seatWord(n){
     const a = n % 100, b = n % 10;
     if (a > 10 && a < 20) return 'мест';
