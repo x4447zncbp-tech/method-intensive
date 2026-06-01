@@ -1728,7 +1728,7 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
 
     <div class="offer__layout">
       <div class="offer__hero">
-        <div class="offer__number"><span class="amber">$300</span></div>
+        <div class="offer__number"><span class="amber" id="offer-number">$300</span></div>
       </div>
 
       <div class="offer__body">
@@ -2055,7 +2055,11 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
   const heroPrice = document.getElementById('hero-price');
   if (heroPrice && active) heroPrice.textContent = 'от $' + active.price;
 
-  // подменить цену в secondary-кнопках («или купить картой сейчас $300»)
+  // большая цифра в секции offer
+  const offerNumber = document.getElementById('offer-number');
+  if (offerNumber && active) offerNumber.textContent = '$' + active.price;
+
+  // подменить цену в secondary-кнопках (на случай если решим вернуть)
   if (active) {
     ['hero-secondary-price','offer-secondary-price','final-secondary-price'].forEach(function(id){
       var el = document.getElementById(id);
