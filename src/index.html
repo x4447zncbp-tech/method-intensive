@@ -10,9 +10,30 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<!-- TODO: Meta Pixel + GA4 — paste IDs здесь, по CLAUDE.md scope (today) -->
-<!-- <script>fbq init ...</script> -->
-<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script> -->
+<!-- ============ Google Analytics 4 ============ -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YEF15G0CEV"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-YEF15G0CEV');
+</script>
+
+<!-- ============ Meta Pixel ============ -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1318781913028577');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1318781913028577&ev=PageView&noscript=1"/></noscript>
 
 <style>
 /* ============================================================
@@ -297,8 +318,67 @@ h3 {
 .cta--inverted { background: var(--amber); color: var(--ink); }
 .cta--inverted:hover { background: var(--amber-d); }
 
+/* Secondary CTA — видимая ghost-button (для «Купить сейчас» рядом с «Забронировать») */
+.cta--secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 24px;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  border: 1.5px solid var(--amber);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.cta--secondary:hover { background: var(--amber); color: var(--ink); }
+.cta--secondary .cta__arrow { font-size: 1em; line-height: 1; }
+
+/* На тёмном фоне (offer/final) — secondary имеет светлый текст */
+.offer .cta--secondary,
+.final .cta--secondary { color: var(--ink-inv); }
+.offer .cta--secondary:hover,
+.final .cta--secondary:hover { background: var(--amber); color: var(--ink); }
+
+/* Пара кнопок: на мобиле в столбик, на десктопе рядом */
+.cta-pair {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+}
+@media (min-width: 640px) {
+  .cta-pair {
+    flex-direction: row;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+}
+@media (min-width: 768px) {
+  .cta--secondary { padding: 16px 28px; font-size: 1rem; }
+}
+
+/* Подсказка под hero CTA — мягкая, что Денис свяжется лично */
+.cta__under {
+  display: block;
+  margin-top: 10px;
+  font-family: var(--body);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  color: var(--ink-muted);
+  line-height: 1.4;
+  max-width: 32ch;
+}
+
 @media (min-width: 768px) {
   .cta { font-size: 1rem; padding: 18px 30px; }
+  .cta--secondary { font-size: 0.9375rem; }
+  .cta__under { font-size: 0.875rem; max-width: 36ch; }
 }
 
 .cta__arrow { font-size: 1.05em; line-height: 1; }
@@ -745,6 +825,111 @@ h3 {
 
 @media (min-width: 768px) {
   .bridge__body { font-size: 1rem; }
+}
+
+/* === Перебивки-цитаты между секциями (interlude) — компактнее .bridge === */
+.bridge--interlude {
+  padding: 40px 24px;
+  border-top: 1px solid color-mix(in srgb, var(--ink) 8%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--ink) 8%, transparent);
+}
+.bridge--interlude.bridge--inv {
+  border-top-color: color-mix(in srgb, var(--ink-inv) 12%, transparent);
+  border-bottom-color: color-mix(in srgb, var(--ink-inv) 12%, transparent);
+}
+/* .wrap должен быть широким (как в других секциях), не сжиматься до 60ch.
+   .bridge > * имеет max-width: 60ch — переопределяем для .wrap чтобы текст был слева в контейнере, не по центру экрана. */
+.bridge--interlude > .wrap {
+  max-width: var(--max-w);
+  width: 100%;
+}
+.bridge--interlude .bridge__quote {
+  font-family: var(--body);
+  font-weight: 400;
+  font-size: clamp(1.0625rem, 3.4vw, 1.375rem);
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  max-width: 56ch;
+  margin-bottom: 10px;
+}
+.bridge--interlude .bridge__quote::before,
+.bridge--interlude .bridge__quote::after { display: none; }
+.bridge--interlude .bridge__cite { margin-bottom: 0; max-width: 56ch; }
+@media (min-width: 768px) {
+  .bridge--interlude { padding: 56px 24px; }
+  .bridge--interlude .bridge__quote { font-size: clamp(1.25rem, 1.9vw, 1.5rem); max-width: 60ch; }
+  .bridge--interlude .bridge__cite { max-width: 60ch; }
+}
+@media (min-width: 1280px) {
+  .bridge--interlude { padding: 72px 24px; }
+}
+
+/* === Секция «Что говорят CD, внедрившие Метод» === */
+.leaders {
+  background: var(--bg);
+  padding: 64px 24px;
+}
+.leaders__eyebrow {
+  font-family: var(--body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-muted);
+  margin-bottom: 12px;
+}
+.leaders__h {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 5vw, 2.25rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 32px;
+  max-width: 26ch;
+}
+.leaders__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+.leaders__card {
+  padding: 24px;
+  border: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--ink) 2%, transparent);
+}
+.leaders__quote {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.0625rem;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-bottom: 14px;
+}
+.leaders__name {
+  font-family: var(--body);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+.leaders__role {
+  font-family: var(--body);
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--ink-muted);
+  line-height: 1.4;
+}
+@media (min-width: 768px) {
+  .leaders { padding: 96px 40px; }
+  .leaders__grid { grid-template-columns: 1fr 1fr; gap: 24px; }
+  .leaders__card { padding: 28px 30px; }
+  .leaders__quote { font-size: 1.1875rem; }
+}
+@media (min-width: 1280px) {
+  .leaders { padding: 120px 64px; }
 }
 
 /* ============================================================
@@ -1292,7 +1477,7 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
       <a class="nav__link" href="#offer">Цена</a>
       <a class="nav__link" href="#faq">Вопросы</a>
     </nav>
-    <a class="nav__cta" href="https://buy.stripe.com/7sY3cu9sjdFm2sm3Die7m0U" target="_blank" rel="noopener">Купить место</a>
+    <a class="nav__cta js-waitlist" href="https://forms.gle/qCV9pSTp7aGnVNdVA" target="_blank" rel="noopener">Забронировать</a>
     <label class="nav__burger" for="nav-toggle" aria-label="Открыть меню">
       <span></span><span></span><span></span>
     </label>
@@ -1337,9 +1522,23 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
       </div>
     </div>
 
-    <a class="cta" href="https://buy.stripe.com/7sY3cu9sjdFm2sm3Die7m0U" target="_blank" rel="noopener">
-      Купить место <span class="cta__arrow" aria-hidden="true">→</span>
-    </a>
+    <div class="cta-pair">
+      <a class="cta js-waitlist" href="https://forms.gle/qCV9pSTp7aGnVNdVA" target="_blank" rel="noopener">
+        Забронировать <span class="cta__arrow" aria-hidden="true">→</span>
+      </a>
+      <a class="cta--secondary js-buy" href="https://buy.stripe.com/7sY3cu9sjdFm2sm3Die7m0U" target="_blank" rel="noopener">
+        Купить сразу <span class="cta__arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+    <span class="cta__under">Свяжусь лично — расскажу детали и заберу за тобой место.</span>
+  </div>
+</section>
+
+<!-- Перебивка #1: множество наград команды Sinthesis — пруф в начале -->
+<section class="bridge bridge--interlude bridge--inv">
+  <div class="wrap">
+    <p class="bridge__quote">Мы вели «Метод» Дениса в 2022 году. Это принесло нам множество наград — метод очень сильно помог систематизировать работу креативной команды.</p>
+    <p class="bridge__cite">Farrukh Sharipov · Co-owner &amp; Creative Director, Sinthesis.uz — одно из самых креативных агентств Центральной Азии</p>
   </div>
 </section>
 
@@ -1361,6 +1560,14 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
       <span><span class="from">от</span>удачи</span>
       <span><span class="from">от</span>зависимости от команды</span>
     </p>
+  </div>
+</section>
+
+<!-- Перебивка #2: знаковые регалии — Apple + Friends Moscow -->
+<section class="bridge bridge--interlude">
+  <div class="wrap">
+    <p class="bridge__quote">Метод — это простая и очень рабочая система. Позволяет делать ресёрч своими силами, без гигантских бюджетов и долгих сроков. И интегрировать уникальный опыт каждого участника команды.</p>
+    <p class="bridge__cite">Alexander Popkov · Independent Brand Strategist · ex-Strategy Lead, Media Arts Lab London (Apple) · ex-Strategy Lead, Friends Moscow</p>
   </div>
 </section>
 
@@ -1405,6 +1612,14 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
   </div>
 </section>
 
+<!-- Перебивка #3: ex Google + Bakery + Friends Moscow — независимость от вдохновения -->
+<section class="bridge bridge--interlude bridge--inv">
+  <div class="wrap">
+    <p class="bridge__quote">Сможете придумывать всегда, при любых обстоятельствах — вне зависимости от того, есть у вас сегодня вдохновение или нет. Метод учит делать это стабильно.</p>
+    <p class="bridge__cite">Dmitry Semenov · Independent International Creative Director · ex-CD, Bakery (USA) · ex-Creative Lead, Google Russia · ex-CD, Friends Moscow</p>
+  </div>
+</section>
+
 
 <!-- ============================================================
      S3.5 — На выходе (inverted) — отдельная секция (v6)
@@ -1420,6 +1635,14 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
       <li><span class="outcomes__kicker">Борд</span><span class="outcomes__text">Несколько собранных фестивальных идей. Часть из них GAV реализует в Калифорнии, остальное ты кладёшь себе в портфолио.</span></li>
       <li><span class="outcomes__kicker">Запись</span><span class="outcomes__text">Видеозапись интенсива ~14 часов. Пересматриваешь, когда нужно повторить шаг с командой.</span></li>
     </ul>
+  </div>
+</section>
+
+<!-- Перебивка #4: бизнес-метрика — winrate агентства от ex Friends Moscow (перед освобождениями) -->
+<section class="bridge bridge--interlude">
+  <div class="wrap">
+    <p class="bridge__quote">В тот год, когда Дэн начал внедрять процессы — декомпозицию проектов, постановочные встречи — наш winrate агентства значительно вырос и составил 79%. Очень высокий результат для агентства.</p>
+    <p class="bridge__cite">Sabina Reingold · Co-founder, Jolbors &amp; Pointy · ex-New Business Director, Friends Moscow</p>
   </div>
 </section>
 
@@ -1487,6 +1710,14 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
   </div>
 </section>
 
+<!-- Перебивка #4: снятие возражения по цене — прямо перед блоком про деньги -->
+<section class="bridge bridge--interlude">
+  <div class="wrap">
+    <p class="bridge__quote">Единственное, что останавливало — цена. Но я не пожалел, что нашёл путь присоединиться: курс окупил себя на все 100%.</p>
+    <p class="bridge__cite">Выпускник Method</p>
+  </div>
+</section>
+
 
 <!-- ============================================================
      S5 — Цена (DRAMA inverted)
@@ -1508,25 +1739,40 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
           <span class="offer__seats-count" id="seats-count">25 мест</span>
         </div>
 
-        <div class="offer__breakdown" id="tiering">
-          <div class="offer__row" data-until="2026-05-25"><span>Интенсив до 25 мая</span><span class="offer__price">$300</span></div>
-          <div class="offer__row" data-until="2026-05-29"><span>до 29 мая</span><span class="offer__price">$350</span></div>
-          <div class="offer__row" data-until="2026-06-05"><span>до 5 июня</span><span class="offer__price">$450</span></div>
-          <div class="offer__row" data-until="2026-06-12"><span>до 12 июня</span><span class="offer__price">$500</span></div>
+        <div class="offer__breakdown" id="tiering"
+             data-tier-1='{"from":"2026-05-16","until":"2026-05-29","price":300,"url":"https://buy.stripe.com/7sY3cu9sjdFm2sm3Die7m0U"}'
+             data-tier-2='{"from":"2026-05-30","until":"2026-06-05","price":350,"url":"https://buy.stripe.com/cNiaEW1ZR30I0ke8XCe7m0W"}'
+             data-tier-3='{"from":"2026-06-06","until":"2026-06-12","price":400,"url":"https://buy.stripe.com/00w4gy47Z9p6aYS8XCe7m0X"}'>
+          <div class="offer__row" data-from="2026-05-16" data-until="2026-05-29"><span>Интенсив до 29 мая</span><span class="offer__price">$300</span></div>
+          <div class="offer__row" data-from="2026-05-30" data-until="2026-06-05"><span>с 30 мая</span><span class="offer__price">$350</span></div>
+          <div class="offer__row" data-from="2026-06-06" data-until="2026-06-12"><span>с 6 июня</span><span class="offer__price">$400</span></div>
           <div class="offer__row offer__row--zachet"><span>В зачёт следующего <a href="https://gotaddedvalue.com/method/" target="_blank" rel="noopener" class="offer__note-link">Method</a></span><span>−$300</span></div>
         </div>
 
         <p class="offer__note">$300 из любого тарифа идут в зачёт следующего <a href="https://gotaddedvalue.com/method/" target="_blank" rel="noopener" class="offer__note-link">Method</a>. Не понравится — у тебя на руках бриф, борд и видеозапись интенсива на ~14 часов.</p>
 
-        <a class="cta cta--inverted" href="https://buy.stripe.com/7sY3cu9sjdFm2sm3Die7m0U" target="_blank" rel="noopener">
-          Купить место <span class="cta__arrow" aria-hidden="true">→</span>
-        </a>
+        <div class="cta-pair">
+          <a class="cta cta--inverted js-waitlist" href="https://forms.gle/qCV9pSTp7aGnVNdVA" target="_blank" rel="noopener">
+            Забронировать <span class="cta__arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="cta--secondary js-buy" href="https://buy.stripe.com/7sY3cu9sjdFm2sm3Die7m0U" target="_blank" rel="noopener">
+            Купить сразу <span class="cta__arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
 
         <p class="offer__rationale">
           Зачем этот курс — <a href="#bridges" class="offer__anchor">шесть зависимостей, которые он снимает</a>.
         </p>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- Перебивка #5: результат на стороне клиента — Бренд года Узбекистан -->
+<section class="bridge bridge--interlude bridge--inv">
+  <div class="wrap">
+    <p class="bridge__quote">Метод помог нам понять изнутри, как проходит процесс формирования идеи, реализации и оценки эффективности. В этом году мы получили статус «Бренд года» — заняли первое место в рейтинге брендов Узбекистана, а также стали «Клиентом года» среди центральноазиатских брендов.</p>
+    <p class="bridge__cite">Zamira Rakhmanova · Creative Director, Ishonch · Brand of the Year 2023 Uzbekistan · сторона клиента</p>
   </div>
 </section>
 
@@ -1643,6 +1889,13 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
   </div>
 </section>
 
+<!-- Перебивка #6: личная награда Effie от CD Realweb -->
+<section class="bridge bridge--interlude">
+  <div class="wrap">
+    <p class="bridge__quote">Применил всё, что Денис давал, на одном из агентских проектов — итогом стало золото и серебро Effie. Думайте.</p>
+    <p class="bridge__cite">Yuri Puchkov · Creative Director, Realweb Agency</p>
+  </div>
+</section>
 
 <!-- ============================================================
      S7 — FAQ
@@ -1675,7 +1928,11 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
       </details>
       <details class="faq__item">
         <summary>Как оплатить?</summary>
-        <p class="faq__a">Жми «Купить место» — откроется оплата картой, платёж проходит сразу, чек приходит на почту. Нужна оплата от компании — <a href="https://t.me/denis_eliseev_usa" target="_blank" rel="noopener">напиши в Telegram</a>, решим.</p>
+        <p class="faq__a">Два пути. <strong>(1)</strong> «Записаться» → оставь контакт в форме, я свяжусь лично и заберу место за тобой (это удобно если оплата от компании, нужна рассрочка или просто хочешь обсудить). <strong>(2)</strong> «Купить картой сейчас» → откроется Stripe, платёж проходит сразу, чек приходит на почту. Нужна оплата от компании прямо сейчас — <a href="https://t.me/denis_eliseev_usa" target="_blank" rel="noopener">напиши в Telegram</a>.</p>
+      </details>
+      <details class="faq__item">
+        <summary>А если я не готов сейчас купить?</summary>
+        <p class="faq__a"><a href="https://forms.gle/qCV9pSTp7aGnVNdVA" target="_blank" rel="noopener" class="js-waitlist">Оставь заявку</a> — это ни к чему не обязывает. Я свяжусь лично, расскажу детали, отвечу на твои вопросы и заберу за тобой место, если решишься. Так покупают большинство.</p>
       </details>
 
       <!-- source: Денис напрямую, 2026-05-19 -->
@@ -1709,6 +1966,14 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
   </div>
 </section>
 
+<!-- Перебивка #7: эмоциональный финальный буст перед последней CTA — энергия, не выгорание -->
+<section class="bridge bridge--interlude bridge--inv">
+  <div class="wrap">
+    <p class="bridge__quote">Удивительное чувство, когда четырёхчасовой созвон не посадил твою социальную батарейку, а наоборот.</p>
+    <p class="bridge__cite">Lada · студентка Method 3.0</p>
+  </div>
+</section>
+
 
 <!-- ============================================================
      S8 — Финал (HUGE 100vh inverted)
@@ -1720,9 +1985,14 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
     </div>
     <h2 class="final__tagline">Не случайно.</h2>
 
-    <a class="cta cta--inverted" href="https://buy.stripe.com/7sY3cu9sjdFm2sm3Die7m0U" target="_blank" rel="noopener">
-      Купить место <span class="cta__arrow" aria-hidden="true">→</span>
-    </a>
+    <div class="cta-pair">
+      <a class="cta cta--inverted js-waitlist" href="https://forms.gle/qCV9pSTp7aGnVNdVA" target="_blank" rel="noopener">
+        Забронировать <span class="cta__arrow" aria-hidden="true">→</span>
+      </a>
+      <a class="cta--secondary js-buy" href="https://buy.stripe.com/7sY3cu9sjdFm2sm3Die7m0U" target="_blank" rel="noopener">
+        Купить сразу <span class="cta__arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
     <p class="cta__hint">
       Или задать любой вопрос — <a href="https://t.me/denis_eliseev_usa" target="_blank" rel="noopener">t.me/denis_eliseev_usa</a>
     </p>
@@ -1746,21 +2016,62 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
 
 <script>
 (function(){
-  const today = new Date();
-  const rows = document.querySelectorAll('#tiering .offer__row[data-until]');
-  let activePrice = null;
-  for (const row of rows) {
-    const until = new Date(row.dataset.until + 'T23:59:59');
-    if (today <= until && activePrice === null) {
-      row.classList.add('offer__row--active');
-      activePrice = row.querySelector('.offer__price').textContent;
+  // === ТАРИФЫ — единственный источник правды ===
+  // Меняем здесь — синхронно обновляются: цена в hero, активная строка в таблице,
+  // href всех CTA-кнопок (.js-buy), сумма скидки в зачёт.
+  const tierContainer = document.getElementById('tiering');
+  const TIERS = [];
+  if (tierContainer) {
+    for (let i = 1; i <= 9; i++) {
+      const raw = tierContainer.dataset['tier' + i];
+      if (!raw) break;
+      try { TIERS.push(JSON.parse(raw)); } catch (e) {}
     }
   }
-  if (activePrice) {
-    const heroPrice = document.getElementById('hero-price');
-    if (heroPrice) heroPrice.textContent = 'от ' + activePrice;
+  // дата сравнивается по локали браузера, без времени
+  function dayStr(d){
+    const y = d.getFullYear(), m = String(d.getMonth()+1).padStart(2,'0'), dd = String(d.getDate()).padStart(2,'0');
+    return y + '-' + m + '-' + dd;
+  }
+  const today = dayStr(new Date());
+  function findActive(){
+    for (const t of TIERS) {
+      if (today >= t.from && today <= t.until) return t;
+    }
+    // если дата за пределами — последний тариф (с максимальной ценой)
+    return TIERS[TIERS.length - 1] || null;
+  }
+  const active = findActive();
+
+  // подсветить активную строку в таблице тарифов
+  const rows = document.querySelectorAll('#tiering .offer__row[data-from]');
+  for (const row of rows) {
+    if (active && row.dataset.from === active.from) {
+      row.classList.add('offer__row--active');
+    }
   }
 
+  // hero: «от $300»
+  const heroPrice = document.getElementById('hero-price');
+  if (heroPrice && active) heroPrice.textContent = 'от $' + active.price;
+
+  // подменить цену в secondary-кнопках («или купить картой сейчас $300»)
+  if (active) {
+    ['hero-secondary-price','offer-secondary-price','final-secondary-price'].forEach(function(id){
+      var el = document.getElementById(id);
+      if (el) el.textContent = '$' + active.price;
+    });
+  }
+
+  // подменить href ВСЕХ кнопок-покупок (Stripe)
+  if (active) {
+    document.querySelectorAll('.js-buy').forEach(function(a){
+      a.setAttribute('href', active.url);
+      a.setAttribute('data-tier-price', active.price);
+    });
+  }
+
+  // === МЕСТА ===
   const SEATS = 25;
   function seatWord(n){
     const a = n % 100, b = n % 10;
@@ -1776,10 +2087,212 @@ footer a:hover { color: var(--ink); text-decoration: underline; }
   const seatsCount = document.getElementById('seats-count');
   if (seatsCount) seatsCount.textContent = SEATS + ' ' + seatWord(SEATS);
 
+  // === Закрытие мобильного меню по клику на ссылку ===
   document.querySelectorAll('.nav__menu .nav__link').forEach(function(a){
     a.addEventListener('click', function(){
       var t = document.getElementById('nav-toggle');
       if (t) t.checked = false;
+    });
+  });
+
+  // === Аналитика: события воронки ===
+  function track(name, params, opts){
+    opts = opts || {};
+    if (typeof gtag === 'function') gtag('event', name, params || {});
+    // В Meta шлём только маркетинговые конверсии, dwell-time и FAQ-кликам нечего там делать
+    if (!opts.skipMeta && typeof fbq === 'function') {
+      var fbName = {
+        'begin_checkout': 'InitiateCheckout',
+        'view_pricing': 'ViewContent',
+        'generate_lead': 'Lead'
+      }[name] || name;
+      fbq('track', fbName, params || {});
+    }
+  }
+
+  // Клик «Купить картой» (Stripe) — событие begin_checkout с ценой текущего тарифа
+  document.querySelectorAll('.js-buy').forEach(function(a){
+    a.addEventListener('click', function(){
+      var price = parseFloat(a.getAttribute('data-tier-price')) || 0;
+      track('begin_checkout', {
+        currency: 'USD',
+        value: price,
+        items: [{ item_name: 'Method Intensive', item_category: 'intensive', price: price, quantity: 1 }]
+      });
+    });
+  });
+
+  // Клик «Записаться» (Google Form waitlist) — событие generate_lead
+  document.querySelectorAll('.js-waitlist').forEach(function(a){
+    a.addEventListener('click', function(){
+      track('generate_lead', {
+        content_name: 'Method Intensive waitlist',
+        currency: 'USD'
+      });
+    });
+  });
+
+  // Долистал до блока с ценой — view_pricing (один раз на сессию)
+  var offer = document.getElementById('offer');
+  if (offer && 'IntersectionObserver' in window) {
+    var pricingSeen = false;
+    var obs = new IntersectionObserver(function(entries){
+      if (!pricingSeen && entries[0].isIntersecting) {
+        pricingSeen = true;
+        track('view_pricing', { content_name: 'Method Intensive pricing block' });
+        obs.disconnect();
+      }
+    }, { threshold: 0.4 });
+    obs.observe(offer);
+  }
+
+  // === Dwell time на важных блоках ===
+  // Авто-генерация осмысленных track-id и наблюдение за временем нахождения в viewport
+  if ('IntersectionObserver' in window) {
+    function slug(text){
+      return (text || '').toLowerCase()
+        .replace(/[«»"'.,!?:()]/g, '')
+        .replace(/[^a-zа-я0-9ё\s\-]/gi, '')
+        .trim().split(/\s+/).slice(0, 3).join('-').slice(0, 40);
+    }
+    var groups = [
+      // 6 «От чего освобождаем» — прямые боли клиента
+      { selector: '.liberation__items > span', prefix: 'liberation',
+        idFromText: function(el){ return slug(el.textContent.replace(/^от/i, '').trim()); }
+      },
+      // 6 мостов с цитатами выпускников
+      { selector: '#bridges article.bridge', prefix: 'bridge',
+        idFromText: function(el){
+          var h = el.querySelector('.bridge__h');
+          return h ? slug(h.textContent.replace(/освобождение от/gi, '').trim()) : '';
+        }
+      },
+      // Перебивки-цитаты от лидеров и студентов
+      { selector: '.bridge--interlude', prefix: 'interlude',
+        idFromText: function(el){
+          var c = el.querySelector('.bridge__cite');
+          return c ? slug(c.textContent.split('·')[0].trim()) : '';
+        }
+      },
+      // 4 пункта на выходе (Метод / Бриф / Борд / Видео)
+      { selector: '#outcomes .outcomes__list > li', prefix: 'outcome',
+        idFromText: function(el){
+          var k = el.querySelector('.outcomes__kicker');
+          return k ? slug(k.textContent) : '';
+        }
+      },
+      // 2 дня программы
+      { selector: '#program details', prefix: 'program',
+        idFromText: function(el){
+          var s = el.querySelector('summary');
+          return s ? slug(s.textContent) : '';
+        }
+      },
+      // FAQ — каждый вопрос
+      { selector: '.faq__item', prefix: 'faq',
+        idFromText: function(el){
+          var s = el.querySelector('summary');
+          return s ? slug(s.textContent) : '';
+        }
+      },
+      // Крупные секции
+      { selector: '#hero', prefix: 'section', idFromText: function(){ return 'hero'; } },
+      { selector: '#author', prefix: 'section', idFromText: function(){ return 'author'; } },
+      { selector: '#tiering', prefix: 'section', idFromText: function(){ return 'tiering'; } },
+      { selector: '#final', prefix: 'section', idFromText: function(){ return 'final'; } },
+    ];
+
+    var trackedElements = [];
+    groups.forEach(function(g){
+      document.querySelectorAll(g.selector).forEach(function(el, i){
+        if (!el.getAttribute('data-track-id')) {
+          var suffix = g.idFromText ? g.idFromText(el) : '';
+          if (!suffix) suffix = String(i + 1);
+          el.setAttribute('data-track-id', g.prefix + '__' + suffix);
+        }
+        trackedElements.push(el);
+      });
+    });
+
+    var dwellStart = new Map();
+    var dwellTotal = new Map();   // суммарное время по элементу
+    var dwellSent = new Set();    // защита от повторных отправок мелких ивентов
+
+    function flushDwell(id, finalize){
+      var start = dwellStart.get(id);
+      var prevTotal = dwellTotal.get(id) || 0;
+      var current = start ? (performance.now() - start) / 1000 : 0;
+      var total = prevTotal + current;
+      if (start) {
+        dwellStart.delete(id);
+        dwellTotal.set(id, total);
+      }
+      // Отправляем только если набралось ≥1 сек, и только один раз пока он не вышел и снова не вернулся
+      if (finalize && total >= 1 && !dwellSent.has(id)) {
+        dwellSent.add(id);
+        track('dwell_time', {
+          element_id: id,
+          seconds: Math.round(total * 10) / 10,
+          value: Math.round(total * 10) / 10
+        }, { skipMeta: true });
+      }
+    }
+
+    var dwellObs = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        var id = entry.target.getAttribute('data-track-id');
+        if (!id) return;
+        if (entry.isIntersecting) {
+          if (!dwellStart.has(id)) dwellStart.set(id, performance.now());
+        } else {
+          flushDwell(id, false);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    trackedElements.forEach(function(el){ dwellObs.observe(el); });
+
+    // На уход со страницы — финализируем все активные таймеры (использует sendBeacon в GA4 автоматически)
+    function finalizeAll(){
+      // сначала добиваем активные
+      dwellStart.forEach(function(_, id){ flushDwell(id, false); });
+      // потом отправляем накопленное
+      dwellTotal.forEach(function(total, id){
+        if (total >= 1 && !dwellSent.has(id)) {
+          dwellSent.add(id);
+          track('dwell_time', {
+            element_id: id,
+            seconds: Math.round(total * 10) / 10,
+            value: Math.round(total * 10) / 10
+          }, { skipMeta: true });
+        }
+      });
+    }
+    document.addEventListener('visibilitychange', function(){
+      if (document.visibilityState === 'hidden') finalizeAll();
+    });
+    window.addEventListener('pagehide', finalizeAll);
+  }
+
+  // === FAQ — какие вопросы открывают ===
+  document.querySelectorAll('.faq__item').forEach(function(item){
+    var summary = item.querySelector('summary');
+    if (!summary) return;
+    item.addEventListener('toggle', function(){
+      if (item.open) {
+        track('faq_open', {
+          question: summary.textContent.trim().slice(0, 60)
+        }, { skipMeta: true });
+      }
+    });
+  });
+
+  // === Клик по строке тарифа в таблице цен ===
+  document.querySelectorAll('#tiering .offer__row[data-from]').forEach(function(row){
+    row.addEventListener('click', function(){
+      var priceEl = row.querySelector('.offer__price');
+      var price = priceEl ? parseInt(priceEl.textContent.replace(/[^0-9]/g, '')) : 0;
+      track('tier_click', { tier_price: price, value: price }, { skipMeta: true });
     });
   });
 })();
