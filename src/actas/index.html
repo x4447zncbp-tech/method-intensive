@@ -168,9 +168,7 @@ footer a{color:var(--amber);text-decoration:none;font-weight:600}
     <div class="status" id="m-status"></div>
   </div>
   <div id="m-done" style="display:none">
-    <p class="msub" style="margin-bottom:6px">Готово! Файл скачивается. Твой код экземпляра:</p>
-    <div class="code-box" id="m-code"></div>
-    <p class="msub" style="margin-top:14px;margin-bottom:0">Код зашит внутри инструкции. Дальше — шаги установки на странице.</p>
+    <p class="msub" style="margin-bottom:0">Готово! Файл скачивается. Дальше — следуй шагам установки на странице.</p>
   </div>
 </div></div>
 
@@ -252,7 +250,7 @@ function openModal(fmt){PENDING_FORMAT=fmt||'zip';document.getElementById('modal
 function closeModal(){document.getElementById('modal').classList.remove('open');}
 document.getElementById('modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal();});
 
-const README=`# Метод Помощник — установка\n\nПолные шаги под твою платформу — на сайте, где ты скачал.\nКоротко: вставь assistant-instruction.md в «Инструкции» проекта, загрузи папку knowledge + lectures-index.md в «Знания/Источники», напиши «метод».\n\nВнутри инструкции зашит твой уникальный код — не удаляй его.\nПолный курс: gotaddedvalue.com/method · Got Added Value: gav.gotaddedvalue.com`;
+const README=`# Метод Помощник — установка\n\nПолные шаги под твою платформу — на сайте, где ты скачал.\nКоротко: вставь assistant-instruction.md в «Инструкции» проекта, загрузи папку knowledge + lectures-index.md в «Знания/Источники», напиши «метод».\n\nМетод Интенсив: method.gotaddedvalue.com · Got Added Value: gav.gotaddedvalue.com`;
 
 function track(code){
   try{if(typeof fbq==='function')fbq('trackCustom','DownloadMetod',{code:code,platform:CURRENT.key,format:PENDING_FORMAT});}catch(e){}
@@ -290,7 +288,6 @@ async function doDownload(){
     track(code);
     document.getElementById('m-form').style.display='none';
     document.getElementById('m-done').style.display='block';
-    document.getElementById('m-code').textContent=code;
     document.getElementById('m-title').textContent='Спасибо!';
     document.getElementById('m-sub').style.display='none';
   }catch(e){btn.disabled=false;st.className='status err';st.textContent='Не удалось собрать. Обнови страницу и попробуй снова.';}
