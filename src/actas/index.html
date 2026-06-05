@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Метод Помощник — наставник по курсу «Метод» в твоём ИИ</title>
+<meta name="description" content="Метод Помощник — наставник по курсу «Метод» прямо в ChatGPT, Claude, Gemini, Perplexity или DeepSeek. Установи за 5 минут.">
+<meta property="og:title" content="Метод Помощник">
+<meta property="og:description" content="Наставник по курсу «Метод» прямо в твоём ИИ. Установи за 5 минут.">
+<meta property="og:type" content="website">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YEF15G0CEV"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-YEF15G0CEV');</script>
+<!-- Meta Pixel -->
+<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','1514480906783549');fbq('track','PageView');</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1514480906783549&ev=PageView&noscript=1"/></noscript>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+<style>
+:root{--bg:#ebebeb;--ink:#0a0a0a;--ink-soft:#3a3a3a;--ink-muted:#6a6a6a;--line:#cccccc;--card:#f4f4f2;--amber:#c89b3c;--amber-d:#b8893a;--max-w:1100px;--display:'Bricolage Grotesque',system-ui,sans-serif;--body:'Inter Tight',-apple-system,system-ui,sans-serif;}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:var(--max-w);margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:var(--display);font-weight:700;line-height:1.05;letter-spacing:-0.02em}
+.dot{color:var(--amber)}
+a{color:inherit}
+nav{position:sticky;top:0;z-index:50;background:rgba(235,235,235,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
+.logo{font-family:var(--display);font-weight:800;font-size:18px;letter-spacing:-0.02em}
+.logo b{color:var(--amber)}
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--body);font-weight:600;font-size:15px;padding:12px 22px;border-radius:10px;border:none;cursor:pointer;text-decoration:none;transition:.15s}
+.btn-amber{background:var(--amber);color:#0a0a0a}.btn-amber:hover{background:var(--amber-d)}
+.btn-lg{font-size:17px;padding:16px 30px}
+.hero{padding:90px 0 70px;border-bottom:1px solid var(--line)}
+.hero h1{font-size:clamp(40px,7vw,76px);max-width:14ch}
+.hero p.lead{font-size:clamp(18px,2.4vw,23px);color:var(--ink-soft);max-width:46ch;margin:24px 0 36px}
+.kicker{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:22px}
+.kicker::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--amber)}
+section{padding:72px 0;border-bottom:1px solid var(--line)}
+.eyebrow{font-size:13px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--amber);margin-bottom:14px}
+.sec-h{font-size:clamp(28px,4vw,42px);max-width:18ch;margin-bottom:14px}
+.sec-sub{font-size:18px;color:var(--ink-soft);max-width:54ch;margin-bottom:44px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.fcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:26px}
+.fcard h3{font-size:19px;margin-bottom:8px}.fcard p{font-size:15px;color:var(--ink-soft)}
+.fnum{font-family:var(--display);font-weight:800;color:var(--amber);font-size:15px;margin-bottom:14px;display:block}
+.picker{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:36px}
+.pbtn{font-family:var(--body);font-weight:600;font-size:16px;padding:12px 20px;border-radius:11px;border:1.5px solid var(--line);background:var(--card);color:var(--ink-soft);cursor:pointer;transition:.15s}
+.pbtn:hover{border-color:var(--ink-muted)}
+.pbtn.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.pbtn .pct{font-size:12px;opacity:.6;margin-left:6px}
+.panel{display:none;gap:40px;grid-template-columns:1.1fr .9fr;align-items:start}
+.panel.show{display:grid}
+.panel .ptag{display:inline-block;font-size:13px;font-weight:600;color:var(--amber);margin-bottom:8px}
+.panel h3{font-size:24px;margin-bottom:6px}
+.panel .pnote{color:var(--ink-soft);font-size:16px;margin-bottom:22px}
+.psteps{list-style:none;counter-reset:s}
+.psteps li{counter-increment:s;position:relative;padding:0 0 18px 44px;font-size:16px;color:var(--ink-soft)}
+.psteps li::before{content:counter(s);position:absolute;left:0;top:-2px;width:30px;height:30px;background:var(--ink);color:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:800;font-size:15px}
+.psteps li b{color:var(--ink)}
+.pdl{margin-top:10px}
+.pdl .locknote{font-size:12px;color:var(--ink-muted);margin-top:10px}
+.mock{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 1px 0 rgba(0,0,0,.03);position:sticky;top:90px}
+.mock-bar{display:flex;align-items:center;gap:6px;padding:11px 14px;background:var(--card);border-bottom:1px solid var(--line);font-size:13px;color:var(--ink-muted);font-weight:600}
+.mock-bar i{width:9px;height:9px;border-radius:50%;background:#d6d6d2;display:inline-block}
+.mock-bar span{margin-left:8px}
+.mock-body{padding:18px}
+.mz{border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:14px}
+.mz:last-child{margin-bottom:0}
+.mz-label{font-size:13px;font-weight:700;margin-bottom:10px;color:var(--ink)}
+.mz-label b{color:var(--amber)}
+.mz-lines i{display:block;height:8px;border-radius:4px;background:#e3e3e0;margin-bottom:7px}
+.mz-lines i:nth-child(1){width:92%}.mz-lines i:nth-child(2){width:80%}.mz-lines i:nth-child(3){width:88%}.mz-lines i:nth-child(4){width:60%}
+.mz-chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{font-size:12px;font-weight:600;background:var(--card);border:1px solid var(--line);border-radius:7px;padding:6px 10px;color:var(--ink-soft)}
+.chip.amber{border-color:var(--amber);color:var(--amber-d)}
+.stages{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.stage{display:flex;gap:14px;align-items:baseline;padding:16px 18px;background:var(--card);border:1px solid var(--line);border-radius:12px}
+.stage b{font-family:var(--display);color:var(--amber);font-size:20px}
+.stage div p:first-child{font-weight:600}.stage div p:last-child{font-size:14px;color:var(--ink-muted)}
+footer{padding:54px 0;text-align:center}
+.slogan{font-family:var(--display);font-weight:700;font-size:22px;margin-bottom:10px}
+footer a{color:var(--amber);text-decoration:none;font-weight:600}
+.fmuted{font-size:13px;color:var(--ink-muted);margin-top:10px}
+.modal-bg{position:fixed;inset:0;background:rgba(10,10,10,.55);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
+.modal-bg.open{display:flex}
+.modal{background:var(--bg);border-radius:18px;max-width:440px;width:100%;padding:34px}
+.modal h3{font-size:26px;margin-bottom:6px}
+.modal .msub{color:var(--ink-soft);font-size:15px;margin-bottom:24px}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--ink-soft)}
+.field input{width:100%;font-family:var(--body);font-size:16px;padding:13px 15px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
+.field input:focus{outline:none;border-color:var(--amber)}
+.status{font-size:14px;margin-top:6px;min-height:20px}.status.err{color:#c0392b}
+.modal-x{float:right;font-size:24px;cursor:pointer;color:var(--ink-muted);line-height:1;margin:-8px -6px 0 0;background:none;border:none}
+.code-box{font-family:var(--display);font-weight:800;font-size:24px;letter-spacing:.05em;color:var(--amber);background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;text-align:center;margin-top:14px}
+@media(max-width:720px){.panel.show{grid-template-columns:1fr}.mock{position:static}}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap"><div class="logo">Метод<b>·</b>Помощник</div><a href="#get" class="btn btn-amber">Установить</a></div></nav>
+
+<header class="hero"><div class="wrap">
+  <div class="kicker">Продукт Got Added Value</div>
+  <h1>Метод Помощник<span class="dot">.</span></h1>
+  <p class="lead">Наставник по курсу «Метод» — прямо в твоём ИИ. Напоминает, как устроен курс, ведёт по этапам проекта и сам выдаёт результат.</p>
+  <a href="#get" class="btn btn-amber btn-lg">Установить себе →</a>
+</div></header>
+
+<section id="what"><div class="wrap">
+  <div class="eyebrow">Что это</div>
+  <h2 class="sec-h">Курс «Метод», встроенный в твой ИИ</h2>
+  <p class="sec-sub">Ставишь Метод Помощника в свой чат-ИИ — и он работает рядом над реальным проектом: подсказывает, делает, проверяет.</p>
+  <div class="grid">
+    <div class="fcard"><span class="fnum">01</span><h3>Напоминает</h3><p>Простым языком — что делаем на каждом этапе и зачем.</p></div>
+    <div class="fcard"><span class="fnum">02</span><h3>Ведёт по шагам</h3><p>Даёшь бриф — сам выдаёт цель, аудиторию, анкету, драйверы. Ты правишь.</p></div>
+    <div class="fcard"><span class="fnum">03</span><h3>Оценивает</h3><p>Смотрит твою работу по критериям курса и подсказывает, что докрутить.</p></div>
+    <div class="fcard"><span class="fnum">04</span><h3>Даёт лекции</h3><p>Спросит твой поток и даст ссылку на запись нужной лекции.</p></div>
+    <div class="fcard"><span class="fnum">05</span><h3>Планирует</h3><p>Скажешь, сколько времени и людей — соберёт план под твой ресурс.</p></div>
+    <div class="fcard"><span class="fnum">06</span><h3>Собирает отчёт</h3><p>В конце этапа — короткий отчёт о работе, чтобы курс становился лучше.</p></div>
+  </div>
+</div></section>
+
+<section id="how"><div class="wrap">
+  <div class="eyebrow">Как пользоваться</div>
+  <h2 class="sec-h">Проект проходишь по этапам</h2>
+  <p class="sec-sub">Заходи с любого этапа. Один этап = один чат; в конце помощник соберёт хендофф для следующего и отчёт.</p>
+  <div class="stages">
+    <div class="stage"><b>0</b><div><p>Декомпозиция</p><p>Разбить проект на план</p></div></div>
+    <div class="stage"><b>1</b><div><p>Синхронизация брифа</p><p>Договориться о задаче</p></div></div>
+    <div class="stage"><b>2</b><div><p>Исследование</p><p>Интервью и инсайты</p></div></div>
+    <div class="stage"><b>3</b><div><p>Синтез смыслов</p><p>Драйверы и концепции</p></div></div>
+    <div class="stage"><b>4</b><div><p>Генерация</p><p>Бриф и шторминг идей</p></div></div>
+    <div class="stage"><b>5</b><div><p>Отбор и финализация</p><p>Драматизация и борд</p></div></div>
+  </div>
+</div></section>
+
+<section id="get"><div class="wrap">
+  <div class="eyebrow">Установка</div>
+  <h2 class="sec-h">Выбери, где ты работаешь</h2>
+  <p class="sec-sub">Покажем шаги именно под твой ИИ. Везде одно и то же: вставить инструкцию и загрузить знания.</p>
+  <div class="picker" id="picker"></div>
+  <div id="panels"></div>
+</div></section>
+
+<footer><div class="wrap">
+  <p class="slogan">Method. Твори не случайно.</p>
+  <p><a href="https://gotaddedvalue.com/method" target="_blank" rel="noopener">Полный курс «Метод»</a> · <a href="https://gav.gotaddedvalue.com" target="_blank" rel="noopener">Got Added Value</a></p>
+  <p class="fmuted">© Got Added Value</p>
+</div></footer>
+
+<div class="modal-bg" id="modal"><div class="modal">
+  <button class="modal-x" onclick="closeModal()">&times;</button>
+  <h3 id="m-title">Скачать Метод</h3>
+  <p class="msub" id="m-sub">Введи email и пароль доступа — соберём твой персональный пакет.</p>
+  <div id="m-form">
+    <div class="field"><label>Email</label><input type="email" id="m-email" placeholder="you@email.com" autocomplete="email"></div>
+    <div class="field"><label>Пароль доступа</label><input type="password" id="m-pass" placeholder="пароль" autocomplete="off"></div>
+    <button class="btn btn-amber btn-lg" style="width:100%;justify-content:center" id="m-btn" onclick="doDownload()">Скачать</button>
+    <div class="status" id="m-status"></div>
+  </div>
+  <div id="m-done" style="display:none">
+    <p class="msub" style="margin-bottom:6px">Готово! Файл скачивается. Твой код экземпляра:</p>
+    <div class="code-box" id="m-code"></div>
+    <p class="msub" style="margin-top:14px;margin-bottom:0">Код зашит внутри инструкции. Дальше — шаги установки на странице.</p>
+  </div>
+</div></div>
+
+<script>
+const CONFIG = { endpoint: "/.netlify/functions/download" }; // пароль и файлы — на сервере
+
+const PLATFORMS = [
+  {key:'chatgpt', name:'ChatGPT', pct:'88%', term:'Проекты', format:'zip', mock:'project',
+   instr:'Инструкции проекта', files:'Источники',
+   note:'У ChatGPT есть «Проекты» — постоянный контейнер с инструкцией и файлами. Файлы в проекте лежат в разделе «<b>Источники</b>».',
+   steps:['Боковая панель → «<b>Проекты</b>» → создай проект.','Три точки справа вверху → «<b>Настройки проекта</b>» → вставь текст <b>assistant-instruction.md</b> в «<b>Инструкции проекта</b>».','Перетащи в проект файлы <b>knowledge</b> + <b>lectures-index.md</b> + <b>handoff-template.md</b> — они попадут в «<b>Источники</b>».','Напиши <b>метод</b>.']},
+  {key:'claude', name:'Claude', pct:'59%', term:'Проекты', format:'zip', mock:'project',
+   instr:'Инструкции проекта', files:'Знания проекта',
+   note:'У Claude есть «Проекты»: «Инструкции проекта» + «Знания проекта». Наш формат подходит как есть.',
+   steps:['claude.ai → «<b>Проекты</b>» → «<b>Создать проект</b>».','Открой «<b>Инструкции проекта</b>» и вставь текст <b>assistant-instruction.md</b>.','В «<b>Знания проекта</b>» добавь файлы <b>knowledge</b> + <b>lectures-index.md</b> + <b>handoff-template.md</b>.','Напиши <b>метод</b>.']},
+  {key:'gemini', name:'Gemini', pct:'29%', term:'Gems', format:'zip', mock:'project',
+   instr:'Инструкции', files:'Knowledge',
+   note:'«Проектов» у Gemini нет, но есть <b>Gems</b> — то же самое: своя инструкция + файлы в разделе «<b>Knowledge</b>». Лимит — 10 файлов; не влезут — возьми «один файл».',
+   steps:['Открой «<b>Менеджер Gem</b>» → «<b>Новый Gem</b>».','В поле «<b>Инструкции</b>» вставь текст <b>assistant-instruction.md</b>.','В разделе «<b>Knowledge</b>» → «<b>Добавить файлы</b>» (до 10). Не влезают — скачай «один файл» ниже.','Сохрани Gem и напиши <b>метод</b>.']},
+  {key:'perplexity', name:'Perplexity', pct:'7%', term:'Spaces', format:'zip', mock:'project',
+   instr:'Инструкции ИИ', files:'Файлы',
+   note:'У Perplexity есть <b>Spaces</b>: поле «<b>Инструкции ИИ</b>» (Custom AI instructions) + вкладка «<b>Файлы</b>».',
+   steps:['Открой «<b>Spaces</b>» → «<b>Create a Space</b>».','В «<b>Custom AI instructions</b>» (Инструкции ИИ) вставь текст <b>assistant-instruction.md</b>.','Вкладка «<b>Files</b>» → «<b>+</b>» → загрузи <b>knowledge</b> + <b>lectures-index.md</b>.','Напиши <b>метод</b>.']},
+  {key:'deepseek', name:'DeepSeek', pct:'11%', term:'без проектов', format:'allinone', mock:'chat',
+   instr:'первое сообщение', files:'скрепка 📎',
+   note:'У DeepSeek нет проектов и базы знаний. Поэтому даём <b>всё одним файлом</b>: прикладываешь его скрепкой в чат, а инструкцию задаёшь первым сообщением.',
+   steps:['Скачай «<b>один файл</b>» (кнопка ниже) — инструкция и знания вместе.','Новый чат → <b>скрепка 📎</b> → приложи файл.','Первым сообщением: «<b>работай строго по этой инструкции. начнём — метод</b>».','Контекст не вечный: на новый этап начинай новый чат и снова прикладывай файл (помощник отдаст хендофф).']}
+];
+
+let CURRENT = PLATFORMS[0];
+function mockHTML(p){
+  if(p.mock==='chat'){
+    return `<div class="mock"><div class="mock-bar"><i></i><i></i><i></i><span>${p.name} · чат</span></div>
+      <div class="mock-body">
+        <div class="mz"><div class="mz-label">📎 <b>Файл в чате</b></div><div class="mz-chips"><span class="chip amber">metod-pomoshnik.md</span></div></div>
+        <div class="mz"><div class="mz-label">💬 <b>Первое сообщение</b></div><div class="mz-lines"><i></i><i></i></div><div style="font-size:12px;color:var(--ink-muted);margin-top:6px">«работай по этой инструкции… <b>метод</b>»</div></div>
+      </div></div>`;
+  }
+  const chips = p.format==='allinone'
+    ? '<span class="chip amber">metod-pomoshnik.md</span>'
+    : '<span class="chip amber">assistant-instruction.md</span><span class="chip">knowledge ×9</span><span class="chip">lectures-index.md</span><span class="chip">handoff-template.md</span>';
+  return `<div class="mock"><div class="mock-bar"><i></i><i></i><i></i><span>${p.name} · ${p.term}</span></div>
+    <div class="mock-body">
+      <div class="mz"><div class="mz-label">⚙ <b>${p.instr}</b></div><div class="mz-lines"><i></i><i></i><i></i><i></i></div></div>
+      <div class="mz"><div class="mz-label">📎 <b>${p.files}</b></div><div class="mz-chips">${chips}</div></div>
+    </div></div>`;
+}
+function renderPicker(){
+  document.getElementById('picker').innerHTML = PLATFORMS.map(p=>
+    `<button class="pbtn" data-k="${p.key}" onclick="selectP('${p.key}')">${p.name}<span class="pct">${p.pct}</span></button>`).join('');
+  document.getElementById('panels').innerHTML = PLATFORMS.map(p=>{
+    const dlLabel = p.format==='allinone' ? 'Скачать один файл' : 'Скачать пакет';
+    return `<div class="panel" id="panel-${p.key}">
+      <div>
+        <span class="ptag">${p.name} · ${p.term}</span>
+        <h3>Установка в ${p.name}</h3>
+        <p class="pnote">${p.note}</p>
+        <ol class="psteps">${p.steps.map(s=>`<li>${s}</li>`).join('')}</ol>
+        <div class="pdl">
+          <button class="btn btn-amber btn-lg" onclick="openModal('${p.format}')">${dlLabel} →</button>
+          <p class="locknote">🔒 По паролю: нужен email и пароль доступа.</p>
+        </div>
+      </div>
+      ${mockHTML(p)}
+    </div>`;
+  }).join('');
+  selectP(PLATFORMS[0].key);
+}
+function selectP(k){
+  CURRENT = PLATFORMS.find(p=>p.key===k);
+  document.querySelectorAll('.pbtn').forEach(b=>b.classList.toggle('active',b.dataset.k===k));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('show'));
+  document.getElementById('panel-'+k).classList.add('show');
+  try{if(typeof gtag==='function')gtag('event','select_platform',{platform:k});}catch(e){}
+}
+
+let PENDING_FORMAT='zip';
+function openModal(fmt){PENDING_FORMAT=fmt||'zip';document.getElementById('modal').classList.add('open');document.getElementById('m-form').style.display='block';document.getElementById('m-done').style.display='none';document.getElementById('m-status').textContent='';document.getElementById('m-title').textContent='Скачать Метод';document.getElementById('m-sub').style.display='block';setTimeout(()=>document.getElementById('m-email').focus(),50);}
+function closeModal(){document.getElementById('modal').classList.remove('open');}
+document.getElementById('modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal();});
+
+const README=`# Метод Помощник — установка\n\nПолные шаги под твою платформу — на сайте, где ты скачал.\nКоротко: вставь assistant-instruction.md в «Инструкции» проекта, загрузи папку knowledge + lectures-index.md в «Знания/Источники», напиши «метод».\n\nВнутри инструкции зашит твой уникальный код — не удаляй его.\nПолный курс: gotaddedvalue.com/method · Got Added Value: gav.gotaddedvalue.com`;
+
+function track(code){
+  try{if(typeof fbq==='function')fbq('trackCustom','DownloadMetod',{code:code,platform:CURRENT.key,format:PENDING_FORMAT});}catch(e){}
+  try{if(typeof gtag==='function')gtag('event','download_metod',{code:code,platform:CURRENT.key});}catch(e){}
+}
+function dl(blob,name){const u=URL.createObjectURL(blob);const a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000);}
+
+async function doDownload(){
+  const email=document.getElementById('m-email').value.trim();
+  const pass=document.getElementById('m-pass').value;
+  const st=document.getElementById('m-status');st.className='status err';
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){st.textContent='Введи корректный email.';return;}
+  if(!pass){st.textContent='Введи пароль доступа.';return;}
+  const btn=document.getElementById('m-btn');btn.disabled=true;st.className='status';st.textContent='Проверяю и собираю…';
+  try{
+    const resp=await fetch(CONFIG.endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email,password:pass,platform:CURRENT.key,format:PENDING_FORMAT})});
+    if(resp.status===401){btn.disabled=false;st.className='status err';st.textContent='Неверный пароль доступа.';return;}
+    if(!resp.ok){btn.disabled=false;st.className='status err';st.textContent='Ошибка сервера, попробуй ещё раз.';return;}
+    const data=await resp.json();
+    if(!data.ok||!data.files){btn.disabled=false;st.className='status err';st.textContent='Не удалось. Проверь пароль и email.';return;}
+    const code=data.code;
+    if(PENDING_FORMAT==='allinone'){
+      let parts=['# МЕТОД ПОМОЩНИК — всё в одном файле','','> Приложи этот файл в начале чата и напиши «работай строго по этой инструкции, начнём — метод».',''];
+      for(const f of data.files){
+        const title=f.instr?'ИНСТРУКЦИЯ (поведение)':'ЗНАНИЯ · '+f.dest;
+        parts.push('\n\n======================================================\n# '+title+'\n======================================================\n\n'+f.content);
+      }
+      dl(new Blob([parts.join('\n')],{type:'text/markdown'}),'metod-pomoshnik.md');
+    } else {
+      const zip=new JSZip();
+      for(const f of data.files) zip.file(f.dest,f.content);
+      zip.file('README-установка.md',README);
+      dl(await zip.generateAsync({type:'blob'}),'metod-pomoshnik.zip');
+    }
+    track(code);
+    document.getElementById('m-form').style.display='none';
+    document.getElementById('m-done').style.display='block';
+    document.getElementById('m-code').textContent=code;
+    document.getElementById('m-title').textContent='Спасибо!';
+    document.getElementById('m-sub').style.display='none';
+  }catch(e){btn.disabled=false;st.className='status err';st.textContent='Не удалось собрать. Обнови страницу и попробуй снова.';}
+}
+renderPicker();
+</script>
+</body>
+</html>
