@@ -54,9 +54,10 @@ exports.handler = async (event) => {
   });
 
   // лог email+код на сервере (в Google-таблицу через Apps Script)
-  if (process.env.LOG_URL) {
+  const LOG_URL = process.env.LOG_URL || 'https://script.google.com/macros/s/AKfycbwfm8rw6kW9zk3b9lubDuu6Iid1i55Dr9GiD8ipdKPNPmQ1UrRr_jsxHmGdIOOfh8Ffow/exec';
+  if (LOG_URL) {
     try {
-      await fetch(process.env.LOG_URL, {
+      await fetch(LOG_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify({
