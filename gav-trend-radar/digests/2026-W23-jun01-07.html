@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GAV · Trend Radar · W23 · 1–7 июня 2026</title>
+<link rel="stylesheet" href="../../reels/fonts/fonts.css">
+<style>
+  :root{
+    --bg:#f5efe6;
+    --paper:#ffffff;
+    --paper-warm:#fbf6ed;
+    --ink:#1a0e0e;
+    --ink-soft:#3a2828;
+    --ink-muted:#6b5856;
+    --ink-faint:#9a8a86;
+    --burgundy:#722f3e;
+    --burgundy-dark:#5a1f2c;
+    --burgundy-soft:#f2dcd8;
+    --burgundy-tint:#fcf2ee;
+    --method-amber:#c89b3c;
+    --strategai-blue:#3d4fe8;
+    --line:#e6d8cf;
+    --line-soft:#f0e6dc;
+    --display:'Bricolage Grotesque','Inter Tight',system-ui,sans-serif;
+    --body:'Inter Tight',-apple-system,system-ui,sans-serif;
+    --mono:'JetBrains Mono','SF Mono',Menlo,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-font-smoothing:antialiased;}
+  html,body{background:var(--bg);font-family:var(--body);color:var(--ink);line-height:1.55;font-size:16px;}
+  body{padding:48px 24px 96px;}
+  .page{max-width:920px;margin:0 auto;background:var(--paper);border-radius:6px;box-shadow:0 1px 2px rgba(89,40,50,0.04),0 8px 32px rgba(89,40,50,0.08);overflow:hidden;}
+  a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--burgundy);transition:background .15s,color .15s;}
+  a:hover{background:var(--burgundy-soft);color:var(--burgundy);}
+
+  .hd{padding:52px 56px 36px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,var(--paper-warm) 0%,var(--paper) 100%);position:relative;}
+  .hd::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--burgundy);}
+  .hd .eyebrow{display:flex;align-items:center;gap:14px;font-size:11px;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--burgundy);}
+  .hd .eyebrow .tick{width:32px;height:1px;background:var(--burgundy);}
+  .hd .eyebrow .org{color:var(--ink-muted);}
+  .hd h1{font-family:var(--display);font-weight:400;font-size:46px;line-height:1.05;letter-spacing:-0.02em;margin-top:22px;color:var(--ink);}
+  .hd h1 .b{color:var(--burgundy);}
+
+  .nav{display:flex;gap:0;padding:0 56px;background:var(--paper-warm);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10;}
+  .nav a{padding:14px 18px;font-family:var(--body);font-weight:600;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-muted);border-bottom:2px solid transparent;border-left:none;border-right:none;border-top:none;}
+  .nav a:hover{background:transparent;color:var(--burgundy);border-bottom:2px solid var(--burgundy);}
+
+  .meta{padding:24px 56px;border-bottom:1px solid var(--line-soft);background:var(--paper-warm);font-family:var(--display);font-size:16px;line-height:1.6;color:var(--ink-soft);}
+  .meta strong{color:var(--ink);font-weight:600;}
+
+  h2.section{font-family:var(--display);font-weight:500;font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--burgundy);padding:38px 56px 0;background:var(--paper);}
+  h2.section .sub{display:block;font-family:var(--display);font-weight:300;font-size:24px;color:var(--ink);letter-spacing:-0.005em;text-transform:none;margin-top:8px;}
+
+  .post-block{padding:24px 56px 40px;background:var(--paper);}
+  .post-card{padding:24px 0;border-top:1px solid var(--line-soft);}
+  .post-card:first-of-type{border-top:none;}
+  .post-card .pc-head{display:flex;align-items:baseline;gap:12px;}
+  .post-card .pc-head .n{font-family:var(--display);font-weight:500;font-size:32px;line-height:1;color:var(--burgundy);letter-spacing:-0.02em;min-width:44px;}
+  .post-card .pc-head .badge{font-family:var(--body);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--burgundy-dark);background:var(--burgundy-soft);padding:4px 9px;border-radius:3px;}
+  .post-card h3{font-family:var(--display);font-weight:400;font-size:22px;line-height:1.2;letter-spacing:-0.008em;margin-top:8px;color:var(--ink);text-wrap:balance;}
+  .post-card .gist{margin-top:10px;font-family:var(--display);font-weight:300;font-size:15px;line-height:1.5;color:var(--ink-soft);text-wrap:balance;}
+  .post-card .pc-foot{margin-top:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;}
+  .post-card .pc-foot a.watch{display:inline-flex;align-items:center;gap:6px;background:var(--ink);color:var(--paper);padding:6px 12px;border-radius:3px;font-family:var(--body);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;border-bottom:none;}
+  .post-card .pc-foot a.watch:hover{background:var(--burgundy);color:var(--paper);}
+  .post-card .pc-foot code{font-family:var(--mono);font-size:11px;color:var(--ink-muted);background:var(--paper-warm);padding:4px 8px;border:1px solid var(--line);border-radius:3px;}
+
+  .theme{padding:44px 56px;border-top:1px solid var(--line);}
+  .theme:first-of-type{border-top:none;}
+  .theme .rank{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;}
+  .theme .rank .n{font-family:var(--display);font-weight:500;font-size:52px;line-height:1;color:var(--burgundy);letter-spacing:-0.02em;min-width:68px;}
+  .theme .rank .badge{font-family:var(--body);font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--burgundy-dark);background:var(--burgundy-soft);padding:5px 10px;border-radius:4px;}
+  .theme h3{font-family:var(--display);font-weight:400;font-size:32px;line-height:1.13;letter-spacing:-0.012em;margin-top:10px;color:var(--ink);text-wrap:balance;}
+  .theme h3 .brand{font-weight:500;}
+  .theme h3 .agency{color:var(--ink-soft);font-weight:300;}
+
+  .theme .story{margin-top:22px;font-family:var(--display);font-weight:300;font-size:17px;line-height:1.68;color:var(--ink);letter-spacing:-0.003em;}
+  .theme .story p{margin-bottom:14px;}
+  .theme .story p:last-child{margin-bottom:0;}
+  .theme .story strong{color:var(--ink);font-weight:600;}
+  .theme .story em{color:var(--burgundy-dark);font-style:italic;}
+
+  .gav-mark{display:inline-block;font-family:var(--body);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:1px 6px;border-radius:3px;margin:0 1px;vertical-align:1px;border:1px solid;}
+  .gav-mark.method{color:var(--method-amber);border-color:var(--method-amber);background:rgba(200,155,60,0.06);}
+  .gav-mark.strategai{color:var(--strategai-blue);border-color:var(--strategai-blue);background:rgba(61,79,232,0.06);}
+
+  .watch-cta{margin-top:24px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;}
+  .watch-cta a.watch{display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:var(--paper);padding:11px 20px;border-radius:4px;font-family:var(--body);font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;border-bottom:none;}
+  .watch-cta a.watch:hover{background:var(--burgundy);color:var(--paper);}
+  .watch-cta a.watch::before{content:'▶';font-size:11px;}
+  .watch-cta .alt{font-family:var(--body);font-size:12px;color:var(--ink-muted);letter-spacing:.04em;}
+  .watch-cta .alt a{font-weight:500;}
+
+  .theme .meta-line{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;font-size:13px;color:var(--ink-muted);}
+  .theme .meta-line .pill{padding:5px 11px;border:1px solid var(--line);border-radius:14px;background:var(--paper);}
+  .theme .meta-line .pill strong{color:var(--ink);font-weight:600;}
+  .theme .meta-line .pill a{color:var(--ink);border-bottom:none;font-weight:600;}
+  .theme .meta-line .pill a:hover{color:var(--burgundy);}
+
+  .theme .blk{margin-top:24px;}
+  .theme .blk h4{font-family:var(--body);font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--burgundy);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+  .theme .blk h4 .dot{width:6px;height:6px;background:var(--burgundy);border-radius:50%;}
+  .theme .blk ul{list-style:none;padding-left:0;}
+  .theme .blk li{font-size:14px;line-height:1.6;color:var(--ink-soft);padding:7px 0;border-bottom:1px solid var(--line-soft);}
+  .theme .blk li:last-child{border-bottom:none;}
+  .theme .blk .smry{color:var(--ink-muted);margin-left:4px;}
+
+  .theme .says{background:var(--paper-warm);border:1px solid var(--line-soft);border-radius:6px;padding:18px 22px;margin-top:22px;}
+  .theme .says h4{margin-bottom:12px;color:var(--burgundy);font-family:var(--body);font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;}
+  .theme .says ul{list-style:none;padding-left:0;}
+  .theme .says li{font-size:14px;line-height:1.6;color:var(--ink);padding:8px 0;border-bottom:1px dashed var(--line);}
+  .theme .says li:last-child{border-bottom:none;}
+  .theme .says .ang{display:inline-block;font-family:var(--body);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;background:var(--paper);border:1px solid var(--line);color:var(--ink-muted);padding:2px 7px;border-radius:3px;margin-right:8px;vertical-align:middle;}
+
+  .theme .unique{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:18px 22px;margin-top:22px;}
+  .theme .unique h4{margin-bottom:12px;color:var(--burgundy);font-family:var(--body);font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;}
+  .theme .unique p{font-family:var(--display);font-size:15px;line-height:1.55;color:var(--ink);}
+
+  .theme .assets{padding:18px 22px;border:1px solid var(--line);border-radius:6px;margin-top:22px;background:var(--paper-warm);}
+  .theme .assets h4{margin-bottom:12px;color:var(--burgundy);font-family:var(--body);font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;}
+  .theme .assets ul{list-style:none;padding-left:0;}
+  .theme .assets li{font-size:13px;line-height:1.55;color:var(--ink);padding:5px 0;display:flex;gap:8px;align-items:baseline;}
+  .theme .assets li::before{content:'→';color:var(--burgundy);font-weight:700;}
+
+  .theme .gprompt{margin-top:16px;padding:12px 14px;background:var(--paper-warm);border-left:3px solid var(--burgundy);font-family:var(--mono);font-size:13px;color:var(--ink-soft);border-radius:0 3px 3px 0;}
+  .theme .gprompt .lbl{color:var(--burgundy);font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:11px;margin-right:8px;}
+
+  .theme .angle{background:linear-gradient(135deg,var(--paper) 0%,var(--burgundy-tint) 100%);border:1px solid var(--burgundy);border-radius:6px;padding:22px 24px;margin-top:24px;}
+  .theme .angle h4{color:var(--burgundy);margin-bottom:14px;font-weight:700;font-family:var(--body);font-size:11px;letter-spacing:.18em;text-transform:uppercase;}
+  .theme .angle ul{list-style:none;padding-left:0;}
+  .theme .angle li{font-family:var(--display);font-size:15px;line-height:1.6;color:var(--ink);padding:10px 0;border-top:1px dashed var(--line);}
+  .theme .angle li:first-child{border-top:none;padding-top:0;}
+  .theme .flag{margin-top:16px;font-family:var(--body);font-size:12.5px;line-height:1.5;color:var(--ink-muted);background:var(--paper-warm);border:1px dashed var(--line);border-radius:5px;padding:10px 14px;}
+  .theme .flag b{color:var(--burgundy-dark);}
+
+  .extras{padding:28px 56px;border-top:1px solid var(--line);background:var(--paper-warm);}
+  .extras h2{font-family:var(--display);font-weight:500;font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--burgundy);margin-bottom:14px;}
+  .extras ul{list-style:none;padding-left:0;}
+  .extras li{font-size:14px;line-height:1.6;color:var(--ink-soft);padding:8px 0;border-bottom:1px solid var(--line-soft);}
+  .extras li:last-child{border-bottom:none;}
+  .extras strong{color:var(--ink);font-weight:600;}
+  .extras a{font-weight:500;}
+
+  .ft{padding:32px 56px;background:var(--ink);color:#a59590;font-size:12px;letter-spacing:.06em;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;}
+  .ft .lf{font-family:var(--display);font-weight:500;font-size:13px;color:var(--paper-warm);letter-spacing:.24em;text-transform:uppercase;}
+  .ft .lf .b{color:var(--burgundy-soft);}
+  .ft .rt{color:#8e7c78;}
+
+  @media (max-width:760px){
+    body{padding:8px 0 48px;}
+    .page{border-radius:0;}
+    .hd,.meta,.theme,.extras,.ft,h2.section,.post-block,.nav{padding-left:20px;padding-right:20px;}
+    .nav{padding:0 4px;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+    .nav a{padding:14px 12px;font-size:11px;}
+    .hd h1{font-size:32px;}
+    .theme h3{font-size:23px;}
+    .theme .story{font-size:16px;}
+    .theme .rank .n{font-size:40px;}
+    .post-card h3{font-size:18px;}
+  }
+  @media print{
+    body{background:#fff;padding:0;}
+    .page{box-shadow:none;border-radius:0;max-width:none;}
+    .theme,.post-card{page-break-inside:avoid;}
+    .nav{display:none;}
+    .ft{background:#fff;color:#000;border-top:1px solid var(--line);}
+    .ft .lf,.ft .rt,.ft a{color:#000;}
+    a{color:#000 !important;}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <header class="hd">
+    <div class="eyebrow"><span class="org">GAV</span><span class="tick"></span><span>Trend Radar</span><span class="tick"></span><span>W23 · 2026</span></div>
+    <h1>Маркетинговый дайджест за <span class="b">1–7 июня 2026</span>. Четырнадцать тем недели.</h1>
+  </header>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="#post">Для поста · 5</a>
+    <a href="#long">Лонгрид · 14</a>
+    <a href="#extras">Не прошло · Мета · Watchlist</a>
+  </nav>
+
+  <!-- META -->
+  <section class="meta">
+    <strong>Неделя рекламных войн к Кубку мира.</strong> До старта FIFA World Cup 2026 (первый Кубок в трёх странах — США, Канада, Мексика — стартует 11 июня) остаётся неделя, и главная история — лобовое столкновение <strong>Nike vs Adidas</strong>. Спортивная пресса всю неделю выставляла роликам оценки (ESPN: Nike 10/10, Adidas 9.5/10, Coca-Cola 4.5/10).
+    <br><br>
+    <strong>AI-backlash достиг пика.</strong> Coca-Cola с AI-роликом стала громоотводом критики, а на контрасте поднялась волна брендов, делающих «human-made» (сделано людьми) своим позиционированием. 9 июня в Нью-Йорке вступил в силу первый в США закон об обязательной маркировке «синтетических исполнителей» — AI-актёров — в рекламе.
+    <br><br>
+    <strong>Pride и пре-Cannes.</strong> Pride Month прошёл под знаком «тихого отступления» брендов (участие Fortune 500 в индексе равноправия HRC упало на 65%). А за две недели до Cannes Lions 2026 (главный мировой фестиваль рекламы, 22–26 июня) вышли списки прогнозов: их сквозной тезис — человеческий крафт важнее технологического спектакля, и даже AI-бренды выигрывают, <em>не</em> опираясь на AI.
+  </section>
+
+  <!-- ════ ДЛЯ ПОСТА ════ -->
+  <h2 class="section" id="post">Для поста-карусели<span class="sub">5 главных — что вы могли пропустить</span></h2>
+  <section class="post-block">
+
+    <article class="post-card">
+      <div class="pc-head"><span class="n">01</span><span class="badge">Score 17 · World Cup</span></div>
+      <h3>Nike «Rip the Script» против Adidas «Backyard Legends» — рекламная война</h3>
+      <p class="gist">Два главных спортивных бренда столкнулись лбами за неделю до Кубка мира. Nike (6-мин фильм-эпик, звёзды бунтуют против режиссёра) против Adidas (Тимоти Шаламе + AI-деэйджинг легенд). ESPN: Nike 10/10, Adidas 9.5/10. Главное: Nike — даже не спонсор турнира.</p>
+      <div class="pc-foot">
+        <a class="watch" href="https://www.youtube.com/watch?v=IyZ1WIua_1s" target="_blank">Nike фильм</a>
+        <a class="watch" href="https://www.youtube.com/watch?v=mJJY53qhJe0" target="_blank">Adidas фильм</a>
+        <code>nike rip the script vs adidas backyard legends world cup 2026</code>
+      </div>
+    </article>
+
+    <article class="post-card">
+      <div class="pc-head"><span class="n">02</span><span class="badge">Score 17 · AI</span></div>
+      <h3>AI-backlash: Coca-Cola «худший ролик» против движения «сделано людьми»</h3>
+      <p class="gist">Coca-Cola с AI-кадрами банок к Кубку мира стала громоотводом (ESPN 4.5/10). На контрасте — снек Chookie демонстративно ушёл от AI к ручной съёмке с куклами. 9 июня в Нью-Йорке вступил в силу закон: AI-актёров в рекламе надо маркировать.</p>
+      <div class="pc-foot">
+        <a class="watch" href="https://www.creativebloq.com/design/advertising/the-good-the-bad-and-the-ai-of-world-cup-2026-adverts" target="_blank">Разбор Creative Bloq</a>
+        <code>coca-cola uncanned emotions AI backlash + new york synthetic performer law</code>
+      </div>
+    </article>
+
+    <article class="post-card">
+      <div class="pc-head"><span class="n">03</span><span class="badge">Score 14 · Discourse</span></div>
+      <h3>Pride 2026: «тихое отступление» брендов</h3>
+      <p class="gist">Бренды массово сворачивают видимое участие в Pride: участие Fortune 500 в индексе HRC упало на 65% (377→131). Garnier, Mastercard, Skyy, Target ушли из NYC Pride; Apple, Levi's, REI — наоборот, удвоили. 8 июня — поворот: часть брендов возвращается.</p>
+      <div class="pc-foot">
+        <a class="watch" href="https://www.mgid.com/blog/the-quiet-pride-era-why-brands-are-rethinking-lgbtq-marketing-in-2026" target="_blank">The Quiet Pride Era</a>
+        <code>pride 2026 brands retreat HRC index mastercard target rebound</code>
+      </div>
+    </article>
+
+    <article class="post-card">
+      <div class="pc-head"><span class="n">04</span><span class="badge">Score 14</span></div>
+      <h3>Snickers собрал фокус-группу из людей по имени «Reese»</h3>
+      <p class="gist">Snickers Peanut Butter (BBDO, со звездой Eric André) собрал «слепую» фокус-группу целиком из людей по имени Reese/Reece/Rhys, которые невольно нахваливают конкурента Reese's. Джеб в уязвимый момент соперника — а Reese's в ответ… похвалил.</p>
+      <div class="pc-foot">
+        <a class="watch" href="https://www.youtube.com/watch?v=LjhuNpYcih4" target="_blank">Смотреть ролик</a>
+        <code>snickers peanut butter focus group reese bbdo eric andre</code>
+      </div>
+    </article>
+
+    <article class="post-card">
+      <div class="pc-head"><span class="n">05</span><span class="badge">Score 13</span></div>
+      <h3>Apple «Clingers» — трекеры как навязчивые «прилипалы»</h3>
+      <p class="gist">Apple (TBWA, реж. Ivan Zacharias) олицетворила веб-трекеры как навязчивых людей в хромированных трико, которые липнут к не-Apple браузерам, пока Safari их не «взрывает». «Chrome»-трико — каламбур про браузер Chrome. Запуск к WWDC.</p>
+      <div class="pc-foot">
+        <a class="watch" href="https://www.youtube.com/watch?v=Spb-ka7xrR8" target="_blank">Смотреть ролик</a>
+        <code>apple clingers safari privacy tbwa ivan zacharias 2026</code>
+      </div>
+    </article>
+
+  </section>
+
+  <!-- ════ ЛОНГРИД ════ -->
+  <h2 class="section" id="long">Лонгрид<span class="sub">Подробно про каждую тему</span></h2>
+
+  <!-- 1 Nike vs Adidas -->
+  <article class="theme">
+    <div class="rank"><span class="n">01</span><span class="badge">Score 17 · World Cup</span></div>
+    <h3><span class="brand">Nike «Rip the Script»</span> × <span class="brand">Adidas «Backyard Legends»</span> <span class="agency">— рекламная война к Кубку мира</span></h3>
+
+    <div class="story">
+      <p>FIFA World Cup 2026 стартует 11 июня в трёх странах сразу. Это главный коммерческий повод года для спортивных брендов — и Nike с Adidas всю неделю делили внимание индустрии. Adidas — официальный партнёр FIFA (платит за право быть «спонсором турнира»). Nike — нет. И именно из этого ограничения Nike сделал свою стратегию. <span class="gav-mark method">для Method · стратегия = выбор</span></p>
+
+      <p>Nike (агентство Wieden+Kennedy Portland, режиссёр Dan Streit, продакшн Somesuch) выпустил 6-минутный фильм-эпик «Rip the Script»: 30+ звёзд (Роналду, Мбаппе, Холанд, плюс Ким Кардашьян, Трэвис Скотт) бунтуют против «режиссёра» на съёмочной площадке — мета-сюжет, который буквально «рвёт сценарий» рекламы. Фильм — центр «вселенной» из ≈185 коротких роликов на ~12 недель. Логика: раз мы не привязаны к стадиону как спонсор, мы свободно встраиваем футбол в поп-культуру.</p>
+
+      <p>Adidas (агентство LOLA USA, режиссёр Mark Molloy, продакшн SMUGGLER) ответил 5-минутным «Backyard Legends» с Тимоти Шаламе, Месси и Bad Bunny — и AI-деэйджингом (омоложением) легенд: Бекхэм, Зидан, Дель Пьеро в их «игровом» возрасте. Была даже пасхалка с тремя «AI-Бекхэмами». Adidas, наоборот, опирается на авторитет официального партнёра. <span class="gav-mark strategai">для StrategAI · AI как крафт</span></p>
+
+      <p>ESPN 9 июня выставил оценки: Nike 10/10, Adidas 9.5/10 (сняли полбалла за «uncanny valley» — эффект жути от омоложенных лиц). The Drum написал, что «можно подумать, спонсор турнира — Nike, а не Adidas». Highsnobiety возразил в пользу Adidas: у Nike «камео ради камео». Две диаметрально разные ставки на один и тот же повод. <span class="gav-mark method">для Method · формат двигает идею</span></p>
+    </div>
+
+    <div class="watch-cta">
+      <a class="watch" href="https://www.youtube.com/watch?v=IyZ1WIua_1s" target="_blank">Nike «Rip the Script»</a>
+      <a class="watch" href="https://www.youtube.com/watch?v=mJJY53qhJe0" target="_blank">Adidas «Backyard Legends»</a>
+      <span class="alt">контекст · <a href="https://www.espn.com/soccer/story/_/id/49002681/rating-2026-fifa-world-cup-ads-adidas-nike-coke-pepsi" target="_blank">ESPN scorecard всех роликов</a></span>
+    </div>
+
+    <div class="meta-line">
+      <span class="pill"><strong>Nike:</strong> Wieden+Kennedy Portland · Somesuch</span>
+      <span class="pill"><strong>Adidas:</strong> LOLA USA · SMUGGLER</span>
+      <span class="pill"><strong>Running entry:</strong> Adidas впервые в W22</span>
+    </div>
+
+    <div class="blk">
+      <h4><span class="dot"></span>Cross-citation · 8+ порталов</h4>
+      <ul>
+        <li><a href="https://www.adweek.com/creativity/nike-reveals-a-world-cup-universe-that-rips-up-its-own-script/" target="_blank">Adweek</a> · <a href="https://www.campaignlive.com/article/nike-rips-script-writes-new-chapter-epic-2026-world-cup-campaign/1960540" target="_blank">Campaign US</a> · <a href="https://www.creativereview.co.uk/nike-world-cup-film-rip-the-script/" target="_blank">Creative Review</a> · <a href="https://lbbonline.com/news/nike-world-cup-2026-wieden-kennedy" target="_blank">LBBOnline</a></li>
+        <li><a href="https://www.campaignlive.co.uk/article/adidas-%E2%80%9Cbackyard-legends%E2%80%9D-lola-usa/1957460" target="_blank">Campaign UK (Adidas)</a> · <a href="https://www.thedrum.com/news/ad-of-the-day-nike-upstages-adidas-s-world-cup" target="_blank">The Drum</a> · <a href="https://www.espn.com/soccer/story/_/id/49002681/rating-2026-fifa-world-cup-ads-adidas-nike-coke-pepsi" target="_blank">ESPN</a> · <a href="https://www.fourfourtwo.com/competition/how-does-the-nike-rip-the-script-2026-world-cup-advert-rank-against-previous-iconic-campaigns" target="_blank">FourFourTwo</a></li>
+      </ul>
+    </div>
+
+    <div class="says">
+      <h4>Что говорят</h4>
+      <ul>
+        <li><span class="ang">Pro Nike</span>The Drum: не-спонсор выигрывает, встраивая футбол в культуру, а не в стадион.</li>
+        <li><span class="ang">Pro Adidas</span>Highsnobiety: у Nike «камео ради камео», как в Ready Player One; Adidas цельнее.</li>
+        <li><span class="ang">Scorecard</span>ESPN: Nike 10, Adidas 9.5 — Nike побеждает на полбалла.</li>
+      </ul>
+    </div>
+
+    <div class="unique">
+      <h4>Что уникально</h4>
+      <p>Два противоположных playbook'а в одном окне: Nike превращает ограничение («мы не спонсор») в свободу микшировать поп-культуру; Adidas опирается на официальный статус и AI-деэйджинг легенд. Оба отказались от 30-сек спота в пользу 5–6-мин нарратива.</p>
+    </div>
+
+    <div class="gprompt"><span class="lbl">Google</span>nike "rip the script" vs adidas "backyard legends" world cup 2026</div>
+
+    <div class="angle">
+      <h4>Угол для GAV-контента</h4>
+      <ul>
+        <li><strong>Method · стратегия — это выбор, от чего отказаться.</strong> Один повод, два диаметрально разных ответа. Nike делает преимущество из ограничения.</li>
+        <li><strong>Method · формат двигает идею.</strong> 5–6-мин фильм вместо спота — способ удержать тех, кто рекламу не смотрит.</li>
+        <li><strong>StrategAI · AI как крафт, а не подмена.</strong> Деэйджинг Adidas хвалят, но 0.5 балла сняли за uncanny valley — точная грань (см. тему №2 про Coca-Cola).</li>
+      </ul>
+    </div>
+    <div class="flag"><b>Флаги:</b> бюджеты (€250M / £50m) — не подтверждены, не публиковать. «185 роликов» — лайтово-источниковое.</div>
+  </article>
+
+  <!-- 2 AI backlash -->
+  <article class="theme">
+    <div class="rank"><span class="n">02</span><span class="badge">Score 17 · AI</span></div>
+    <h3><span class="brand">AI-backlash</span> <span class="agency">— Coca-Cola против движения «сделано людьми» + закон Нью-Йорка</span></h3>
+
+    <div class="story">
+      <p>Одна арка из трёх сюжетов, сошедшихся на одной неделе. <strong>Сюжет 1:</strong> Coca-Cola (агентство WPP Open X / Ogilvy) выпустила второй глобальный ролик к Кубку мира «Uncanned Emotions» — без игроков и матчей, с AI-сгенерированными кадрами банок (их открывают, бросают, проливают). Ролик стал громоотводом: ESPN 4.5/10, Creative Bloq назвал его «худшим» в подборке — «бессмысленные AI-кадры; бренд сделан героем вместо футбола». <span class="gav-mark strategai">для StrategAI · граница AI</span></p>
+
+      <p><strong>Сюжет 2:</strong> Chookie — маленький снек-бренд из Нью-Джерси — после провала собственных AI-роликов демонстративно ушёл в подчёркнуто ручную съёмку: картонные самолёты, винтажные куклы, миниатюры. Видимое человеческое усилие стало самой идеей. Бренд заявляет о ~12× росте подписчиков (это его собственная цифра, не аудит). <span class="gav-mark method">для Method · как сделано = смысл</span></p>
+
+      <p><strong>Сюжет 3:</strong> 9 июня в штате Нью-Йорк вступил в силу первый в США закон, требующий «заметно раскрывать» наличие «синтетического исполнителя» — AI-сгенерированного актёра — в рекламе. Штрафы $1 000 / $5 000, отраслевая ассоциация 4A's в оппозиции, ждут исков по Первой поправке. «Human-made» из креативного приёма превратился в вопрос юридического комплаенса.</p>
+
+      <p>Связка читается как стрела: большой бренд платит репутацией за <em>видимый</em> AI → малый бренд монетизирует <em>видимое</em> человеческое усилие → регулятор делает раскрытие AI обязательным. Это центральный кейс недели для разговора про AI в рекламе. <span class="gav-mark strategai">для StrategAI · позиция бренда про AI</span></p>
+    </div>
+
+    <div class="watch-cta">
+      <a class="watch" href="https://www.youtube.com/watch?v=0tOU0SJxoxw" target="_blank">Coca-Cola «Uncanned Emotions»</a>
+      <span class="alt">разбор · <a href="https://www.creativebloq.com/design/advertising/the-good-the-bad-and-the-ai-of-world-cup-2026-adverts" target="_blank">Creative Bloq «the good, the bad and the AI»</a></span>
+    </div>
+
+    <div class="blk">
+      <h4><span class="dot"></span>Cross-citation · 6+ порталов</h4>
+      <ul>
+        <li><a href="https://www.creativebloq.com/design/advertising/the-good-the-bad-and-the-ai-of-world-cup-2026-adverts" target="_blank">Creative Bloq</a> · <a href="https://www.espn.com/soccer/story/_/id/49002681/rating-2026-fifa-world-cup-ads-adidas-nike-coke-pepsi" target="_blank">ESPN (Coke 4.5/10)</a> · <a href="https://www.marketingdive.com/news/campaign-trail-coca-cola-rides-a-roller-coaster-of-world-cup-emotions/821781/" target="_blank">Marketing Dive</a></li>
+        <li><a href="https://adage.com/creativity/work/aa-chookie-air/" target="_blank">Ad Age (Chookie)</a> · <a href="https://futurism.com/artificial-intelligence/brand-hate-ai-ads-homemade" target="_blank">Futurism</a> · <a href="https://theconversation.com/a-backlash-against-ai-imagery-in-ads-may-have-begun-as-brands-promote-human-made-269276" target="_blank">The Conversation</a> · <a href="https://digiday.com/marketing/with-ai-backlash-building-marketers-reconsider-their-approach/" target="_blank">Digiday</a></li>
+      </ul>
+    </div>
+
+    <div class="says">
+      <h4>Что говорят</h4>
+      <ul>
+        <li><span class="ang">Coke / con</span>Creative Bloq: «плоско и generic; бренд — герой вместо футбола».</li>
+        <li><span class="ang">Тренд</span>The Conversation: «как сделано теперь важнее, чем как выглядит» (78% не верят в аутентичность AI-картинки).</li>
+        <li><span class="ang">Сдвиг</span>Digiday: бренды не кричат «без AI», а доказывают «настоящее» крафтом (предпочтение gen-AI упало до ~26% с 60% в 2023).</li>
+      </ul>
+    </div>
+
+    <div class="unique">
+      <h4>Что уникально</h4>
+      <p>Три истории одной недели образуют единую арку «human-made»: креативный флекс (Chookie) + коммерческий дифференциатор (тренд) + юридическая граница (закон NY). Регуляторный «тентпол» придаёт теме вес award-уровня.</p>
+    </div>
+
+    <div class="assets">
+      <h4>Asset-ссылки</h4>
+      <ul>
+        <li>Coca-Cola фильм: <a href="https://www.youtube.com/watch?v=0tOU0SJxoxw" target="_blank">YouTube</a> · <a href="https://www.coca-colacompany.com/media-center/coca-cola-unveils-uncanned-emotions-for-fifa-world-cup-2026" target="_blank">пресс-релиз</a></li>
+        <li>Chookie reel: <a href="https://www.instagram.com/reels/DY2oJJLobnt/" target="_blank">Instagram</a></li>
+        <li>Закон NY: <a href="https://www.cooley.com/news/insight/2026/2026-01-29-new-york-enacts-synthetic-performer-disclosure-law-for-advertisements-including-those-using-generative-ai" target="_blank">Cooley</a> · <a href="https://ctmirror.org/2026/06/09/ai-generated-performers-ny-advertisements/" target="_blank">CT Mirror (9 июня)</a></li>
+      </ul>
+    </div>
+
+    <div class="gprompt"><span class="lbl">Google</span>coca-cola uncanned emotions AI backlash + new york synthetic performer law 2026</div>
+
+    <div class="angle">
+      <h4>Угол для GAV-контента</h4>
+      <ul>
+        <li><strong>StrategAI · главный угол.</strong> Тезис недели: даже AI-бренды выигрывают, не опираясь на AI. Грань «AI как крафт» (Adidas) vs «AI как замена идеи» (Coke) — точная иллюстрация позиции StrategAI.</li>
+        <li><strong>Method · как сделано = смысл.</strong> Chookie сделал видимое усилие самой идеей — контр-аргумент полированному спектаклю.</li>
+        <li><strong>Method · proof over hype.</strong> Данные (78% не верят AI-картинке; −26% предпочтения) — продажа позиции через пруфы, не лозунги.</li>
+      </ul>
+    </div>
+    <div class="flag"><b>Флаги:</b> «третий год подряд» у Coke — синтез из 3 эпизодов; «12× подписчиков» Chookie — self-reported; цифра 4A's-оппозиции — новостного уровня.</div>
+  </article>
+
+  <!-- 3 Pride -->
+  <article class="theme">
+    <div class="rank"><span class="n">03</span><span class="badge">Score 14 · Discourse</span></div>
+    <h3><span class="brand">Pride 2026</span> <span class="agency">— «тихое отступление» брендов</span></h3>
+
+    <div class="story">
+      <p>Доминирующий Pride-дискурс июня — массовое сворачивание видимого участия брендов в Pride под политическим давлением и на фоне отката DEI (политики разнообразия и инклюзии). Жёсткая цифра: участие компаний Fortune 500 в индексе равноправия HRC (Human Rights Campaign — ключевая LGBTQ-организация США) упало на 65% год к году — с 377 до 131. Доля компаний, урезавших Pride-активность, выросла до 39% с 9%. <span class="gav-mark method">для Method · позиция как актив</span></p>
+
+      <p>Конкретика NYC Pride: Garnier, Mastercard, Skyy, Target вышли или урезали спонсорство платинового уровня. На контрасте — бренды, демонстративно «удвоившие ставку»: Apple (Pride-коллекция), Levi's, REI, American Eagle ($150K в It Gets Better), Abercrombie ($400K в The Trevor Project). MarTech назвал это «бренды хотят быть и в шкафу, и вне его».</p>
+
+      <p>8 июня — поворот: Bloomberg сообщил, что часть ушедших возвращается (Mastercard, American Eagle, Target), а NYC Pride набрал на ~дюжину спонсоров больше прошлогоднего — но «без прежней видимости». Двойной нарратив на одной неделе. <span class="gav-mark strategai">для StrategAI · риск-моделирование</span></p>
+    </div>
+
+    <div class="watch-cta">
+      <a class="watch" href="https://www.mgid.com/blog/the-quiet-pride-era-why-brands-are-rethinking-lgbtq-marketing-in-2026" target="_blank">The Quiet Pride Era</a>
+      <span class="alt">данные · <a href="https://reports.hrc.org/corporate-equality-index-2026" target="_blank">HRC Corporate Equality Index 2026</a></span>
+    </div>
+
+    <div class="blk">
+      <h4><span class="dot"></span>Cross-citation · 6+ порталов</h4>
+      <ul>
+        <li><a href="https://www.prweek.com/article/1960549/pride-2026-brands-navigating-political-backlash-dei-rollbacks" target="_blank">Campaign / PR Week</a> · <a href="https://www.emarketer.com/content/retailers-scale-back-pride-amid-political-pressure" target="_blank">eMarketer (retreat)</a> · <a href="https://www.emarketer.com/content/apple-pride-collection-2026-dei-brand-strategy" target="_blank">eMarketer (Apple)</a></li>
+        <li><a href="https://www.advocate.com/news/culture/2026-pride-month-company-support" target="_blank">The Advocate</a> · <a href="https://martech.org/brands-want-to-be-in-and-out-of-the-closet-for-pride-month/" target="_blank">MarTech</a> · <a href="https://www.insurancejournal.com/news/national/2026/06/08/872885.htm" target="_blank">Bloomberg / Insurance Journal (8 июня)</a></li>
+      </ul>
+    </div>
+
+    <div class="says">
+      <h4>Что говорят</h4>
+      <ul>
+        <li><span class="ang">Новое</span>MGID: «в 2026 маркетологи моделируют backlash exposure» — измеряют риск публичной позиции.</li>
+        <li><span class="ang">Split</span>iLoveGay: «split screen» — одни тихо отступают, другие шагают вперёд с большей убеждённостью.</li>
+        <li><span class="ang">Бизнес</span>Morning Consult: бренды, удержавшие DEI, видят рост purchase consideration; откатившиеся — падение.</li>
+      </ul>
+    </div>
+
+    <div class="gprompt"><span class="lbl">Google</span>pride 2026 brands retreat HRC index mastercard target rebound bloomberg</div>
+
+    <div class="angle">
+      <h4>Угол для GAV-контента</h4>
+      <ul>
+        <li><strong>Method / StrategAI · позиция как измеримый актив.</strong> Последовательность позиции коррелирует с purchase consideration — это бизнес-метрика, а не «ценности ради ценностей».</li>
+        <li><strong>Method · риск как переменная.</strong> «Моделирование backlash exposure» — честный взгляд на то, как бренд считает риск публичной позиции. Хороший разбор «как принимаются такие решения».</li>
+      </ul>
+    </div>
+    <div class="flag"><b>Флаг:</b> Target/Mastercard/Skyy — в списках «ушли» (2025) И «вернулись» (8.06.2026); различать год. Coach/Lime «удвоили» — тонко-источниковое.</div>
+  </article>
+
+  <!-- 4 Snickers -->
+  <article class="theme">
+    <div class="rank"><span class="n">04</span><span class="badge">Score 14</span></div>
+    <h3><span class="brand">Snickers</span> · «Peanut Butter Focus Group» <span class="agency">— BBDO New York</span></h3>
+
+    <div class="story">
+      <p>Snickers Peanut Butter (бренд Mars, агентство BBDO New York, режиссёр и звезда — комик Eric André) сыграл на одном лингвистическом совпадении. Они собрали «слепую» фокус-группу целиком из людей по имени Reese / Reece / Rhys — и те, не зная подвоха, нахваливают Snickers с арахисовой пастой, то есть конкурента бренда Reese's. <span class="gav-mark method">для Method · инсайт-механика</span></p>
+
+      <p>Тайминг — точный джеб: у Reese's в 2026 году разгорелся скандал (внук изобретателя обвинил Hershey в «удешевлении рецепта»), и Snickers вошёл в эту трещину. Активация «Peanut Butter Pledge» — годовой запас батончиков любому, кого зовут Reese. Самое сильное: Reese's / Hershey ответили не агрессией, а похвалой — и тем усилили охват (earned media — бесплатный охват за счёт реакции). <span class="gav-mark method">для Method · джеб без агрессии</span></p>
+    </div>
+
+    <div class="watch-cta">
+      <a class="watch" href="https://www.youtube.com/watch?v=LjhuNpYcih4" target="_blank">Смотреть ролик</a>
+      <span class="alt">или <a href="https://www.snickers.com/peanutbutterpledge" target="_blank">Peanut Butter Pledge</a></span>
+    </div>
+
+    <div class="meta-line">
+      <span class="pill"><strong>Бренд:</strong> SNICKERS Peanut Butter (Mars)</span>
+      <span class="pill"><strong>Агентство:</strong> BBDO New York</span>
+      <span class="pill"><strong>Реж/звезда:</strong> Eric André</span>
+    </div>
+
+    <div class="blk">
+      <h4><span class="dot"></span>Cross-citation · 6 порталов</h4>
+      <ul>
+        <li><a href="https://adage.com/creativity/work/aa-snickers-peanut-butter-reeses/" target="_blank">Ad Age</a> · <a href="https://www.campaignlive.com/article/ad-week-snickers-peanut-butter-focus-group-bbdo/1959815" target="_blank">Campaign US (Ad of the Week)</a> · <a href="https://lbbonline.com/news/SNICKERS-Reece-Focus-Group" target="_blank">LBBOnline</a></li>
+        <li><a href="https://www.marketingdive.com/news/snickers-wins-praise-from-reeses-for-bigger-push-behind-peanut-butter/821696/" target="_blank">Marketing Dive</a> · <a href="https://news.designrush.com/snickers-reese-focus-group-peanut-butter-creamy-crunchy-eric-andre-bbdo" target="_blank">DesignRush</a> · <a href="https://www.fooddive.com/news/snickers-wins-praise-from-reeses-for-bigger-push-behind-peanut-butter/822080/" target="_blank">Food Dive</a></li>
+      </ul>
+    </div>
+
+    <div class="unique">
+      <h4>Что уникально</h4>
+      <p>Кастинг-механика: фокус-группа из «Reese'ов», нахваливающих конкурента, превращает скучный research-театр в конкурентный джеб. Идея целиком держится на имени — и расширена реальной активацией-pledge.</p>
+    </div>
+
+    <div class="gprompt"><span class="lbl">Google</span>snickers "peanut butter focus group" reese bbdo eric andre 2026</div>
+
+    <div class="angle">
+      <h4>Угол для GAV-контента</h4>
+      <ul>
+        <li><strong>Method · большая идея — найденная мелочь.</strong> Вся кампания — на одном лингвистическом совпадении, доведённом до конца.</li>
+        <li><strong>Method · атаковать категорию и получить дружелюбную реакцию.</strong> Соперник сам похвалил — мастер-класс по конкурентному джебу без токсичности.</li>
+      </ul>
+    </div>
+  </article>
+
+  <!-- 5 Apple -->
+  <article class="theme">
+    <div class="rank"><span class="n">05</span><span class="badge">Score 13</span></div>
+    <h3><span class="brand">Apple</span> · «Clingers» <span class="agency">— TBWA\Media Arts Lab</span></h3>
+
+    <div class="story">
+      <p>Apple (агентство TBWA\Media Arts Lab, режиссёр Ivan Zacharias, продакшн SMUGGLER) взяла абстрактную фичу — защиту Safari от веб-трекеров (программ, которые следят за вами между сайтами) — и сделала её телесной. Трекеры показаны как навязчивые «прилипалы» в хромированных трико, которые физически липнут к людям, пользующимся не-Apple браузерами, пока переход на Safari их буквально не «взрывает». <span class="gav-mark method">для Method · сделать невидимое видимым</span></p>
+
+      <p>Главный приём — двойной смысл: «chrome» (хром) трико — это каламбур про браузер Google Chrome. B&T прямо назвал это «ударом по Google». Adweek отметил тоньше: в самом тексте ролика Apple не называет Chrome — держит цель как «rival browsers», то есть это позиционирование Safari на приватности, а не лобовая атака. Запуск ~3 июня, к WWDC (ежегодная конференция Apple для разработчиков, 8–12 июня).</p>
+    </div>
+
+    <div class="watch-cta">
+      <a class="watch" href="https://www.youtube.com/watch?v=Spb-ka7xrR8" target="_blank">Смотреть ролик</a>
+      <span class="alt">кейс · <a href="https://www.shootonline.com/shoot_video2/director-ivan-zacharias-and-tbwamedia-arts-lab-go-on-a-privacy-safari-to-get-clingers-off-peoples-backs-for-apple/" target="_blank">кредиты SHOOT</a></span>
+    </div>
+
+    <div class="meta-line">
+      <span class="pill"><strong>Бренд:</strong> Apple</span>
+      <span class="pill"><strong>Агентство:</strong> TBWA\Media Arts Lab</span>
+      <span class="pill"><strong>Реж:</strong> Ivan Zacharias · SMUGGLER</span>
+    </div>
+
+    <div class="blk">
+      <h4><span class="dot"></span>Cross-citation · 6 порталов</h4>
+      <ul>
+        <li><a href="https://adage.com/creativity/work/aa-apple-privacy-clingers/" target="_blank">Ad Age</a> · <a href="https://www.adweek.com/creativity/apple-turns-rival-browsers-trackers-into-creepy-chrome-stalkers/" target="_blank">Adweek</a> · <a href="https://www.bandt.com.au/apple-takes-aim-at-google-in-new-clingers-privacy-campaign-via-tbwamedia-arts-lab/" target="_blank">B&T</a></li>
+        <li><a href="https://campaignbriefasia.com/2026/06/04/apple-takes-on-online-trackers-in-global-privacy-campaign-clingers-via-tbwamedia-arts-lab/" target="_blank">Campaign Brief Asia</a> · <a href="https://news.designrush.com/apple-clingers-safari-privacy-campaign-tbwa-media-arts-lab" target="_blank">DesignRush</a> · <a href="https://www.famouscampaigns.com/2026/06/online-tracking-gets-sinister-in-apples-surreal-new-ad/" target="_blank">Famous Campaigns</a></li>
+      </ul>
+    </div>
+
+    <div class="unique">
+      <h4>Что уникально</h4>
+      <p>Материализация невидимого: абстрактные трекеры → телесный body-horror в хромированных трико (chrome = двойной смысл). Дедпан-сюрреализм Захариаса для жанра, где обычно скучный explainer.</p>
+    </div>
+
+    <div class="gprompt"><span class="lbl">Google</span>apple "clingers" safari privacy tbwa ivan zacharias 2026</div>
+
+    <div class="angle">
+      <h4>Угол для GAV-контента</h4>
+      <ul>
+        <li><strong>Method · сделать невидимое видимым.</strong> Главный приём — визуализация абстрактной фичи через физическую метафору. «Если идею нельзя показать — её ещё не нашли».</li>
+        <li><strong>Method · продукт-фича как сюжет.</strong> Не «у нас есть приватность», а драма, где фича — развязка.</li>
+      </ul>
+    </div>
+  </article>
+
+  <!-- 6 IKEA -->
+  <article class="theme">
+    <div class="rank"><span class="n">06</span><span class="badge">Score 12</span></div>
+    <h3><span class="brand">IKEA Sweden</span> · «Sweden's Sunniest Square Metre» <span class="agency">— NoA Åkestam Holst</span></h3>
+    <div class="story">
+      <p>IKEA Sweden (агентство NoA Åkestam Holst) проанализировала 20 лет солнечных данных (партнёр — метеослужба SMHI), нашла самый солнечный квадратный метр страны (юг острова Готланд) и построила там <em>постоянный</em> памятник — два гранитных кресла по мотивам стула SKARPÖ. Так продают садовую мебель. <span class="gav-mark method">для Method · данные как креатив</span></p>
+    </div>
+    <div class="watch-cta">
+      <a class="watch" href="https://adage.com/creativity/work/aa-ikea-sunniest-square-meter/" target="_blank">Смотреть кейс</a>
+      <span class="alt">+ <a href="https://www.thedrum.com/news/ad-of-the-day-ikea-finds-sweden-s-sunniest-square-metre" target="_blank">The Drum · Ad of the Day</a></span>
+    </div>
+    <div class="blk">
+      <h4><span class="dot"></span>Cross-citation · 7+ порталов</h4>
+      <ul>
+        <li><a href="https://adage.com/creativity/work/aa-ikea-sunniest-square-meter/" target="_blank">Ad Age</a> · <a href="https://musebyclios.com/advertising/ikea-marked-swedens-sunniest-spot-with-big-stone-chairs/" target="_blank">Muse by Clio</a> · <a href="https://www.bandt.com.au/ikea-marks-swedens-sunniest-square-metre-with-granite-chairs-on-gotland/" target="_blank">B&T</a> · <a href="https://www.thedrum.com/news/ad-of-the-day-ikea-finds-sweden-s-sunniest-square-metre" target="_blank">The Drum</a> (+ WERSM, adobo, Famous Campaigns)</li>
+      </ul>
+    </div>
+    <div class="unique">
+      <h4>Что уникально</h4>
+      <p>Данные превращены в постоянный физический объект-направление, а не в ролик. Третья работа серии «ответить на вопрос про шведскую природу посещаемым объектом».</p>
+    </div>
+    <div class="gprompt"><span class="lbl">Google</span>ikea "sweden's sunniest square metre" åkestam holst gotland 2026</div>
+    <div class="angle">
+      <h4>Угол для GAV-контента</h4>
+      <ul><li><strong>Method · данные как креатив.</strong> Идея не на экране, а в реальном месте. «Лучшая медиа — объект, к которому едут сами».</li></ul>
+    </div>
+  </article>
+
+  <!-- 7 Tesco -->
+  <article class="theme">
+    <div class="rank"><span class="n">07</span><span class="badge">Score 12 · System1 5.9</span></div>
+    <h3><span class="brand">Tesco</span> · «Plumbert» / Фруктовый великан <span class="agency">— BBH London</span></h3>
+    <div class="story">
+      <p>Tesco (агентство BBH London, режиссёр Nick Ball / MJZ, VFX Untold Studios) запустил 22-футового CGI-великана из фруктов и овощей — 86 сортов, 105 000+ фотореалистичных элементов. Великан путешествует по Британии и <em>тает</em>, отдавая куски себя школам. Программа «Free Fruit & Veg for Schools» масштабируется с 500 до 1000+ школ. <span class="gav-mark method">для Method · форма = сообщение</span></p>
+    </div>
+    <div class="watch-cta">
+      <a class="watch" href="https://www.youtube.com/watch?v=3CYzNYeG3Kg" target="_blank">Смотреть фильм</a>
+      <span class="alt">крафт · <a href="https://shots.net/news/view/from-seed-to-screen-how-tesco-grew-its-greens-giant" target="_blank">shots «From seed to screen»</a></span>
+    </div>
+    <div class="blk">
+      <h4><span class="dot"></span>Cross-citation · 5 порталов</h4>
+      <ul>
+        <li><a href="https://www.thedrum.com/news/tesco-s-joyful-fruit-giant-announces-ambitious-school-program" target="_blank">The Drum</a> · <a href="https://lbbonline.com/news/tesco-joyful-fruit-giant-free-fruit-veg-for-schools-programme" target="_blank">LBBOnline</a> · <a href="https://musebyclios.com/advertising/friendly-fruit-giant-touts-tescos-free-fruit-and-veggie-school-program/" target="_blank">Muse by Clio</a> · <a href="https://www.retailgazette.co.uk/blog/2026/04/tesco-ramps-up-free-fruit-and-veg-for-schools-programme/" target="_blank">Retail Gazette</a> · <a href="https://www.shootonline.com/shoot_video2/tesco-bbh-london-director-nick-ball-and-untold-studios-unleash-fruit-giant-for-community-initiative/" target="_blank">SHOOT</a></li>
+      </ul>
+    </div>
+    <div class="says">
+      <h4>Что говорят</h4>
+      <ul>
+        <li><span class="ang">Effectiveness</span><a href="https://system1group.com/blog/the-best-of-may-tescos-giant-success" target="_blank">System1: 5.9 балла</a> — первый в истории максимум Tesco, «самая эффективная реклама супермаркета за год».</li>
+        <li><span class="ang">Craft</span>Nick Ball: великан должен казаться «собранным самим овощным отделом, а не дизайнером».</li>
+      </ul>
+    </div>
+    <div class="unique">
+      <h4>Что уникально</h4>
+      <p>«Тающий великан, отдающий себя» — буквальное воплощение механики пожертвования: убывание персонажа <em>и есть</em> промис бренда. Технически — не риг, а постоянно пересобираемая масса из 105k элементов.</p>
+    </div>
+    <div class="gprompt"><span class="lbl">Google</span>tesco "fruit giant" plumbert bbh nick ball untold studios 2026</div>
+    <div class="angle">
+      <h4>Угол для GAV-контента</h4>
+      <ul>
+        <li><strong>Method · характер-механика = смысл.</strong> Форма (тающий великан) несёт сообщение (отдаём детям).</li>
+        <li><strong>Method · proof.</strong> System1-рейтинг как пруф эффективности, не вкусовщина.</li>
+      </ul>
+    </div>
+    <div class="flag"><b>Тайминг:</b> запуск в начале мая; привязка к окну — новость о масштабировании школьной программы.</div>
+  </article>
+
+  <!-- 8 Made By Dyslexia -->
+  <article class="theme">
+    <div class="rank"><span class="n">08</span><span class="badge">Score 11 · Cannes contender</span></div>
+    <h3><span class="brand">Made By Dyslexia</span> · «What is dyslexia?» <span class="agency">— Clemenger BBDO</span></h3>
+    <div class="story">
+      <p>Благотворительность Made By Dyslexia (агентство Clemenger BBDO, продакшн Finch, анимация Art&Graft) сделала фильм, спроектированный <em>занять</em> Google Knowledge Panel (информационную карточку справа в поиске) и топ выдачи по запросу «what is dyslexia?». Цель — заменить дефицит-язык («расстройство», «словесная слепота») на язык сильных сторон. Механика дистрибуции тут <em>и есть</em> идея: фильм назван точь-в-точь как поисковый запрос, отзывы на IMDb / Letterboxd поднимают его в выдаче. Голоса — Jeremy Irons, Liv Tyler. <span class="gav-mark strategai">для StrategAI · дистрибуция = идея</span></p>
+    </div>
+    <div class="watch-cta">
+      <a class="watch" href="https://www.youtube.com/watch?v=VQYrXm8W8X4" target="_blank">Смотреть фильм</a>
+      <span class="alt">SEO-сигнал · <a href="https://letterboxd.com/film/what-is-dyslexia/" target="_blank">Letterboxd</a></span>
+    </div>
+    <div class="blk">
+      <h4><span class="dot"></span>Cross-citation · 5 порталов</h4>
+      <ul>
+        <li><a href="https://campaignbrief.com/made-by-dyslexia-launches-global-film-via-clemenger-bbdo-to-reshape-dyslexia-search-results/" target="_blank">Campaign Brief</a> · <a href="https://www.shootonline.com/shoot_video2/top-spot-of-the-week-made-by-dyslexia-clemenger-bbdo-finch-and-artgraft-team-on-short-film-to-change-what-every-child-with-dyslexia-finds-online/" target="_blank">SHOOT (Top Spot)</a> · <a href="https://www.bandt.com.au/made-by-dyslexia-charity-launches-film-with-jeremy-irons-to-hijack-negative-search-results-via-clems/" target="_blank">B&T</a> · <a href="https://www.thestable.com.au/clemenger-bbdo-made-by-dyslexia-make-a-film-that-hijacks-what-is-dyslexia-searches/" target="_blank">The Stable</a> · <a href="https://www.creativeboom.com/news/what-is-dyslexia-why-artgrafts-hybrid-animation-style-is-this-short-films-most-powerful-argument/" target="_blank">Creative Boom</a></li>
+      </ul>
+    </div>
+    <div class="unique">
+      <h4>Что уникально</h4>
+      <p>Медиа-байинг заменён производством органической поисковой авторитетности. Дистрибуция = идея: фильм-запрос, квалифицированный под Knowledge Panel, переопределяет язык категории прямо в выдаче Google.</p>
+    </div>
+    <div class="gprompt"><span class="lbl">Google</span>"what is dyslexia" made by dyslexia clemenger bbdo knowledge panel</div>
+    <div class="angle">
+      <h4>Угол для GAV-контента</h4>
+      <ul><li><strong>Method / StrategAI · дистрибуция и есть идея.</strong> Самый «механический» кейс недели — отличный разбор «как идея и канал становятся одним».</li></ul>
+    </div>
+    <div class="flag"><b>Тайминг:</b> премьера 25 апреля; в окне — пре-Cannes обсуждение.</div>
+  </article>
+
+  <!-- 9 EE -->
+  <article class="theme">
+    <div class="rank"><span class="n">09</span><span class="badge">Score 11</span></div>
+    <h3><span class="brand">EE</span> · «Yes Boys» <span class="agency">— Saatchi & Saatchi + Digitas</span></h3>
+    <div class="story">
+      <p>EE (телеком, часть BT Group; агентства Saatchi & Saatchi + Digitas) к Кубку мира продвигает позитивную маскулинность и цифровую безопасность мальчиков — как противовес «манасфере» (онлайн-сообществам с токсичной маскулинностью). 60-сек фильм под Underworld «Born Slippy». Главное отличие — бесплатный инструмент для тренеров Mentor-Badge на базе исследования с проф. Беном Хайном. <span class="gav-mark method">для Method · эмоция + функция</span></p>
+    </div>
+    <div class="watch-cta">
+      <a class="watch" href="https://www.facebook.com/ee/videos/ee-yes-boys/1807144460252503/" target="_blank">Смотреть фильм</a>
+      <span class="alt">+ <a href="https://newsroom.ee.co.uk/ee-launches-yes-boys-campaign-to-help-build-young-boys-up-on-and-off-the-pitch/" target="_blank">EE newsroom</a></span>
+    </div>
+    <div class="blk">
+      <h4><span class="dot"></span>Cross-citation · 5 порталов</h4>
+      <ul>
+        <li><a href="https://www.campaignlive.co.uk/article/ee-spotlights-footballs-positive-influence-young-boys/1959607" target="_blank">Campaign</a> · <a href="https://lbbonline.com/news/EE-Yes-Boys" target="_blank">LBBOnline</a> · <a href="https://creative.salon/articles/work/ee-yes-boys-saatchi-saatchi-digitas" target="_blank">Creative Salon</a> · <a href="https://www.thedrum.com/news/world-cup-2026-watch-all-the-latest-ads" target="_blank">The Drum</a> · EuropaWire</li>
+      </ul>
+    </div>
+    <div class="says">
+      <h4>Что говорят</h4>
+      <ul>
+        <li><span class="ang">Topical</span>LBB: прямой противовес «манасфере»; тренеры как доверенные ролевые модели.</li>
+        <li><span class="ang">Risk</span>Creative Salon: телеком в теме маскулинности рискует обвинениями в «purpose-washing»; Mentor-Badge — хедж доверия.</li>
+      </ul>
+    </div>
+    <div class="gprompt"><span class="lbl">Google</span>ee "yes boys" saatchi digitas "born slippy" mentor-badge 2026</div>
+    <div class="angle">
+      <h4>Угол для GAV-контента</h4>
+      <ul><li><strong>Method · эмоция + функция.</strong> Продукт-инструмент (Mentor-Badge) усиливает кампанию; позиция продана через пруфы исследования.</li></ul>
+    </div>
+  </article>
+
+  <!-- 10 Visa -->
+  <article class="theme">
+    <div class="rank"><span class="n">10</span><span class="badge">Score 10 · World Cup</span></div>
+    <h3><span class="brand">Visa</span> · «Tap In» <span class="agency">— Saatchi & Saatchi · Jason Sudeikis</span></h3>
+    <div class="story">
+      <p>Visa (агентство Saatchi & Saatchi) с Джейсоном Судейкисом и звёздами (Ямаль, Холанд, Пулишич) построила кампанию на каламбуре: «tap-in» (гол с близкого расстояния) = «tap» (бесконтактная оплата картой). Мир Судейкиса меняется при каждом «тапе». Розыгрыш билетов при «tap-in»-голах турнира. <span class="gav-mark method">для Method · продукт-механика в сюжете</span></p>
+    </div>
+    <div class="watch-cta">
+      <a class="watch" href="https://usa.visa.com/about-visa/newsroom/press-releases.releaseId.22441.html" target="_blank">Visa newsroom</a>
+      <span class="alt">+ <a href="https://www.fastcompany.com/91542777/why-visa-sees-the-world-cup-as-a-brand-tap-in" target="_blank">Fast Company · стратегия</a></span>
+    </div>
+    <div class="blk">
+      <h4><span class="dot"></span>Cross-citation · 5 порталов</h4>
+      <ul>
+        <li><a href="https://www.adweek.com/creativity/visa-recruits-jason-sudeikis-to-score-big-at-the-2026-world-cup/" target="_blank">Adweek</a> · <a href="https://www.marketingbrew.com/stories/visa-jason-sudeikis-world-cup-campaign" target="_blank">Marketing Brew</a> · <a href="https://www.fastcompany.com/91542777/why-visa-sees-the-world-cup-as-a-brand-tap-in" target="_blank">Fast Company</a> · DesignRush · The Drum</li>
+      </ul>
+    </div>
+    <div class="gprompt"><span class="lbl">Google</span>visa "tap in" jason sudeikis world cup saatchi 2026</div>
+    <div class="angle">
+      <h4>Угол для GAV-контента</h4>
+      <ul><li><strong>Method · каламбур-механика продукта.</strong> Двойной смысл «tap in» (футбол / оплата) — двигатель идеи.</li></ul>
+    </div>
+  </article>
+
+  <!-- 11 LEGO -->
+  <article class="theme">
+    <div class="rank"><span class="n">11</span><span class="badge">Score 8</span></div>
+    <h3><span class="brand">LEGO</span> · «Play Maker» <span class="agency">— Jason Momoa · World Play Day</span></h3>
+    <div class="story">
+      <p>LEGO (Our LEGO Agency + Chaos x Magic, режиссёр Rhys Thomas) сделал пародию на корпоративный keynote в полностью кирпичном «совете директоров»: Джейсон Момоа в роли «Playmaker» спасает мир от «дефицита игры». К World Play Day (11 июня); на базе исследования LEGO Play Well Study 2026. <span class="gav-mark method">для Method · продукт = сеттинг</span></p>
+    </div>
+    <div class="watch-cta">
+      <a class="watch" href="https://www.youtube.com/watch?v=jZ6ywkTlfJo" target="_blank">Смотреть фильм</a>
+      <span class="alt">+ <a href="https://www.thedrum.com/news/why-is-jason-momoa-in-a-lego-boardroom-someone-has-to-save-the-world-s-play-deficit" target="_blank">The Drum</a></span>
+    </div>
+    <div class="blk">
+      <h4><span class="dot"></span>Cross-citation · 5 порталов</h4>
+      <ul>
+        <li><a href="https://www.thedrum.com/news/why-is-jason-momoa-in-a-lego-boardroom-someone-has-to-save-the-world-s-play-deficit" target="_blank">The Drum</a> · <a href="https://lbbonline.com/news/Jason-Momoa-LEGO-World-Play-Day" target="_blank">LBBOnline</a> · <a href="https://www.marketing-interactive.com/jason-momoa-takes-on-his-toughest-role-yet" target="_blank">Marketing-Interactive</a> · DesignRush · Roastbrief</li>
+      </ul>
+    </div>
+    <div class="gprompt"><span class="lbl">Google</span>lego "play maker" jason momoa world play day chaos x magic 2026</div>
+    <div class="angle">
+      <h4>Угол для GAV-контента</h4>
+      <ul><li><strong>Method · продукт = сеттинг + proof.</strong> Кирпичи — сам мир ролика; исследование про «дефицит игры» как пруф.</li></ul>
+    </div>
+  </article>
+
+  <!-- 12 Coors -->
+  <article class="theme">
+    <div class="rank"><span class="n">12</span><span class="badge">Score 8</span></div>
+    <h3><span class="brand">Coors Light</span> · «Cold as the Rockies» <span class="agency">— Rethink · инфракрасная съёмка</span></h3>
+    <div class="story">
+      <p>Coors Light (Molson Coors, агентство Rethink) снял летнюю кампанию целиком в тепловой / инфракрасной камере: жаркий мир светится красно-оранжевым, а банка Coors читается холодным синим — буквализируя индикатор «холодного» на банке. Запуск 1 июня (чистое попадание в окно). <span class="gav-mark method">для Method · медиум = сообщение</span></p>
+    </div>
+    <div class="watch-cta">
+      <a class="watch" href="https://www.youtube.com/watch?v=oqujrpXOvh0" target="_blank">Смотреть ролик</a>
+      <span class="alt">+ <a href="https://www.adsoftheworld.com/campaigns/cold-as-the-rockies" target="_blank">Ads of the World</a></span>
+    </div>
+    <div class="blk">
+      <h4><span class="dot"></span>Cross-citation · 4–5 порталов</h4>
+      <ul>
+        <li><a href="https://lbbonline.com/news/Coors-Light-Summer-Heat-Infrared-Campaign" target="_blank">LBBOnline</a> · <a href="https://strategyonline.ca/2026/06/02/coors-light-infrared/" target="_blank">Strategy</a> · <a href="https://news.designrush.com/coors-light-rethink-thermal-camera-cold-as-the-rockies" target="_blank">DesignRush</a> · Roastbrief · Ad Age</li>
+      </ul>
+    </div>
+    <div class="gprompt"><span class="lbl">Google</span>coors light "cold as the rockies" infrared rethink 2026</div>
+    <div class="angle">
+      <h4>Угол для GAV-контента</h4>
+      <ul><li><strong>Method · техника съёмки = доказательство клейма.</strong> Инфракрасная камера буквально показывает «холодную» — медиум несёт сообщение.</li></ul>
+    </div>
+  </article>
+
+  <!-- 13 Guinness -->
+  <article class="theme">
+    <div class="rank"><span class="n">13</span><span class="badge">Score 8 · World Cup</span></div>
+    <h3><span class="brand">Guinness</span> · «The World's Cup» / Singing Pints <span class="agency">— AMV BBDO London</span></h3>
+    <div class="story">
+      <p>Guinness (Diageo, агентство AMV BBDO London) к Кубку мира пересобрал две свои иконы — слоган 1990 года «The world's cup… well in hand» и любимый ролик «Singing Pints» (2023): пенные «головы» пинт кричат «goooal» вместо пения. OOH-реклама в Атланте, Бостоне, Филадельфии, SF. <span class="gav-mark method">для Method · бренд-активы как капитал</span></p>
+    </div>
+    <div class="watch-cta">
+      <a class="watch" href="https://www.prnewswire.com/news-releases/raise-a-guinness-the-worlds-cup-to-soccer-fans-everywhere-this-summer-302774971.html" target="_blank">Пресс-релиз</a>
+      <span class="alt">+ <a href="https://www.thedrum.com/news/ad-of-the-day-guinness-toasts-2-iconic-spots-with-the-world-s-cup" target="_blank">The Drum · Ad of the Day</a></span>
+    </div>
+    <div class="blk">
+      <h4><span class="dot"></span>Cross-citation · 5 порталов</h4>
+      <ul>
+        <li><a href="https://www.thedrum.com/news/ad-of-the-day-guinness-toasts-2-iconic-spots-with-the-world-s-cup" target="_blank">The Drum</a> · <a href="https://lbbonline.com/news/Guinness-World-Cup-Fifa-Football-Soccer" target="_blank">LBBOnline</a> · <a href="https://www.marketing-interactive.com/guinness-revives-the-worlds-cup-amid-global-football-fever" target="_blank">Marketing-Interactive</a> · MediaPost · Famous Campaigns</li>
+      </ul>
+    </div>
+    <div class="gprompt"><span class="lbl">Google</span>guinness "the world's cup" singing pints amv bbdo 2026</div>
+    <div class="angle">
+      <h4>Угол для GAV-контента</h4>
+      <ul><li><strong>Method · не выдумывать новое, переоткрыть своё.</strong> Слоган 1990 + ролик 2023 — бренд-активы как капитал.</li></ul>
+    </div>
+    <div class="flag"><b>Тайминг:</b> пресс-цикл 21–22 мая, продолжается в окне.</div>
+  </article>
+
+  <!-- 14 Chobani -->
+  <article class="theme">
+    <div class="rank"><span class="n">14</span><span class="badge">Score 7 · World Cup</span></div>
+    <h3><span class="brand">Chobani</span> · «Feed the Dream» <span class="agency">— Uncommon New York · USMNT</span></h3>
+    <div class="story">
+      <p>Chobani (йогурты, нутриент-партнёр сборной США; агентство Uncommon New York, режиссёр Hector Dockrill) сделал арт-платформу про «незаметных героев» за спинами игроков: кастомные джерси от Heron Preston, коллажи Michael Mapes, фильм — и $5M грантов 500 юношеским клубам. <span class="gav-mark method">для Method · кампания как платформа</span></p>
+    </div>
+    <div class="watch-cta">
+      <a class="watch" href="https://soccer.chobani.com/" target="_blank">Хаб кампании</a>
+      <span class="alt">+ <a href="https://www.adweek.com/creativity/chobani-puts-soccers-unsung-heroes-on-the-world-cup-stage/" target="_blank">Adweek</a></span>
+    </div>
+    <div class="blk">
+      <h4><span class="dot"></span>Cross-citation · 4 портала</h4>
+      <ul>
+        <li><a href="https://www.campaignlive.com/article/chobani-launches-feed-dream-usmnt-world-cup-roster-reveal/1959498" target="_blank">Campaign US</a> · <a href="https://www.adweek.com/creativity/chobani-puts-soccers-unsung-heroes-on-the-world-cup-stage/" target="_blank">Adweek</a> · <a href="https://news.designrush.com/chobani-feed-the-dream-world-cup-art" target="_blank">DesignRush</a> · AdForum</li>
+      </ul>
+    </div>
+    <div class="gprompt"><span class="lbl">Google</span>chobani "feed the dream" usmnt uncommon heron preston 2026</div>
+    <div class="angle">
+      <h4>Угол для GAV-контента</h4>
+      <ul><li><strong>Method · кампания как платформа, не ролик.</strong> Мода + коллаж + фильм + реальное обязательство ($5M) как пруф.</li></ul>
+    </div>
+  </article>
+
+  <!-- ════ EXTRAS ════ -->
+  <div class="extras" id="extras">
+    <h2>Что НЕ прошло фильтр (но было заметно)</h2>
+    <ul>
+      <li><strong>Wimbledon «Where Beauty Meets the Battle»</strong> (VCCP; фильм от лица бабочки) — сильный крафт, но запуск 8 июня = следующее окно. → watchlist.</li>
+      <li><strong>Oura «Subtle Power»</strong> — только The Drum, один портал. Cross-cite &lt; 3. → watchlist.</li>
+      <li><strong>Indeed «Jobs Need People»</strong> (72andSunny) — cross-cite ОК, но hot-take мягкий. Тематически — часть AI-vs-человек дискурса (см. тему №2).</li>
+      <li><strong>Chili's × Lizzo</strong> (ремикс джингла Baby Back Ribs) — cross-cite 2 + культурная пресса, не дотянул до 3 ad-trade.</li>
+      <li><strong>Wendy's</strong> (lookalike-конкурс) — 3 портала, но футпринт US-local/PR, не глобальный ad-trade; событие 26 мая.</li>
+      <li><strong>World Cup tracker «фон»:</strong> McDonald's (collectible cups), Budweiser «Let It Pour» (Haaland/Klopp), Lay's «Bandwagon» (Will Ferrell), Paddy Power (Danny Dyer vs Rob Lowe), Pepsi «Home of Banter» — массовая волна, по отдельности слабее топа.</li>
+    </ul>
+  </div>
+
+  <div class="extras">
+    <h2>Meta-новости недели</h2>
+    <ul>
+      <li><strong>Пре-Cannes волна прогнозов:</strong> <a href="https://adage.com/events-awards/cannes-lions/aa-winner-predictions-2026/" target="_blank">Ad Age — 64 кампании</a>, <a href="https://www.adweek.com/creativity/creative-leaders-place-their-bets-on-19-campaigns-to-win-at-cannes-lions-2026/" target="_blank">Adweek — 19 кампаний</a>. Фавориты: <strong>Coinbase «Your Way Out»</strong> (Isle of Any, зеро-AI/в камере), <strong>Claude / Anthropic «A Time and a Place»</strong> (Mother, AI-бренд с анти-AI мессаджем), <strong>Channel 4 «Fountain of Filth»</strong> (4Creative), <strong>KitKat «Dash»</strong> (Courage), <strong>Hornbach</strong> (HeimatTBWA), <strong>Columbia «Expedition Impossible»</strong> (adam&eve\TBWA). Сквозной тезис: человеческий крафт выше технологического спектакля.</li>
+      <li><strong>Закон Нью-Йорка о «синтетических исполнителях»</strong> вступил в силу 9 июня — первый в США. Обязательная маркировка AI-актёров, штрафы $1K/$5K (см. тему №2).</li>
+      <li><strong>Cannes Lions вводит «Creative Brand Lion»</strong> + расширенные AI-категории и интегрити-правила (раскрытие AI, баны до 3 лет за ложные заявки). <a href="https://www.canneslions.com/news/cannes-lions-introduces-the-creative-brand-lion" target="_blank">Cannes Lions</a>.</li>
+      <li><strong>New York Festivals Advertising Awards 2026</strong> — объявлен shortlist (победители 15 июня); 45+ стран. <a href="https://www.brandinginasia.com/new-york-festivals-advertising-awards-announces-2026-shortlist/" target="_blank">Branding in Asia</a>.</li>
+    </ul>
+  </div>
+
+  <div class="extras">
+    <h2>Watchlist (следующие недели)</h2>
+    <ul>
+      <li><strong>FIFA World Cup 2026</strong> стартует 11 июня — кампании выходят в активную фазу; ждём пост-launch резонанс и первые перформанс-данные.</li>
+      <li><strong>Cannes Lions 2026</strong> (22–26 июня) — главное событие года. Тематический спец-выпуск дайджеста; следить за фаворитами из прогнозов + дебют Creative Brand Lion и AI-Craft.</li>
+      <li><strong>Apple WWDC 2026</strong> (8–12 июня) — идёт сейчас; пограничная зона с tech-radar (Gemini-Siri, «Liquid Glass»).</li>
+      <li><strong>Фоллаут закона Нью-Йорка об AI</strong> — первые иски (Первая поправка), реакция 4A's, как бренды маркируют «synthetic performer».</li>
+      <li><strong>Wimbledon</strong> (старт 29 июня) — кампания «Where Beauty Meets the Battle» набирает обороты с 8 июня.</li>
+      <li><strong>Pride-«откат»</strong> — удержится ли «возврат» брендов (Bloomberg 8 июня) или это разовый сигнал.</li>
+    </ul>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="ft">
+    <div class="lf"><span class="b">GAV</span> · Trend Radar</div>
+    <div class="rt">W23 · 1–7 июня 2026 · 14 тем прошло фильтр · только мировые англоязычные источники</div>
+  </footer>
+
+</div>
+</body>
+</html>
