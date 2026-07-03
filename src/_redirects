@@ -1,0 +1,4 @@
+# Корень method.gotaddedvalue.com (старый лендинг интенсива 13-14 июня) -> новый лендинг Method.
+# 301! (force) обязателен: src/index.html существует, без force Netlify отдал бы его.
+# /actas (Помощник), /assets и функции НЕ трогаем - правило матчит только "/".
+/  https://gotaddedvalue.com/method/  301!
